@@ -1,0 +1,112 @@
+<div class="page-container">
+  <div class="header">
+    <a routerLink="/" class="back-button">← Back to Main</a>
+    <h1>Signal-Based Forms</h1>
+    <p>Forms using Angular signals for state management</p>
+  </div>
+  
+  <div class="form-container">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input 
+          type="text" 
+          id="name" 
+          [value]="name()"
+          (input)="onNameChange($event)"
+          class="form-input"
+          [class.error]="nameError()"
+        />
+        <div class="error-message" *ngIf="nameError()">
+          {{ nameErrorMessage() }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          [value]="email()"
+          (input)="onEmailChange($event)"
+          class="form-input"
+          [class.error]="emailError()"
+        />
+        <div class="error-message" *ngIf="emailError()">
+          {{ emailErrorMessage() }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input 
+          type="number" 
+          id="age" 
+          [value]="age()"
+          (input)="onAgeChange($event)"
+          class="form-input"
+          [class.error]="ageError()"
+        />
+        <div class="error-message" *ngIf="ageError()">
+          {{ ageErrorMessage() }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country</label>
+        <select 
+          id="country" 
+          [value]="country()"
+          (change)="onCountryChange($event)"
+          class="form-input"
+          [class.error]="countryError()"
+        >
+          <option value="">Select a country</option>
+          <option value="us">United States</option>
+          <option value="uk">United Kingdom</option>
+          <option value="ca">Canada</option>
+          <option value="au">Australia</option>
+          <option value="de">Germany</option>
+        </select>
+        <div class="error-message" *ngIf="countryError()">
+          {{ countryErrorMessage() }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            [checked]="newsletter()"
+            (change)="onNewsletterChange($event)"
+            class="checkbox"
+          />
+          Subscribe to newsletter
+        </label>
+      </div>
+
+      <button 
+        type="submit" 
+        class="submit-button"
+        [disabled]="!isFormValid()"
+      >
+        Submit Form
+      </button>
+    </form>
+
+    <div class="form-data" *ngIf="submittedData()">
+      <h3>Submitted Data:</h3>
+      <pre>{{ submittedData() | json }}</pre>
+    </div>
+
+    <div class="form-status">
+      <h3>Form Status:</h3>
+      <p><strong>Valid:</strong> {{ isFormValid() }}</p>
+      <p><strong>Name:</strong> {{ name() || 'Empty' }}</p>
+      <p><strong>Email:</strong> {{ email() || 'Empty' }}</p>
+      <p><strong>Age:</strong> {{ age() || 'Empty' }}</p>
+      <p><strong>Country:</strong> {{ country() || 'Empty' }}</p>
+      <p><strong>Newsletter:</strong> {{ newsletter() ? 'Yes' : 'No' }}</p>
+    </div>
+  </div>
+</div>

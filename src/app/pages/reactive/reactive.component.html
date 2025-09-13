@@ -1,0 +1,108 @@
+<div class="page-container">
+  <div class="header">
+    <a routerLink="/" class="back-button">← Back to Main</a>
+    <h1>Reactive Forms</h1>
+    <p>Forms using FormControl, FormGroup, and reactive patterns</p>
+  </div>
+  
+  <div class="form-container">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input 
+          type="text" 
+          id="name" 
+          formControlName="name"
+          class="form-input"
+          [class.error]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+        />
+        <div class="error-message" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+          <span *ngIf="userForm.get('name')?.errors?.['required']">Name is required</span>
+          <span *ngIf="userForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email"
+          class="form-input"
+          [class.error]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+        />
+        <div class="error-message" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+          <span *ngIf="userForm.get('email')?.errors?.['required']">Email is required</span>
+          <span *ngIf="userForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input 
+          type="number" 
+          id="age" 
+          formControlName="age"
+          class="form-input"
+          [class.error]="userForm.get('age')?.invalid && userForm.get('age')?.touched"
+        />
+        <div class="error-message" *ngIf="userForm.get('age')?.invalid && userForm.get('age')?.touched">
+          <span *ngIf="userForm.get('age')?.errors?.['required']">Age is required</span>
+          <span *ngIf="userForm.get('age')?.errors?.['min']">Age must be at least 18</span>
+          <span *ngIf="userForm.get('age')?.errors?.['max']">Age must be at most 100</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="country">Country</label>
+        <select 
+          id="country" 
+          formControlName="country"
+          class="form-input"
+          [class.error]="userForm.get('country')?.invalid && userForm.get('country')?.touched"
+        >
+          <option value="">Select a country</option>
+          <option value="us">United States</option>
+          <option value="uk">United Kingdom</option>
+          <option value="ca">Canada</option>
+          <option value="au">Australia</option>
+          <option value="de">Germany</option>
+        </select>
+        <div class="error-message" *ngIf="userForm.get('country')?.invalid && userForm.get('country')?.touched">
+          <span *ngIf="userForm.get('country')?.errors?.['required']">Country is required</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            formControlName="newsletter"
+            class="checkbox"
+          />
+          Subscribe to newsletter
+        </label>
+      </div>
+
+      <button 
+        type="submit" 
+        class="submit-button"
+        [disabled]="userForm.invalid"
+      >
+        Submit Form
+      </button>
+    </form>
+
+    <div class="form-data" *ngIf="submittedData">
+      <h3>Submitted Data:</h3>
+      <pre>{{ submittedData | json }}</pre>
+    </div>
+
+    <div class="form-status">
+      <h3>Form Status:</h3>
+      <p><strong>Valid:</strong> {{ userForm.valid }}</p>
+      <p><strong>Pristine:</strong> {{ userForm.pristine }}</p>
+      <p><strong>Touched:</strong> {{ userForm.touched }}</p>
+    </div>
+  </div>
+</div>
