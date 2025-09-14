@@ -1,0 +1,68 @@
+<div class="slideshow-container">
+  <!-- Header with navigation and progress -->
+  <header class="slideshow-header">
+    <div class="header-content">
+      <a routerLink="/" class="back-button">← Back to Main</a>
+      <h1>Angular Forms Presentation</h1>
+      <div class="slide-counter">
+        {{ currentSlide() }} / {{ totalSlides() }}
+      </div>
+    </div>
+    
+    <!-- Progress bar -->
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progressPercentage()"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Slide content -->
+  <main class="slide-content">
+    <div class="slide-wrapper" [style.transform]="'translateX(' + slideOffset() + 'px)'">
+      @for (slide of slides(); track slide.id; let i = $index) {
+        <div class="slide">
+          @switch (i) {
+            @case (0) {
+              <afs-slide1></afs-slide1>
+            }
+            @case (1) {
+              <afs-slide2></afs-slide2>
+            }
+            @case (2) {
+              <afs-slide3></afs-slide3>
+            }
+          }
+        </div>
+      }
+    </div>
+  </main>
+
+  <!-- Navigation controls -->
+  <footer class="slideshow-footer">
+    <button 
+      class="nav-button prev" 
+      (click)="previousSlide()" 
+      [disabled]="currentSlide() === 1">
+      ← Previous
+    </button>
+    
+    <div class="slide-indicators">
+      @for (slide of slides(); track slide.id; let i = $index) {
+        <button 
+          class="indicator"
+          [class.active]="currentSlide() === i + 1"
+          (click)="goToSlide(i + 1)">
+          {{ i + 1 }}
+        </button>
+      }
+    </div>
+    
+    <button 
+      class="nav-button next" 
+      (click)="nextSlide()" 
+      [disabled]="currentSlide() === totalSlides()">
+      Next →
+    </button>
+  </footer>
+</div>
