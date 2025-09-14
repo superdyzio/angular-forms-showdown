@@ -1,38 +1,40 @@
 <div class="slide-container">
-  <h1>Reactive Forms</h1>
+  <h1>Signal-Based Forms</h1>
   <div class="slide-content">
     <h2>Key Characteristics</h2>
     <div class="features-grid">
       <div class="feature-card">
-        <h3>🎛️ Explicit Control</h3>
-        <p>Form state is explicitly managed using FormControl, FormGroup, and FormArray</p>
+        <h3>🔄 Reactive Signals</h3>
+        <p>Uses Angular signals for reactive form state management with automatic change detection</p>
       </div>
       <div class="feature-card">
-        <h3>🔍 Type Safety</h3>
-        <p>Better TypeScript support with strongly typed form controls and validation</p>
-      </div>
-      <div class="feature-card">
-        <h3>🧪 Testable</h3>
-        <p>Easier to unit test since form logic is in the component, not the template</p>
+        <h3>🎯 Simplified API</h3>
+        <p>Cleaner, more intuitive API compared to traditional reactive forms</p>
       </div>
       <div class="feature-card">
         <h3>⚡ Performance</h3>
-        <p>More efficient for complex forms with better change detection control</p>
+        <p>Optimized change detection with fine-grained reactivity using signals</p>
+      </div>
+      <div class="feature-card">
+        <h3>🔮 Future-Ready</h3>
+        <p>Modern approach that aligns with Angular's signal-based architecture</p>
       </div>
     </div>
     <div class="code-example">
       <h3>Example:</h3>
-      <pre><code>userForm = new FormGroup(&#123;
-  name: new FormControl('', Validators.required),
-  email: new FormControl('', [Validators.required, Validators.email])
-&#125;);
+      <pre><code>name = signal('');
+email = signal('');
 
-&lt;form [formGroup]="userForm"&gt;
-  &lt;input formControlName="name"&gt;
-  {{"@if (userForm.get('name')?.invalid) {"}}
-    &lt;div&gt;Name is required!&lt;/div&gt;
-  {{'}'}}
-&lt;/form&gt;</code></pre>
+// Computed validation
+isValid = computed(() => 
+  this.name().length > 0 && this.email().includes('@')
+);
+
+&lt;input [value]="name()" 
+       (input)="name.set($event.target.value)"&gt;
+{{"@if (!isValid()) {"}}
+  &lt;div&gt;Please enter valid name and email!&lt;/div&gt;
+{{'}'}}</code></pre>
     </div>
   </div>
 </div>

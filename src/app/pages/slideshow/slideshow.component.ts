@@ -1,6 +1,8 @@
-import { Component, signal, computed, OnInit } from '@angular/core';
+import { Component, signal, computed, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router, ActivatedRoute, RouterOutlet } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute, RouterOutlet, NavigationEnd } from '@angular/router';
+import { filter, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'afs-slideshow',
@@ -9,7 +11,7 @@ import { RouterLink, Router, ActivatedRoute, RouterOutlet } from '@angular/route
   templateUrl: './slideshow.component.html',
   styleUrl: './slideshow.component.scss'
 })
-export class SlideshowComponent implements OnInit {
+export class SlideshowComponent implements OnInit, OnDestroy {
   // Current slide index (1-based)
   currentSlide = signal(1);
   
@@ -17,7 +19,7 @@ export class SlideshowComponent implements OnInit {
   slides = signal([
     { id: 1, title: 'Welcome to Angular Forms' },
     { id: 2, title: 'Template-Driven Forms' },
-    { id: 3, title: 'Reactive Forms' }
+    { id: 3, title: 'Signal-Based Forms' }
   ]);
   
   // Computed values
@@ -27,23 +29,47 @@ export class SlideshowComponent implements OnInit {
     (this.currentSlide() / this.totalSlides()) * 100
   );
   
+  private destroy$ = new Subject<void>();
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute
   ) {}
   
   ngOnInit() {
-    // Read slide number from child route
-    this.route.firstChild?.params.subscribe(params => {
-      const slideNumber = params[''] || '1'; // Empty string for root child route
-      const slideNum = parseInt(slideNumber, 10);
+    // Listen to route changes to update current slide
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((event: NavigationEnd) => {
+        this.updateCurrentSlideFromUrl(event.url);
+      });
+    
+    // Initial slide update
+    this.updateCurrentSlideFromUrl(this.router.url);
+  }
+  
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  
+  private updateCurrentSlideFromUrl(url: string) {
+    const urlSegments = url.split('/');
+    const slideNumber = urlSegments[urlSegments.length - 1] || '1';
+    const slideNum = parseInt(slideNumber, 10);
+    
+    // Only update if we're on a slideshow route
+    if (url.includes('/slideshow/')) {
       if (slideNum >= 1 && slideNum <= this.totalSlides()) {
         this.currentSlide.set(slideNum);
       } else {
         // Redirect to first slide if invalid slide number
         this.router.navigate(['/slideshow/1']);
       }
-    });
+    }
   }
   
   // Navigation methods
