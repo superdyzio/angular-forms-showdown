@@ -4,6 +4,10 @@ import { MainComponent } from './pages/main/main.component';
 export const routes: Routes = [
   { path: '', component: MainComponent },
   { 
+    path: 'slideshow', 
+    loadComponent: () => import('./pages/slideshow/slideshow.component').then(m => m.SlideshowComponent)
+  },
+  { 
     path: 'template', 
     loadComponent: () => import('./pages/template/template.component').then(m => m.TemplateComponent)
   },
