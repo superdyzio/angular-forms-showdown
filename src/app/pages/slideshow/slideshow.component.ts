@@ -1,18 +1,15 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { Slide1Component } from '../../slides/slide1/slide1.component';
-import { Slide2Component } from '../../slides/slide2/slide2.component';
-import { Slide3Component } from '../../slides/slide3/slide3.component';
+import { RouterLink, Router, ActivatedRoute, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'afs-slideshow',
   standalone: true,
-  imports: [CommonModule, RouterLink, Slide1Component, Slide2Component, Slide3Component],
+  imports: [CommonModule, RouterLink, RouterOutlet],
   templateUrl: './slideshow.component.html',
   styleUrl: './slideshow.component.scss'
 })
-export class SlideshowComponent {
+export class SlideshowComponent implements OnInit {
   // Current slide index (1-based)
   currentSlide = signal(1);
   
@@ -30,26 +27,43 @@ export class SlideshowComponent {
     (this.currentSlide() / this.totalSlides()) * 100
   );
   
-  slideOffset = computed(() => 
-    -(this.currentSlide() - 1) * window.innerWidth
-  );
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+  
+  ngOnInit() {
+    // Read slide number from child route
+    this.route.firstChild?.params.subscribe(params => {
+      const slideNumber = params[''] || '1'; // Empty string for root child route
+      const slideNum = parseInt(slideNumber, 10);
+      if (slideNum >= 1 && slideNum <= this.totalSlides()) {
+        this.currentSlide.set(slideNum);
+      } else {
+        // Redirect to first slide if invalid slide number
+        this.router.navigate(['/slideshow/1']);
+      }
+    });
+  }
   
   // Navigation methods
   nextSlide() {
     if (this.currentSlide() < this.totalSlides()) {
-      this.currentSlide.update(current => current + 1);
+      const nextSlideNumber = this.currentSlide() + 1;
+      this.router.navigate(['/slideshow', nextSlideNumber.toString()]);
     }
   }
   
   previousSlide() {
     if (this.currentSlide() > 1) {
-      this.currentSlide.update(current => current - 1);
+      const prevSlideNumber = this.currentSlide() - 1;
+      this.router.navigate(['/slideshow', prevSlideNumber.toString()]);
     }
   }
   
   goToSlide(slideNumber: number) {
     if (slideNumber >= 1 && slideNumber <= this.totalSlides()) {
-      this.currentSlide.set(slideNumber);
+      this.router.navigate(['/slideshow', slideNumber.toString()]);
     }
   }
 }

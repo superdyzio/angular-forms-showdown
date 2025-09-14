@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { MainComponent } from './pages/main/main.component';
+import { slidesRoutes } from './slides/slides.routes';
 
 export const routes: Routes = [
   { path: '', component: MainComponent },
   { 
     path: 'slideshow', 
-    loadComponent: () => import('./pages/slideshow/slideshow.component').then(m => m.SlideshowComponent)
+    loadComponent: () => import('./pages/slideshow/slideshow.component').then(m => m.SlideshowComponent),
+    children: slidesRoutes
   },
   { 
     path: 'template', 

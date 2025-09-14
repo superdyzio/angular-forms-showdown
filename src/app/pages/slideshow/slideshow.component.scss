@@ -72,12 +72,16 @@ h1 {
 .slide-wrapper {
   display: flex;
   height: 100%;
-  transition: transform 0.5s ease-in-out;
+  justify-content: center;
+  align-items: center;
 }
 
 .slide {
-  min-width: 100%;
+  width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .slideshow-footer {

@@ -19,22 +19,10 @@
 
   <!-- Slide content -->
   <main class="slide-content">
-    <div class="slide-wrapper" [style.transform]="'translateX(' + slideOffset() + 'px)'">
-      @for (slide of slides(); track slide.id; let i = $index) {
-        <div class="slide">
-          @switch (i) {
-            @case (0) {
-              <afs-slide1></afs-slide1>
-            }
-            @case (1) {
-              <afs-slide2></afs-slide2>
-            }
-            @case (2) {
-              <afs-slide3></afs-slide3>
-            }
-          }
-        </div>
-      }
+    <div class="slide-wrapper">
+      <div class="slide">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </main>
 
