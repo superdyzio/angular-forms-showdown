@@ -1,7 +1,17 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Observable, of } from 'rxjs';
+import { map, delay, catchError } from 'rxjs/operators';
+
+interface Address {
+  type: string;
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
 
 @Component({
   selector: 'afs-reactive',
@@ -10,18 +20,184 @@ import { CommonModule } from '@angular/common';
   templateUrl: './reactive.component.html',
   styleUrl: './reactive.component.scss'
 })
-export class ReactiveComponent {
+export class ReactiveComponent implements OnInit {
   userForm: FormGroup;
   submittedData: any = null;
+  emailExists = false;
+  emailCheckInProgress = false;
+  profileCompletion = 0;
+
+  // Available options
+  countries = [
+    { value: '', label: 'Select a country' },
+    { value: 'usa', label: 'United States' },
+    { value: 'uk', label: 'United Kingdom' },
+    { value: 'ca', label: 'Canada' },
+    { value: 'au', label: 'Australia' },
+    { value: 'de', label: 'Germany' }
+  ];
+
+  states = [
+    { value: '', label: 'Select a state' },
+    { value: 'ca', label: 'California' },
+    { value: 'ny', label: 'New York' },
+    { value: 'tx', label: 'Texas' },
+    { value: 'fl', label: 'Florida' },
+    { value: 'il', label: 'Illinois' }
+  ];
+
+  addressTypes = [
+    { value: 'home', label: 'Home' },
+    { value: 'work', label: 'Work' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  newsletterFrequencies = [
+    { value: 'daily', label: 'Daily' },
+    { value: 'weekly', label: 'Weekly' },
+    { value: 'monthly', label: 'Monthly' }
+  ];
 
   constructor(private fb: FormBuilder) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      age: [null, [Validators.required, Validators.min(18), Validators.max(100)]],
+      email: ['', [Validators.required, Validators.email], [this.emailExistsValidator.bind(this)]],
+      password: ['', [Validators.required, Validators.minLength(8), this.passwordComplexityValidator]],
+      confirmPassword: ['', Validators.required],
       country: ['', Validators.required],
-      newsletter: [false]
+      state: [''],
+      newsletter: [false],
+      newsletterFrequency: [''],
+      addresses: this.fb.array([])
+    }, { validators: this.passwordMatchValidator });
+  }
+
+  ngOnInit() {
+    // Add initial address
+    this.addAddress();
+    
+    // Subscribe to form changes to update completion
+    this.userForm.valueChanges.subscribe(() => {
+      this.calculateProfileCompletion();
     });
+  }
+
+  // Custom password complexity validator
+  passwordComplexityValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumeric = /\d/.test(value);
+    const hasSpecialChar = /[@$!%*?&]/.test(value);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumeric || !hasSpecialChar) {
+      return { passwordComplexity: true };
+    }
+    return null;
+  }
+
+  // Cross-field password match validator
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else if (confirmPassword && confirmPassword.errors?.['passwordMismatch']) {
+      delete confirmPassword.errors['passwordMismatch'];
+      if (Object.keys(confirmPassword.errors).length === 0) {
+        confirmPassword.setErrors(null);
+      }
+    }
+    return null;
+  }
+
+  // Async email existence validator
+  emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+    const email = control.value;
+    
+    if (!email || !email.includes('@')) {
+      return of(null);
+    }
+
+    this.emailCheckInProgress = true;
+    
+    // Simulate API call
+    return of(email === 'test@example.com').pipe(
+      delay(1000),
+      map(exists => {
+        this.emailCheckInProgress = false;
+        this.emailExists = exists;
+        return exists ? { emailExists: true } : null;
+      }),
+      catchError(() => {
+        this.emailCheckInProgress = false;
+        return of(null);
+      })
+    );
+  }
+
+  // Get addresses FormArray
+  get addresses(): FormArray {
+    return this.userForm.get('addresses') as FormArray;
+  }
+
+  // Create address FormGroup
+  createAddressFormGroup(): FormGroup {
+    return this.fb.group({
+      type: ['home'],
+      street: [''],
+      city: [''],
+      state: [''],
+      zipCode: ['']
+    });
+  }
+
+  // Add new address
+  addAddress() {
+    this.addresses.push(this.createAddressFormGroup());
+  }
+
+  // Remove address
+  removeAddress(index: number) {
+    this.addresses.removeAt(index);
+  }
+
+  // Check if country is USA
+  isUSA(): boolean {
+    return this.userForm.get('country')?.value === 'usa';
+  }
+
+  // Check if newsletter is subscribed
+  isNewsletterSubscribed(): boolean {
+    return this.userForm.get('newsletter')?.value;
+  }
+
+  // Calculate profile completion percentage
+  calculateProfileCompletion() {
+    const formValue = this.userForm.value;
+    const fields = [
+      formValue.name,
+      formValue.email,
+      formValue.password,
+      formValue.confirmPassword,
+      formValue.country
+    ];
+
+    const filledFields = fields.filter(field => field && field.toString().trim() !== '').length;
+    
+    // Add address completion
+    const addressCompletion = formValue.addresses && formValue.addresses.length > 0 ? 
+      formValue.addresses.reduce((acc: number, addr: Address) => {
+        const addrFields = [addr.street, addr.city, addr.zipCode];
+        const filledAddrFields = addrFields.filter(field => field && field.trim() !== '').length;
+        return acc + (filledAddrFields / addrFields.length);
+      }, 0) / formValue.addresses.length : 0;
+
+    this.profileCompletion = Math.round(((filledFields + addressCompletion) / (fields.length + 1)) * 100);
   }
 
   onSubmit() {

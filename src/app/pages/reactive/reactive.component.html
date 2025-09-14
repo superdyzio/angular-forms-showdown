@@ -1,100 +1,248 @@
 <div class="page-container">
   <div class="header">
     <a routerLink="/" class="back-button">← Back to Main</a>
-    <h1>Reactive Forms</h1>
-    <p>Forms using FormControl, FormGroup, and reactive patterns</p>
+    <h1>Reactive Forms - User Registration</h1>
+    <p>Forms using FormControl, FormGroup, FormArray, and reactive patterns with advanced validation</p>
   </div>
   
   <div class="form-container">
+    <!-- Profile Completion Indicator -->
+    <div class="completion-indicator">
+      <h3>Profile Completion: {{ profileCompletion }}%</h3>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="profileCompletion"></div>
+      </div>
+    </div>
+
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input 
-          type="text" 
-          id="name" 
-          formControlName="name"
-          class="form-input"
-          [class.error]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
-        />
-        <div class="error-message" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
-          <span *ngIf="userForm.get('name')?.errors?.['required']">Name is required</span>
-          <span *ngIf="userForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters</span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input 
-          type="email" 
-          id="email" 
-          formControlName="email"
-          class="form-input"
-          [class.error]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
-        />
-        <div class="error-message" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
-          <span *ngIf="userForm.get('email')?.errors?.['required']">Email is required</span>
-          <span *ngIf="userForm.get('email')?.errors?.['email']">Please enter a valid email</span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="age">Age</label>
-        <input 
-          type="number" 
-          id="age" 
-          formControlName="age"
-          class="form-input"
-          [class.error]="userForm.get('age')?.invalid && userForm.get('age')?.touched"
-        />
-        <div class="error-message" *ngIf="userForm.get('age')?.invalid && userForm.get('age')?.touched">
-          <span *ngIf="userForm.get('age')?.errors?.['required']">Age is required</span>
-          <span *ngIf="userForm.get('age')?.errors?.['min']">Age must be at least 18</span>
-          <span *ngIf="userForm.get('age')?.errors?.['max']">Age must be at most 100</span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="country">Country</label>
-        <select 
-          id="country" 
-          formControlName="country"
-          class="form-input"
-          [class.error]="userForm.get('country')?.invalid && userForm.get('country')?.touched"
-        >
-          <option value="">Select a country</option>
-          <option value="us">United States</option>
-          <option value="uk">United Kingdom</option>
-          <option value="ca">Canada</option>
-          <option value="au">Australia</option>
-          <option value="de">Germany</option>
-        </select>
-        <div class="error-message" *ngIf="userForm.get('country')?.invalid && userForm.get('country')?.touched">
-          <span *ngIf="userForm.get('country')?.errors?.['required']">Country is required</span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="checkbox-label">
+      <!-- Basic Information -->
+      <fieldset class="form-section">
+        <legend>Basic Information</legend>
+        
+        <div class="form-group">
+          <label for="name">Full Name *</label>
           <input 
-            type="checkbox" 
-            formControlName="newsletter"
-            class="checkbox"
+            type="text" 
+            id="name" 
+            formControlName="name"
+            class="form-input"
+            [class.error]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
           />
-          Subscribe to newsletter
-        </label>
-      </div>
+          <div class="error-message" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+            <span *ngIf="userForm.get('name')?.errors?.['required']">Name is required</span>
+            <span *ngIf="userForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            class="form-input"
+            [class.error]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+          />
+          <div class="error-message" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+            <span *ngIf="userForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="userForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+            <span *ngIf="userForm.get('email')?.errors?.['emailExists']">This email is already registered</span>
+          </div>
+          <div class="loading-message" *ngIf="emailCheckInProgress">
+            <span>Checking email availability...</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password *</label>
+          <input 
+            type="password" 
+            id="password" 
+            formControlName="password"
+            class="form-input"
+            [class.error]="userForm.get('password')?.invalid && userForm.get('password')?.touched"
+          />
+          <div class="error-message" *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+            <span *ngIf="userForm.get('password')?.errors?.['required']">Password is required</span>
+            <span *ngIf="userForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters</span>
+            <span *ngIf="userForm.get('password')?.errors?.['passwordComplexity']">Password must contain uppercase, lowercase, number, and special character</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password *</label>
+          <input 
+            type="password" 
+            id="confirmPassword" 
+            formControlName="confirmPassword"
+            class="form-input"
+            [class.error]="userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched"
+          />
+          <div class="error-message" *ngIf="userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched">
+            <span *ngIf="userForm.get('confirmPassword')?.errors?.['required']">Please confirm your password</span>
+            <span *ngIf="userForm.get('confirmPassword')?.errors?.['passwordMismatch']">Passwords do not match</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Location Information -->
+      <fieldset class="form-section">
+        <legend>Location Information</legend>
+        
+        <div class="form-group">
+          <label for="country">Country *</label>
+          <select 
+            id="country" 
+            formControlName="country"
+            class="form-input"
+            [class.error]="userForm.get('country')?.invalid && userForm.get('country')?.touched"
+          >
+            <option *ngFor="let country of countries" [value]="country.value">
+              {{ country.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="userForm.get('country')?.invalid && userForm.get('country')?.touched">
+            <span *ngIf="userForm.get('country')?.errors?.['required']">Country is required</span>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="isUSA()">
+          <label for="state">State *</label>
+          <select 
+            id="state" 
+            formControlName="state"
+            class="form-input"
+            [class.error]="userForm.get('state')?.invalid && userForm.get('state')?.touched"
+          >
+            <option *ngFor="let state of states" [value]="state.value">
+              {{ state.label }}
+            </option>
+          </select>
+          <div class="error-message" *ngIf="userForm.get('state')?.invalid && userForm.get('state')?.touched">
+            <span *ngIf="userForm.get('state')?.errors?.['required']">State is required for USA</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Addresses -->
+      <fieldset class="form-section">
+        <legend>Addresses</legend>
+        
+        <div class="addresses-container" formArrayName="addresses">
+          <div class="address-item" *ngFor="let address of addresses.controls; let i = index" [formGroupName]="i">
+            <div class="address-header">
+              <h4>Address {{ i + 1 }}</h4>
+              <button type="button" class="remove-button" (click)="removeAddress(i)" *ngIf="addresses.length > 1">
+                Remove
+              </button>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label [for]="'addressType' + i">Type</label>
+                <select 
+                  [id]="'addressType' + i" 
+                  formControlName="type"
+                  class="form-input"
+                >
+                  <option *ngFor="let type of addressTypes" [value]="type.value">
+                    {{ type.label }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label [for]="'street' + i">Street Address</label>
+              <input 
+                type="text" 
+                [id]="'street' + i" 
+                formControlName="street"
+                class="form-input"
+              />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label [for]="'city' + i">City</label>
+                <input 
+                  type="text" 
+                  [id]="'city' + i" 
+                  formControlName="city"
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group" *ngIf="isUSA()">
+                <label [for]="'state' + i">State</label>
+                <select 
+                  [id]="'state' + i" 
+                  formControlName="state"
+                  class="form-input"
+                >
+                  <option *ngFor="let state of states" [value]="state.value">
+                    {{ state.label }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label [for]="'zipCode' + i">ZIP Code</label>
+                <input 
+                  type="text" 
+                  [id]="'zipCode' + i" 
+                  formControlName="zipCode"
+                  class="form-input"
+                />
+              </div>
+            </div>
+          </div>
+          
+          <button type="button" class="add-button" (click)="addAddress()">
+            + Add Another Address
+          </button>
+        </div>
+      </fieldset>
+
+      <!-- Newsletter Preferences -->
+      <fieldset class="form-section">
+        <legend>Newsletter Preferences</legend>
+        
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input 
+              type="checkbox" 
+              formControlName="newsletter"
+              class="checkbox"
+            />
+            Subscribe to newsletter
+          </label>
+        </div>
+
+        <div class="form-group" *ngIf="isNewsletterSubscribed()">
+          <label for="newsletterFrequency">Newsletter Frequency</label>
+          <select 
+            id="newsletterFrequency" 
+            formControlName="newsletterFrequency"
+            class="form-input"
+          >
+            <option value="">Select frequency</option>
+            <option *ngFor="let freq of newsletterFrequencies" [value]="freq.value">
+              {{ freq.label }}
+            </option>
+          </select>
+        </div>
+      </fieldset>
 
       <button 
         type="submit" 
         class="submit-button"
         [disabled]="userForm.invalid"
       >
-        Submit Form
+        Register Account
       </button>
     </form>
 
     <div class="form-data" *ngIf="submittedData">
-      <h3>Submitted Data:</h3>
+      <h3>Registration Successful!</h3>
       <pre>{{ submittedData | json }}</pre>
     </div>
 
@@ -103,6 +251,8 @@
       <p><strong>Valid:</strong> {{ userForm.valid }}</p>
       <p><strong>Pristine:</strong> {{ userForm.pristine }}</p>
       <p><strong>Touched:</strong> {{ userForm.touched }}</p>
+      <p><strong>Email Exists:</strong> {{ emailExists }}</p>
+      <p><strong>Email Check In Progress:</strong> {{ emailCheckInProgress }}</p>
     </div>
   </div>
 </div>

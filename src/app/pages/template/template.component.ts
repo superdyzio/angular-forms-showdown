@@ -3,6 +3,14 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+interface Address {
+  type: string;
+  street: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
+
 @Component({
   selector: 'afs-template',
   standalone: true,
@@ -14,15 +22,136 @@ export class TemplateComponent {
   user = {
     name: '',
     email: '',
-    age: null as number | null,
+    password: '',
+    confirmPassword: '',
     country: '',
-    newsletter: false
+    state: '',
+    newsletter: false,
+    newsletterFrequency: '',
+    addresses: [] as Address[]
   };
 
   submittedData: any = null;
+  emailExists = false;
+  emailCheckInProgress = false;
+  profileCompletion = 0;
+
+  // Available options
+  countries = [
+    { value: '', label: 'Select a country' },
+    { value: 'usa', label: 'United States' },
+    { value: 'uk', label: 'United Kingdom' },
+    { value: 'ca', label: 'Canada' },
+    { value: 'au', label: 'Australia' },
+    { value: 'de', label: 'Germany' }
+  ];
+
+  states = [
+    { value: '', label: 'Select a state' },
+    { value: 'ca', label: 'California' },
+    { value: 'ny', label: 'New York' },
+    { value: 'tx', label: 'Texas' },
+    { value: 'fl', label: 'Florida' },
+    { value: 'il', label: 'Illinois' }
+  ];
+
+  addressTypes = [
+    { value: 'home', label: 'Home' },
+    { value: 'work', label: 'Work' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  newsletterFrequencies = [
+    { value: 'daily', label: 'Daily' },
+    { value: 'weekly', label: 'Weekly' },
+    { value: 'monthly', label: 'Monthly' }
+  ];
+
+  constructor() {
+    // Add initial address
+    this.addAddress();
+  }
+
+  // Check if country is USA
+  isUSA(): boolean {
+    return this.user.country === 'usa';
+  }
+
+  // Check if newsletter is subscribed
+  isNewsletterSubscribed(): boolean {
+    return this.user.newsletter;
+  }
+
+  // Add new address
+  addAddress() {
+    this.user.addresses.push({
+      type: 'home',
+      street: '',
+      city: '',
+      state: '',
+      zipCode: ''
+    });
+    this.calculateProfileCompletion();
+  }
+
+  // Remove address
+  removeAddress(index: number) {
+    this.user.addresses.splice(index, 1);
+    this.calculateProfileCompletion();
+  }
+
+  // Simulate async email validation
+  async checkEmailExists(email: string) {
+    if (!email || !email.includes('@')) {
+      this.emailExists = false;
+      return;
+    }
+
+    this.emailCheckInProgress = true;
+    
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Simulate email check (in real app, this would be an API call)
+    this.emailExists = email === 'test@example.com';
+    this.emailCheckInProgress = false;
+  }
+
+  // Custom password confirmation validator
+  passwordsMatch(): boolean {
+    return this.user.password === this.user.confirmPassword;
+  }
+
+  // Calculate profile completion percentage
+  calculateProfileCompletion() {
+    const fields = [
+      this.user.name,
+      this.user.email,
+      this.user.password,
+      this.user.confirmPassword,
+      this.user.country
+    ];
+
+    const filledFields = fields.filter(field => field && field.toString().trim() !== '').length;
+    
+    // Add address completion
+    const addressCompletion = this.user.addresses.length > 0 ? 
+      this.user.addresses.reduce((acc, addr) => {
+        const addrFields = [addr.street, addr.city, addr.zipCode];
+        const filledAddrFields = addrFields.filter(field => field && field.trim() !== '').length;
+        return acc + (filledAddrFields / addrFields.length);
+      }, 0) / this.user.addresses.length : 0;
+
+    this.profileCompletion = Math.round(((filledFields + addressCompletion) / (fields.length + 1)) * 100);
+  }
+
+  // Track changes to update completion
+  onFieldChange() {
+    this.calculateProfileCompletion();
+  }
 
   onSubmit(form: any) {
-    if (form.valid) {
+    if (form.valid && this.passwordsMatch() && !this.emailExists) {
       this.submittedData = { ...this.user };
       console.log('Form submitted:', this.submittedData);
     }
