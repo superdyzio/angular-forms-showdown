@@ -28,10 +28,16 @@
             class="form-input"
             [class.error]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
           />
-          <div class="error-message" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
-            <span *ngIf="userForm.get('name')?.errors?.['required']">Name is required</span>
-            <span *ngIf="userForm.get('name')?.errors?.['minlength']">Name must be at least 2 characters</span>
-          </div>
+          @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+            <div class="error-message">
+              @if (userForm.get('name')?.errors?.['required']) {
+                <span>Name is required</span>
+              }
+              @if (userForm.get('name')?.errors?.['minlength']) {
+                <span>Name must be at least 2 characters</span>
+              }
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -43,14 +49,24 @@
             class="form-input"
             [class.error]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
           />
-          <div class="error-message" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
-            <span *ngIf="userForm.get('email')?.errors?.['required']">Email is required</span>
-            <span *ngIf="userForm.get('email')?.errors?.['email']">Please enter a valid email</span>
-            <span *ngIf="userForm.get('email')?.errors?.['emailExists']">This email is already registered</span>
-          </div>
-          <div class="loading-message" *ngIf="emailCheckInProgress">
-            <span>Checking email availability...</span>
-          </div>
+          @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+            <div class="error-message">
+              @if (userForm.get('email')?.errors?.['required']) {
+                <span>Email is required</span>
+              }
+              @if (userForm.get('email')?.errors?.['email']) {
+                <span>Please enter a valid email</span>
+              }
+              @if (userForm.get('email')?.errors?.['emailExists']) {
+                <span>This email is already registered</span>
+              }
+            </div>
+          }
+          @if (emailCheckInProgress) {
+            <div class="loading-message">
+              <span>Checking email availability...</span>
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -62,11 +78,19 @@
             class="form-input"
             [class.error]="userForm.get('password')?.invalid && userForm.get('password')?.touched"
           />
-          <div class="error-message" *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
-            <span *ngIf="userForm.get('password')?.errors?.['required']">Password is required</span>
-            <span *ngIf="userForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters</span>
-            <span *ngIf="userForm.get('password')?.errors?.['passwordComplexity']">Password must contain uppercase, lowercase, number, and special character</span>
-          </div>
+          @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
+            <div class="error-message">
+              @if (userForm.get('password')?.errors?.['required']) {
+                <span>Password is required</span>
+              }
+              @if (userForm.get('password')?.errors?.['minlength']) {
+                <span>Password must be at least 8 characters</span>
+              }
+              @if (userForm.get('password')?.errors?.['passwordComplexity']) {
+                <span>Password must contain uppercase, lowercase, number, and special character</span>
+              }
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -78,10 +102,16 @@
             class="form-input"
             [class.error]="userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched"
           />
-          <div class="error-message" *ngIf="userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched">
-            <span *ngIf="userForm.get('confirmPassword')?.errors?.['required']">Please confirm your password</span>
-            <span *ngIf="userForm.get('confirmPassword')?.errors?.['passwordMismatch']">Passwords do not match</span>
-          </div>
+          @if (userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched) {
+            <div class="error-message">
+              @if (userForm.get('confirmPassword')?.errors?.['required']) {
+                <span>Please confirm your password</span>
+              }
+              @if (userForm.get('confirmPassword')?.errors?.['passwordMismatch']) {
+                <span>Passwords do not match</span>
+              }
+            </div>
+          }
         </div>
       </fieldset>
 
@@ -97,31 +127,45 @@
             class="form-input"
             [class.error]="userForm.get('country')?.invalid && userForm.get('country')?.touched"
           >
-            <option *ngFor="let country of countries" [value]="country.value">
-              {{ country.label }}
-            </option>
+            @for (country of countries; track country.value) {
+              <option [value]="country.value">
+                {{ country.label }}
+              </option>
+            }
           </select>
-          <div class="error-message" *ngIf="userForm.get('country')?.invalid && userForm.get('country')?.touched">
-            <span *ngIf="userForm.get('country')?.errors?.['required']">Country is required</span>
-          </div>
+          @if (userForm.get('country')?.invalid && userForm.get('country')?.touched) {
+            <div class="error-message">
+              @if (userForm.get('country')?.errors?.['required']) {
+                <span>Country is required</span>
+              }
+            </div>
+          }
         </div>
 
-        <div class="form-group" *ngIf="isUSA()">
-          <label for="state">State *</label>
-          <select 
-            id="state" 
-            formControlName="state"
-            class="form-input"
-            [class.error]="userForm.get('state')?.invalid && userForm.get('state')?.touched"
-          >
-            <option *ngFor="let state of states" [value]="state.value">
-              {{ state.label }}
-            </option>
-          </select>
-          <div class="error-message" *ngIf="userForm.get('state')?.invalid && userForm.get('state')?.touched">
-            <span *ngIf="userForm.get('state')?.errors?.['required']">State is required for USA</span>
+        @if (isUSA()) {
+          <div class="form-group">
+            <label for="state">State *</label>
+            <select 
+              id="state" 
+              formControlName="state"
+              class="form-input"
+              [class.error]="userForm.get('state')?.invalid && userForm.get('state')?.touched"
+            >
+              @for (state of states; track state.value) {
+                <option [value]="state.value">
+                  {{ state.label }}
+                </option>
+              }
+            </select>
+            @if (userForm.get('state')?.invalid && userForm.get('state')?.touched) {
+              <div class="error-message">
+                @if (userForm.get('state')?.errors?.['required']) {
+                  <span>State is required for USA</span>
+                }
+              </div>
+            }
           </div>
-        </div>
+        }
       </fieldset>
 
       <!-- Addresses -->
@@ -129,13 +173,16 @@
         <legend>Addresses</legend>
         
         <div class="addresses-container" formArrayName="addresses">
-          <div class="address-item" *ngFor="let address of addresses.controls; let i = index" [formGroupName]="i">
-            <div class="address-header">
-              <h4>Address {{ i + 1 }}</h4>
-              <button type="button" class="remove-button" (click)="removeAddress(i)" *ngIf="addresses.length > 1">
-                Remove
-              </button>
-            </div>
+          @for (address of addresses.controls; track $index; let i = $index) {
+            <div class="address-item" [formGroupName]="i">
+              <div class="address-header">
+                <h4>Address {{ i + 1 }}</h4>
+                @if (addresses.length > 1) {
+                  <button type="button" class="remove-button" (click)="removeAddress(i)">
+                    Remove
+                  </button>
+                }
+              </div>
             
             <div class="form-row">
               <div class="form-group">
@@ -145,9 +192,11 @@
                   formControlName="type"
                   class="form-input"
                 >
-                  <option *ngFor="let type of addressTypes" [value]="type.value">
-                    {{ type.label }}
-                  </option>
+                  @for (type of addressTypes; track type.value) {
+                    <option [value]="type.value">
+                      {{ type.label }}
+                    </option>
+                  }
                 </select>
               </div>
             </div>
@@ -172,18 +221,22 @@
                   class="form-input"
                 />
               </div>
-              <div class="form-group" *ngIf="isUSA()">
-                <label [for]="'state' + i">State</label>
-                <select 
-                  [id]="'state' + i" 
-                  formControlName="state"
-                  class="form-input"
-                >
-                  <option *ngFor="let state of states" [value]="state.value">
-                    {{ state.label }}
-                  </option>
-                </select>
-              </div>
+              @if (isUSA()) {
+                <div class="form-group">
+                  <label [for]="'state' + i">State</label>
+                  <select 
+                    [id]="'state' + i" 
+                    formControlName="state"
+                    class="form-input"
+                  >
+                    @for (state of states; track state.value) {
+                      <option [value]="state.value">
+                        {{ state.label }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              }
               <div class="form-group">
                 <label [for]="'zipCode' + i">ZIP Code</label>
                 <input 
@@ -194,7 +247,8 @@
                 />
               </div>
             </div>
-          </div>
+            </div>
+          }
           
           <button type="button" class="add-button" (click)="addAddress()">
             + Add Another Address
@@ -217,19 +271,23 @@
           </label>
         </div>
 
-        <div class="form-group" *ngIf="isNewsletterSubscribed()">
-          <label for="newsletterFrequency">Newsletter Frequency</label>
-          <select 
-            id="newsletterFrequency" 
-            formControlName="newsletterFrequency"
-            class="form-input"
-          >
-            <option value="">Select frequency</option>
-            <option *ngFor="let freq of newsletterFrequencies" [value]="freq.value">
-              {{ freq.label }}
-            </option>
-          </select>
-        </div>
+        @if (isNewsletterSubscribed()) {
+          <div class="form-group">
+            <label for="newsletterFrequency">Newsletter Frequency</label>
+            <select 
+              id="newsletterFrequency" 
+              formControlName="newsletterFrequency"
+              class="form-input"
+            >
+              <option value="">Select frequency</option>
+              @for (freq of newsletterFrequencies; track freq.value) {
+                <option [value]="freq.value">
+                  {{ freq.label }}
+                </option>
+              }
+            </select>
+          </div>
+        }
       </fieldset>
 
       <button 
@@ -241,10 +299,12 @@
       </button>
     </form>
 
-    <div class="form-data" *ngIf="submittedData">
-      <h3>Registration Successful!</h3>
-      <pre>{{ submittedData | json }}</pre>
-    </div>
+    @if (submittedData) {
+      <div class="form-data">
+        <h3>Registration Successful!</h3>
+        <pre>{{ submittedData | json }}</pre>
+      </div>
+    }
 
     <div class="form-status">
       <h3>Form Status:</h3>

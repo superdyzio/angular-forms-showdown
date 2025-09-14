@@ -17,9 +17,11 @@
           class="form-input"
           [class.error]="nameError()"
         />
-        <div class="error-message" *ngIf="nameError()">
-          {{ nameErrorMessage() }}
-        </div>
+        @if (nameError()) {
+          <div class="error-message">
+            {{ nameErrorMessage() }}
+          </div>
+        }
       </div>
 
       <div class="form-group">
@@ -32,9 +34,11 @@
           class="form-input"
           [class.error]="emailError()"
         />
-        <div class="error-message" *ngIf="emailError()">
-          {{ emailErrorMessage() }}
-        </div>
+        @if (emailError()) {
+          <div class="error-message">
+            {{ emailErrorMessage() }}
+          </div>
+        }
       </div>
 
       <div class="form-group">
@@ -47,9 +51,11 @@
           class="form-input"
           [class.error]="ageError()"
         />
-        <div class="error-message" *ngIf="ageError()">
-          {{ ageErrorMessage() }}
-        </div>
+        @if (ageError()) {
+          <div class="error-message">
+            {{ ageErrorMessage() }}
+          </div>
+        }
       </div>
 
       <div class="form-group">
@@ -68,9 +74,11 @@
           <option value="au">Australia</option>
           <option value="de">Germany</option>
         </select>
-        <div class="error-message" *ngIf="countryError()">
-          {{ countryErrorMessage() }}
-        </div>
+        @if (countryError()) {
+          <div class="error-message">
+            {{ countryErrorMessage() }}
+          </div>
+        }
       </div>
 
       <div class="form-group">
@@ -94,10 +102,12 @@
       </button>
     </form>
 
-    <div class="form-data" *ngIf="submittedData()">
-      <h3>Submitted Data:</h3>
-      <pre>{{ submittedData() | json }}</pre>
-    </div>
+    @if (submittedData()) {
+      <div class="form-data">
+        <h3>Submitted Data:</h3>
+        <pre>{{ submittedData() | json }}</pre>
+      </div>
+    }
 
     <div class="form-status">
       <h3>Form Status:</h3>

@@ -33,10 +33,16 @@
             [class.error]="name.invalid && name.touched"
             (input)="onFieldChange()"
           />
-          <div class="error-message" *ngIf="name.invalid && name.touched">
-            <span *ngIf="name.errors?.['required']">Name is required</span>
-            <span *ngIf="name.errors?.['minlength']">Name must be at least 2 characters</span>
-          </div>
+          @if (name.invalid && name.touched) {
+            <div class="error-message">
+              @if (name.errors?.['required']) {
+                <span>Name is required</span>
+              }
+              @if (name.errors?.['minlength']) {
+                <span>Name must be at least 2 characters</span>
+              }
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -53,16 +59,26 @@
             [class.error]="email.invalid && email.touched"
             (blur)="checkEmailExists(user.email); onFieldChange()"
           />
-          <div class="error-message" *ngIf="email.invalid && email.touched">
-            <span *ngIf="email.errors?.['required']">Email is required</span>
-            <span *ngIf="email.errors?.['email']">Please enter a valid email</span>
-          </div>
-          <div class="error-message" *ngIf="emailExists">
-            <span>This email is already registered</span>
-          </div>
-          <div class="loading-message" *ngIf="emailCheckInProgress">
-            <span>Checking email availability...</span>
-          </div>
+          @if (email.invalid && email.touched) {
+            <div class="error-message">
+              @if (email.errors?.['required']) {
+                <span>Email is required</span>
+              }
+              @if (email.errors?.['email']) {
+                <span>Please enter a valid email</span>
+              }
+            </div>
+          }
+          @if (emailExists) {
+            <div class="error-message">
+              <span>This email is already registered</span>
+            </div>
+          }
+          @if (emailCheckInProgress) {
+            <div class="loading-message">
+              <span>Checking email availability...</span>
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -80,11 +96,19 @@
             [class.error]="password.invalid && password.touched"
             (input)="onFieldChange()"
           />
-          <div class="error-message" *ngIf="password.invalid && password.touched">
-            <span *ngIf="password.errors?.['required']">Password is required</span>
-            <span *ngIf="password.errors?.['minlength']">Password must be at least 8 characters</span>
-            <span *ngIf="password.errors?.['pattern']">Password must contain uppercase, lowercase, number, and special character</span>
-          </div>
+          @if (password.invalid && password.touched) {
+            <div class="error-message">
+              @if (password.errors?.['required']) {
+                <span>Password is required</span>
+              }
+              @if (password.errors?.['minlength']) {
+                <span>Password must be at least 8 characters</span>
+              }
+              @if (password.errors?.['pattern']) {
+                <span>Password must contain uppercase, lowercase, number, and special character</span>
+              }
+            </div>
+          }
         </div>
 
         <div class="form-group">
@@ -100,9 +124,11 @@
             [class.error]="!passwordsMatch() && confirmPassword.touched"
             (input)="onFieldChange()"
           />
-          <div class="error-message" *ngIf="!passwordsMatch() && confirmPassword.touched">
-            <span>Passwords do not match</span>
-          </div>
+          @if (!passwordsMatch() && confirmPassword.touched) {
+            <div class="error-message">
+              <span>Passwords do not match</span>
+            </div>
+          }
         </div>
       </fieldset>
 
@@ -122,35 +148,49 @@
             [class.error]="country.invalid && country.touched"
             (change)="onFieldChange()"
           >
-            <option *ngFor="let country of countries" [value]="country.value">
-              {{ country.label }}
-            </option>
+            @for (country of countries; track country.value) {
+              <option [value]="country.value">
+                {{ country.label }}
+              </option>
+            }
           </select>
-          <div class="error-message" *ngIf="country.invalid && country.touched">
-            <span *ngIf="country.errors?.['required']">Country is required</span>
-          </div>
+          @if (country.invalid && country.touched) {
+            <div class="error-message">
+              @if (country.errors?.['required']) {
+                <span>Country is required</span>
+              }
+            </div>
+          }
         </div>
 
-        <div class="form-group" *ngIf="isUSA()">
-          <label for="state">State *</label>
-          <select 
-            id="state" 
-            name="state" 
-            [(ngModel)]="user.state" 
-            #state="ngModel"
-            required
-            class="form-input"
-            [class.error]="state.invalid && state.touched"
-            (change)="onFieldChange()"
-          >
-            <option *ngFor="let state of states" [value]="state.value">
-              {{ state.label }}
-            </option>
-          </select>
-          <div class="error-message" *ngIf="state.invalid && state.touched">
-            <span *ngIf="state.errors?.['required']">State is required for USA</span>
+        @if (isUSA()) {
+          <div class="form-group">
+            <label for="state">State *</label>
+            <select 
+              id="state" 
+              name="state" 
+              [(ngModel)]="user.state" 
+              #state="ngModel"
+              required
+              class="form-input"
+              [class.error]="state.invalid && state.touched"
+              (change)="onFieldChange()"
+            >
+              @for (state of states; track state.value) {
+                <option [value]="state.value">
+                  {{ state.label }}
+                </option>
+              }
+            </select>
+            @if (state.invalid && state.touched) {
+              <div class="error-message">
+                @if (state.errors?.['required']) {
+                  <span>State is required for USA</span>
+                }
+              </div>
+            }
           </div>
-        </div>
+        }
       </fieldset>
 
       <!-- Addresses -->
@@ -158,13 +198,16 @@
         <legend>Addresses</legend>
         
         <div class="addresses-container">
-          <div class="address-item" *ngFor="let address of user.addresses; let i = index">
-            <div class="address-header">
-              <h4>Address {{ i + 1 }}</h4>
-              <button type="button" class="remove-button" (click)="removeAddress(i)" *ngIf="user.addresses.length > 1">
-                Remove
-              </button>
-            </div>
+          @for (address of user.addresses; track $index; let i = $index) {
+            <div class="address-item">
+              <div class="address-header">
+                <h4>Address {{ i + 1 }}</h4>
+                @if (user.addresses.length > 1) {
+                  <button type="button" class="remove-button" (click)="removeAddress(i)">
+                    Remove
+                  </button>
+                }
+              </div>
             
             <div class="form-row">
               <div class="form-group">
@@ -176,9 +219,11 @@
                   class="form-input"
                   (change)="onFieldChange()"
                 >
-                  <option *ngFor="let type of addressTypes" [value]="type.value">
-                    {{ type.label }}
-                  </option>
+                  @for (type of addressTypes; track type.value) {
+                    <option [value]="type.value">
+                      {{ type.label }}
+                    </option>
+                  }
                 </select>
               </div>
             </div>
@@ -207,20 +252,24 @@
                   (input)="onFieldChange()"
                 />
               </div>
-              <div class="form-group" *ngIf="isUSA()">
-                <label [for]="'state' + i">State</label>
-                <select 
-                  [id]="'state' + i" 
-                  [name]="'state' + i" 
-                  [(ngModel)]="address.state" 
-                  class="form-input"
-                  (change)="onFieldChange()"
-                >
-                  <option *ngFor="let state of states" [value]="state.value">
-                    {{ state.label }}
-                  </option>
-                </select>
-              </div>
+              @if (isUSA()) {
+                <div class="form-group">
+                  <label [for]="'state' + i">State</label>
+                  <select 
+                    [id]="'state' + i" 
+                    [name]="'state' + i" 
+                    [(ngModel)]="address.state" 
+                    class="form-input"
+                    (change)="onFieldChange()"
+                  >
+                    @for (state of states; track state.value) {
+                      <option [value]="state.value">
+                        {{ state.label }}
+                      </option>
+                    }
+                  </select>
+                </div>
+              }
               <div class="form-group">
                 <label [for]="'zipCode' + i">ZIP Code</label>
                 <input 
@@ -233,7 +282,8 @@
                 />
               </div>
             </div>
-          </div>
+            </div>
+          }
           
           <button type="button" class="add-button" (click)="addAddress()">
             + Add Another Address
@@ -258,21 +308,25 @@
           </label>
         </div>
 
-        <div class="form-group" *ngIf="isNewsletterSubscribed()">
-          <label for="newsletterFrequency">Newsletter Frequency</label>
-          <select 
-            id="newsletterFrequency" 
-            name="newsletterFrequency" 
-            [(ngModel)]="user.newsletterFrequency" 
-            class="form-input"
-            (change)="onFieldChange()"
-          >
-            <option value="">Select frequency</option>
-            <option *ngFor="let freq of newsletterFrequencies" [value]="freq.value">
-              {{ freq.label }}
-            </option>
-          </select>
-        </div>
+        @if (isNewsletterSubscribed()) {
+          <div class="form-group">
+            <label for="newsletterFrequency">Newsletter Frequency</label>
+            <select 
+              id="newsletterFrequency" 
+              name="newsletterFrequency" 
+              [(ngModel)]="user.newsletterFrequency" 
+              class="form-input"
+              (change)="onFieldChange()"
+            >
+              <option value="">Select frequency</option>
+              @for (freq of newsletterFrequencies; track freq.value) {
+                <option [value]="freq.value">
+                  {{ freq.label }}
+                </option>
+              }
+            </select>
+          </div>
+        }
       </fieldset>
 
       <button 
@@ -284,9 +338,11 @@
       </button>
     </form>
 
-    <div class="form-data" *ngIf="submittedData">
-      <h3>Registration Successful!</h3>
-      <pre>{{ submittedData | json }}</pre>
-    </div>
+    @if (submittedData) {
+      <div class="form-data">
+        <h3>Registration Successful!</h3>
+        <pre>{{ submittedData | json }}</pre>
+      </div>
+    }
   </div>
 </div>
