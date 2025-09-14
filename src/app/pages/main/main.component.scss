@@ -23,12 +23,28 @@ p {
   opacity: 0.9;
 }
 
-.button-grid {
+.forms-section {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.forms-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.forms-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   max-width: 1000px;
   width: 100%;
+}
+
+.presentation-section {
+  text-align: center;
 }
 
 .nav-button {
@@ -62,7 +78,14 @@ p {
   line-height: 1.4;
 }
 
-.slideshow:hover {
+.presentation {
+  max-width: 400px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.presentation:hover {
   background: rgba(255, 215, 0, 0.2);
   border-color: rgba(255, 215, 0, 0.5);
 }
@@ -87,12 +110,16 @@ p {
     font-size: 2rem;
   }
   
-  .button-grid {
+  .forms-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
   
   .nav-button {
     padding: 1.5rem;
+  }
+  
+  .presentation {
+    max-width: 100%;
   }
 }
