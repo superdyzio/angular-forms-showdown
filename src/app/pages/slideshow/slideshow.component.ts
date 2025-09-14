@@ -32,13 +32,21 @@ import { Slide3Component } from '../../slides/slide3.component';
       <!-- Slide content -->
       <main class="slide-content">
         <div class="slide-wrapper" [style.transform]="'translateX(' + slideOffset() + 'px)'">
-          <div class="slide" *ngFor="let slide of slides(); let i = index">
-            <ng-container [ngSwitch]="i">
-              <afs-slide1 *ngSwitchCase="0"></afs-slide1>
-              <afs-slide2 *ngSwitchCase="1"></afs-slide2>
-              <afs-slide3 *ngSwitchCase="2"></afs-slide3>
-            </ng-container>
-          </div>
+          @for (slide of slides(); track slide.id; let i = $index) {
+            <div class="slide">
+              @switch (i) {
+                @case (0) {
+                  <afs-slide1></afs-slide1>
+                }
+                @case (1) {
+                  <afs-slide2></afs-slide2>
+                }
+                @case (2) {
+                  <afs-slide3></afs-slide3>
+                }
+              }
+            </div>
+          }
         </div>
       </main>
 
@@ -52,13 +60,14 @@ import { Slide3Component } from '../../slides/slide3.component';
         </button>
         
         <div class="slide-indicators">
-          <button 
-            *ngFor="let slide of slides(); let i = index"
-            class="indicator"
-            [class.active]="currentSlide() === i + 1"
-            (click)="goToSlide(i + 1)">
-            {{ i + 1 }}
-          </button>
+          @for (slide of slides(); track slide.id; let i = $index) {
+            <button 
+              class="indicator"
+              [class.active]="currentSlide() === i + 1"
+              (click)="goToSlide(i + 1)">
+              {{ i + 1 }}
+            </button>
+          }
         </div>
         
         <button 

@@ -30,16 +30,16 @@ import { CommonModule } from '@angular/common';
         </div>
         <div class="code-example">
           <h3>Example:</h3>
-          <pre><code>userForm = new FormGroup({{ '{' }}
+          <pre><code>userForm = new FormGroup(&#123;
   name: new FormControl('', Validators.required),
   email: new FormControl('', [Validators.required, Validators.email])
-{{ '}' }});
+&#125;);
 
 &lt;form [formGroup]="userForm"&gt;
   &lt;input formControlName="name"&gt;
-  &lt;div *ngIf="userForm.get('name')?.invalid"&gt;
-    Name is required!
-  &lt;/div&gt;
+  {{"@if (userForm.get('name')?.invalid) {"}}
+    &lt;div&gt;Name is required!&lt;/div&gt;
+  {{'}'}}
 &lt;/form&gt;</code></pre>
         </div>
       </div>

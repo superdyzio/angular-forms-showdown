@@ -34,9 +34,9 @@ import { CommonModule } from '@angular/common';
        name="name" 
        required 
        #name="ngModel"&gt;
-&lt;div *ngIf="name.invalid && name.touched"&gt;
-  Name is required!
-&lt;/div&gt;</code></pre>
+{{'@if (name.invalid && name.touched) {'}}
+  &lt;div&gt;Name is required!&lt;/div&gt;
+{{'}'}}</code></pre>
         </div>
       </div>
     </div>
