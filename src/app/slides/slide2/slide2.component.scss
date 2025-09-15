@@ -1,4 +1,9 @@
+:host {
+  width: 100%;
+}
+
 .slide-container {
+  width: 100%;
   padding: 2rem;
   min-height: 100%; /* fill available space between header and footer */
   display: flex;
