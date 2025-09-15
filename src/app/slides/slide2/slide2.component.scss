@@ -1,6 +1,6 @@
 .slide-container {
   padding: 2rem;
-  min-height: 100vh;
+  min-height: 100%; /* fill available space between header and footer */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
