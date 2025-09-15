@@ -98,6 +98,35 @@ export class ReactiveComponent implements OnInit {
     return null;
   }
 
+  // Calculate password strength
+  getPasswordStrength(): { score: number; label: string; color: string } {
+    const password = this.userForm.get('password')?.value;
+    if (!password) {
+      return { score: 0, label: '', color: '' };
+    }
+
+    let score = 0;
+    const checks = {
+      length: password.length >= 8,
+      lowercase: /[a-z]/.test(password),
+      uppercase: /[A-Z]/.test(password),
+      number: /\d/.test(password),
+      special: /[@$!%*?&]/.test(password)
+    };
+
+    score = Object.values(checks).filter(Boolean).length;
+
+    if (score <= 2) {
+      return { score, label: 'Weak', color: '#ff4444' };
+    } else if (score <= 3) {
+      return { score, label: 'Fair', color: '#ffaa00' };
+    } else if (score <= 4) {
+      return { score, label: 'Good', color: '#00aa00' };
+    } else {
+      return { score, label: 'Strong', color: '#00aa00' };
+    }
+  }
+
   // Cross-field password match validator
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');

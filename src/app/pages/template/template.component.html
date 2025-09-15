@@ -91,11 +91,25 @@
             #password="ngModel"
             required 
             minlength="8"
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
             class="form-input"
             [class.error]="password.invalid && password.touched"
             (input)="onFieldChange()"
           />
+          @if (user.password) {
+            <div class="password-strength">
+              <div class="strength-bar">
+                <div 
+                  class="strength-fill" 
+                  [style.width.%]="(getPasswordStrength().score / 5) * 100"
+                  [style.background-color]="getPasswordStrength().color"
+                ></div>
+              </div>
+              <span class="strength-label" [style.color]="getPasswordStrength().color">
+                {{ getPasswordStrength().label }}
+              </span>
+            </div>
+          }
           @if (password.invalid && password.touched) {
             <div class="error-message">
               @if (password.errors?.['required']) {
