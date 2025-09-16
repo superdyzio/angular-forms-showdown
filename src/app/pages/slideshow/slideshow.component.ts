@@ -17,9 +17,10 @@ export class SlideshowComponent implements OnInit, OnDestroy {
   
   // All available slides
   slides = signal([
-    { id: 1, title: 'Welcome to Angular Forms' },
-    { id: 2, title: 'Template-Driven Forms' },
-    { id: 3, title: 'Signal-Based Forms' }
+    { id: 1, title: 'Assumptions' },
+    { id: 2, title: 'UseCase'},
+    { id: 3, title: 'Template-Driven Forms' },
+    { id: 4, title: 'Signal-Based Forms' }
   ]);
   
   // Computed values
