@@ -1,14 +1,14 @@
 <div class="page-container">
   <div class="header">
-    <a routerLink="/" class="back-button">← Back to Main</a>
-    <h1>Reactive Forms - User Registration</h1>
-    <p>Forms using FormControl, FormGroup, FormArray, and reactive patterns with advanced validation</p>
+    <a routerLink="/" class="back-button" i18n>← Back to Main</a>
+    <h1 i18n>Reactive Forms - User Registration</h1>
+    <p i18n>Forms using FormControl, FormGroup, FormArray, and reactive patterns with advanced validation</p>
   </div>
   
   <div class="form-container">
     <!-- Profile Completion Indicator -->
     <div class="completion-indicator">
-      <h3>Profile Completion: {{ profileCompletion }}%</h3>
+      <h3 i18n>Profile Completion: {{ profileCompletion }}%</h3>
       <div class="progress-bar">
         <div class="progress-fill" [style.width.%]="profileCompletion"></div>
       </div>
@@ -17,10 +17,10 @@
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
       <!-- Basic Information -->
       <fieldset class="form-section">
-        <legend>Basic Information</legend>
+        <legend i18n>Basic Information</legend>
         
         <div class="form-group">
-          <label for="name">Full Name *</label>
+          <label for="name" i18n>Full Name *</label>
           <input 
             type="text" 
             id="name" 
@@ -31,17 +31,17 @@
           @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
             <div class="error-message">
               @if (userForm.get('name')?.errors?.['required']) {
-                <span>Name is required</span>
+                <span i18n>Name is required</span>
               }
               @if (userForm.get('name')?.errors?.['minlength']) {
-                <span>Name must be at least 2 characters</span>
+                <span i18n>Name must be at least 2 characters</span>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="email">Email Address *</label>
+          <label for="email" i18n>Email Address *</label>
           <input 
             type="email" 
             id="email" 
@@ -52,30 +52,30 @@
           @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
             <div class="error-message">
               @if (userForm.get('email')?.errors?.['required']) {
-                <span>Email is required</span>
+                <span i18n>Email is required</span>
               }
               @if (userForm.get('email')?.errors?.['email']) {
-                <span>Please enter a valid email</span>
+                <span i18n>Please enter a valid email</span>
               }
               @if (userForm.get('email')?.errors?.['emailExists']) {
-                <span>This email is already registered</span>
+                <span i18n>This email is already registered</span>
               }
             </div>
           }
           @if (emailCheckInProgress) {
             <div class="loading-message">
-              <span>Checking email availability...</span>
+              <span i18n>Checking email availability...</span>
             </div>
           }
           @if (userForm.get('email')?.valid && userForm.get('email')?.touched && !emailCheckInProgress) {
             <div class="success-message">
-              <span>Email is available</span>
+              <span i18n>Email is available</span>
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="password">Password *</label>
+          <label for="password" i18n>Password *</label>
           <input 
             type="password" 
             id="password" 
@@ -100,20 +100,20 @@
           @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
             <div class="error-message">
               @if (userForm.get('password')?.errors?.['required']) {
-                <span>Password is required</span>
+                <span i18n>Password is required</span>
               }
               @if (userForm.get('password')?.errors?.['minlength']) {
-                <span>Password must be at least 8 characters</span>
+                <span i18n>Password must be at least 8 characters</span>
               }
               @if (userForm.get('password')?.errors?.['passwordComplexity']) {
-                <span>Password must contain uppercase, lowercase, number, and special character</span>
+                <span i18n>Password must contain uppercase, lowercase, number, and special character</span>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="confirmPassword">Confirm Password *</label>
+          <label for="confirmPassword" i18n>Confirm Password *</label>
           <input 
             type="password" 
             id="confirmPassword" 
@@ -124,10 +124,10 @@
           @if (userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched) {
             <div class="error-message">
               @if (userForm.get('confirmPassword')?.errors?.['required']) {
-                <span>Please confirm your password</span>
+                <span i18n>Please confirm your password</span>
               }
               @if (userForm.get('confirmPassword')?.errors?.['passwordMismatch']) {
-                <span>Passwords do not match</span>
+                <span i18n>Passwords do not match</span>
               }
             </div>
           }
@@ -136,10 +136,10 @@
 
       <!-- Location Information -->
       <fieldset class="form-section">
-        <legend>Location Information</legend>
+        <legend i18n>Location Information</legend>
         
         <div class="form-group">
-          <label for="country">Country *</label>
+          <label for="country" i18n>Country *</label>
           <select 
             id="country" 
             formControlName="country"
@@ -155,7 +155,7 @@
           @if (userForm.get('country')?.invalid && userForm.get('country')?.touched) {
             <div class="error-message">
               @if (userForm.get('country')?.errors?.['required']) {
-                <span>Country is required</span>
+                <span i18n>Country is required</span>
               }
             </div>
           }
@@ -163,7 +163,7 @@
 
         @if (isUSA()) {
           <div class="form-group">
-            <label for="state">State *</label>
+            <label for="state" i18n>State *</label>
             <select 
               id="state" 
               formControlName="state"
@@ -179,7 +179,7 @@
             @if (userForm.get('state')?.invalid && userForm.get('state')?.touched) {
               <div class="error-message">
                 @if (userForm.get('state')?.errors?.['required']) {
-                  <span>State is required for USA</span>
+                  <span i18n>State is required for USA</span>
                 }
               </div>
             }
@@ -189,15 +189,15 @@
 
       <!-- Addresses -->
       <fieldset class="form-section">
-        <legend>Addresses</legend>
+        <legend i18n>Addresses</legend>
         
         <div class="addresses-container" formArrayName="addresses">
           @for (address of addresses.controls; track $index; let i = $index) {
             <div class="address-item" [formGroupName]="i">
               <div class="address-header">
-                <h4>Address {{ i + 1 }}</h4>
+                <h4 i18n>Address {{ i + 1 }}</h4>
                 @if (addresses.length > 1) {
-                  <button type="button" class="remove-button" (click)="removeAddress(i)">
+                  <button type="button" class="remove-button" (click)="removeAddress(i)" i18n>
                     Remove
                   </button>
                 }
@@ -205,7 +205,7 @@
             
             <div class="form-row">
               <div class="form-group">
-                <label [for]="'addressType' + i">Type</label>
+                <label [for]="'addressType' + i" i18n>Type</label>
                 <select 
                   [id]="'addressType' + i" 
                   formControlName="type"
@@ -221,7 +221,7 @@
             </div>
 
             <div class="form-group">
-              <label [for]="'street' + i">Street Address</label>
+              <label [for]="'street' + i" i18n>Street Address</label>
               <input 
                 type="text" 
                 [id]="'street' + i" 
@@ -232,7 +232,7 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label [for]="'city' + i">City</label>
+                <label [for]="'city' + i" i18n>City</label>
                 <input 
                   type="text" 
                   [id]="'city' + i" 
@@ -242,7 +242,7 @@
               </div>
               @if (isUSA()) {
                 <div class="form-group">
-                  <label [for]="'state' + i">State</label>
+                  <label [for]="'state' + i" i18n>State</label>
                   <select 
                     [id]="'state' + i" 
                     formControlName="state"
@@ -257,7 +257,7 @@
                 </div>
               }
               <div class="form-group">
-                <label [for]="'zipCode' + i">ZIP Code</label>
+                <label [for]="'zipCode' + i" i18n>ZIP Code</label>
                 <input 
                   type="text" 
                   [id]="'zipCode' + i" 
@@ -269,7 +269,7 @@
             </div>
           }
           
-          <button type="button" class="add-button" (click)="addAddress()">
+          <button type="button" class="add-button" (click)="addAddress()" i18n>
             + Add Another Address
           </button>
         </div>
@@ -277,7 +277,7 @@
 
       <!-- Newsletter Preferences -->
       <fieldset class="form-section">
-        <legend>Newsletter Preferences</legend>
+        <legend i18n>Newsletter Preferences</legend>
         
         <div class="form-group">
           <label class="checkbox-label">
@@ -286,19 +286,19 @@
               formControlName="newsletter"
               class="checkbox"
             />
-            Subscribe to newsletter
+            <span i18n>Subscribe to newsletter</span>
           </label>
         </div>
 
         @if (isNewsletterSubscribed()) {
           <div class="form-group">
-            <label for="newsletterFrequency">Newsletter Frequency</label>
+            <label for="newsletterFrequency" i18n>Newsletter Frequency</label>
             <select 
               id="newsletterFrequency" 
               formControlName="newsletterFrequency"
               class="form-input"
             >
-              <option value="">Select frequency</option>
+              <option value="" i18n>Select frequency</option>
               @for (freq of newsletterFrequencies; track freq.value) {
                 <option [value]="freq.value">
                   {{ freq.label }}
@@ -313,6 +313,7 @@
         type="submit" 
         class="submit-button"
         [disabled]="userForm.invalid"
+        i18n
       >
         Register Account
       </button>
@@ -320,18 +321,18 @@
 
     @if (submittedData) {
       <div class="form-data">
-        <h3>Registration Successful!</h3>
+        <h3 i18n>Registration Successful!</h3>
         <pre>{{ submittedData | json }}</pre>
       </div>
     }
 
     <div class="form-status">
-      <h3>Form Status:</h3>
-      <p><strong>Valid:</strong> {{ userForm.valid }}</p>
-      <p><strong>Pristine:</strong> {{ userForm.pristine }}</p>
-      <p><strong>Touched:</strong> {{ userForm.touched }}</p>
-      <p><strong>Email Exists:</strong> {{ emailExists }}</p>
-      <p><strong>Email Check In Progress:</strong> {{ emailCheckInProgress }}</p>
+      <h3 i18n>Form Status:</h3>
+      <p><strong i18n>Valid:</strong> {{ userForm.valid }}</p>
+      <p><strong i18n>Pristine:</strong> {{ userForm.pristine }}</p>
+      <p><strong i18n>Touched:</strong> {{ userForm.touched }}</p>
+      <p><strong i18n>Email Exists:</strong> {{ emailExists }}</p>
+      <p><strong i18n>Email Check In Progress:</strong> {{ emailCheckInProgress }}</p>
     </div>
   </div>
 </div>

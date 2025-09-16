@@ -13,6 +13,14 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "afs",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "pl": {
+            "translation": "src/locale/messages.pl.xlf"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -53,6 +61,9 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "pl": {
+              "localize": ["pl"]
             }
           },
           "defaultConfiguration": "production"
@@ -65,6 +76,9 @@
             },
             "development": {
               "buildTarget": "angular-forms-showdown:build:development"
+            },
+            "pl": {
+              "buildTarget": "angular-forms-showdown:build:pl"
             }
           },
           "defaultConfiguration": "development"

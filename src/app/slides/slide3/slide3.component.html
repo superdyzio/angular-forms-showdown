@@ -1,27 +1,27 @@
 <div class="slide-container">
-  <h1>Signal-Based Forms</h1>
+  <h1 i18n>Signal-Based Forms</h1>
   <div class="slide-content">
-    <h2>Key Characteristics</h2>
+    <h2 i18n>Key Characteristics</h2>
     <div class="features-grid">
       <div class="feature-card">
-        <h3>🔄 Reactive Signals</h3>
-        <p>Uses Angular signals for reactive form state management with automatic change detection</p>
+        <h3 i18n>🔄 Reactive Signals</h3>
+        <p i18n>Uses Angular signals for reactive form state management with automatic change detection</p>
       </div>
       <div class="feature-card">
-        <h3>🎯 Simplified API</h3>
-        <p>Cleaner, more intuitive API compared to traditional reactive forms</p>
+        <h3 i18n>🎯 Simplified API</h3>
+        <p i18n>Cleaner, more intuitive API compared to traditional reactive forms</p>
       </div>
       <div class="feature-card">
-        <h3>⚡ Performance</h3>
-        <p>Optimized change detection with fine-grained reactivity using signals</p>
+        <h3 i18n>⚡ Performance</h3>
+        <p i18n>Optimized change detection with fine-grained reactivity using signals</p>
       </div>
       <div class="feature-card">
-        <h3>🔮 Future-Ready</h3>
-        <p>Modern approach that aligns with Angular's signal-based architecture</p>
+        <h3 i18n>🔮 Future-Ready</h3>
+        <p i18n>Modern approach that aligns with Angular's signal-based architecture</p>
       </div>
     </div>
     <div class="code-example">
-      <h3>Example:</h3>
+      <h3 i18n>Example:</h3>
       <pre><code>name = signal('');
 email = signal('');
 
@@ -34,7 +34,8 @@ isValid = computed(() =>
        (input)="name.set($event.target.value)"&gt;
 {{"@if (!isValid()) {"}}
   &lt;div&gt;Please enter valid name and email!&lt;/div&gt;
-{{'}'}}</code></pre>
+{{'}'}}
+</code></pre>
     </div>
   </div>
 </div>

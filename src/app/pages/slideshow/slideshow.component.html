@@ -2,8 +2,8 @@
   <!-- Header with navigation and progress -->
   <header class="slideshow-header">
     <div class="header-content">
-      <a routerLink="/" class="back-button">← Back to Main</a>
-      <h1>Angular Forms Presentation</h1>
+      <a routerLink="/" class="back-button" i18n>← Back to Main</a>
+      <h1 i18n>Angular Forms Presentation</h1>
       <div class="slide-counter">
         {{ currentSlide() }} / {{ totalSlides() }}
       </div>
@@ -31,7 +31,8 @@
     <button 
       class="nav-button prev" 
       (click)="previousSlide()" 
-      [disabled]="currentSlide() === 1">
+      [disabled]="currentSlide() === 1"
+      i18n>
       ← Previous
     </button>
     
@@ -49,7 +50,8 @@
     <button 
       class="nav-button next" 
       (click)="nextSlide()" 
-      [disabled]="currentSlide() === totalSlides()">
+      [disabled]="currentSlide() === totalSlides()"
+      i18n>
       Next →
     </button>
   </footer>
