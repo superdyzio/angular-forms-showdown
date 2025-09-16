@@ -67,6 +67,11 @@
               <span>Checking email availability...</span>
             </div>
           }
+          @if (userForm.get('email')?.valid && userForm.get('email')?.touched && !emailCheckInProgress) {
+            <div class="success-message">
+              <span>Email is available</span>
+            </div>
+          }
         </div>
 
         <div class="form-group">

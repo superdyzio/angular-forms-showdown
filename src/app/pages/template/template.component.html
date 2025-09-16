@@ -56,8 +56,9 @@
             required 
             email
             class="form-input"
-            [class.error]="email.invalid && email.touched"
-            (blur)="checkEmailExists(user.email); onFieldChange()"
+            [class.error]="(email.invalid || email.errors?.['emailExists']) && email.touched"
+            afsEmailExists
+            (blur)="onFieldChange()"
           />
           @if (email.invalid && email.touched) {
             <div class="error-message">
@@ -69,14 +70,19 @@
               }
             </div>
           }
-          @if (emailExists) {
+          @if (email.errors?.['emailExists']) {
             <div class="error-message">
               <span>This email is already registered</span>
             </div>
           }
-          @if (emailCheckInProgress) {
+          @if (email.pending) {
             <div class="loading-message">
               <span>Checking email availability...</span>
+            </div>
+          }
+          @if (email.valid && email.touched && !email.pending) {
+            <div class="success-message">
+              <span>Email is available</span>
             </div>
           }
         </div>
@@ -346,7 +352,7 @@
       <button 
         type="submit" 
         class="submit-button"
-        [disabled]="userForm.invalid || !passwordsMatch() || emailExists"
+        [disabled]="userForm.invalid || !passwordsMatch() || email.pending || email.errors?.['emailExists']"
       >
         Register Account
       </button>

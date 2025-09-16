@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TemplateEmailAsyncValidatorDirective } from './template-email-async.validator';
 import { CommonModule } from '@angular/common';
 
 interface Address {
@@ -14,7 +15,7 @@ interface Address {
 @Component({
   selector: 'afs-template',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [RouterLink, FormsModule, CommonModule, TemplateEmailAsyncValidatorDirective],
   templateUrl: './template.component.html',
   styleUrl: './template.component.scss'
 })
@@ -32,8 +33,6 @@ export class TemplateComponent {
   };
 
   submittedData: any = null;
-  emailExists = false;
-  emailCheckInProgress = false;
   profileCompletion = 0;
 
   // Available options
@@ -100,22 +99,7 @@ export class TemplateComponent {
     this.calculateProfileCompletion();
   }
 
-  // Simulate async email validation
-  async checkEmailExists(email: string) {
-    if (!email || !email.includes('@')) {
-      this.emailExists = false;
-      return;
-    }
-
-    this.emailCheckInProgress = true;
-    
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Simulate email check (in real app, this would be an API call)
-    this.emailExists = email === 'test@example.com';
-    this.emailCheckInProgress = false;
-  }
+  // Async email validation is now handled by afsEmailExists directive
 
   // Custom password confirmation validator
   passwordsMatch(): boolean {
@@ -180,7 +164,7 @@ export class TemplateComponent {
   }
 
   onSubmit(form: any) {
-    if (form.valid && this.passwordsMatch() && !this.emailExists) {
+    if (form.valid && this.passwordsMatch()) {
       this.submittedData = { ...this.user };
       console.log('Form submitted:', this.submittedData);
     }

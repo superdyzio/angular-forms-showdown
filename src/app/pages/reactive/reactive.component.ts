@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { map, delay, catchError } from 'rxjs/operators';
+import { EmailCheckService } from '../../services/email-check.service';
 
 interface Address {
   type: string;
@@ -58,7 +59,7 @@ export class ReactiveComponent implements OnInit {
     { value: 'monthly', label: 'Monthly' }
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private emailCheck: EmailCheckService) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email], [this.emailExistsValidator.bind(this)]],
@@ -147,16 +148,12 @@ export class ReactiveComponent implements OnInit {
   // Async email existence validator
   emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
     const email = control.value;
-    
     if (!email || !email.includes('@')) {
+      this.emailExists = false;
       return of(null);
     }
-
     this.emailCheckInProgress = true;
-    
-    // Simulate API call
-    return of(email === 'test@example.com').pipe(
-      delay(1000),
+    return this.emailCheck.checkEmailExists(email).pipe(
       map(exists => {
         this.emailCheckInProgress = false;
         this.emailExists = exists;
