@@ -9,6 +9,7 @@ import { SignalFormsSlideComponent } from './07-signal-forms/signal-forms-slide.
 import { SignalFormsApiSlideComponent } from './08-signal-forms-api/signal-forms-api-slide.component';
 import { CvaSlideComponent } from './09-cva/cva-slide.component';
 import { FeatureMappingSlideComponent } from './10-feature-mapping/feature-mapping-slide.component';
+import { DemoSlideComponent } from './11-demo/demo-slide.component';
 
 export const slidesRoutes: Routes = [
   { path: '', redirectTo: '1', pathMatch: 'full' },
@@ -22,5 +23,6 @@ export const slidesRoutes: Routes = [
   { path: '8', component: SignalFormsApiSlideComponent },
   { path: '9', component: CvaSlideComponent },
   { path: '10', component: FeatureMappingSlideComponent },
+  { path: '11', component: DemoSlideComponent },
   { path: '**', redirectTo: '1' }
 ];
