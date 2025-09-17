@@ -3,14 +3,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TemplateEmailAsyncValidatorDirective } from './template-email-async.validator';
 import { CommonModule } from '@angular/common';
-
-interface Address {
-  type: string;
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-}
+import { Address } from '../../types/address';
 
 @Component({
   selector: 'afs-template',

@@ -3,16 +3,9 @@ import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, Abs
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
-import { map, delay, catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { EmailCheckService } from '../../services/email-check.service';
-
-interface Address {
-  type: string;
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-}
+import { Address } from '../../types/address';
 
 @Component({
   selector: 'afs-reactive',
