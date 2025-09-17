@@ -364,5 +364,14 @@
         <pre>{{ submittedData | json }}</pre>
       </div>
     }
+
+    <div class="form-status">
+      <h3>Form Status:</h3>
+      <p><strong>Valid:</strong> {{ userForm.valid }}</p>
+      <p><strong>Pristine:</strong> {{ userForm.pristine }}</p>
+      <p><strong>Touched:</strong> {{ userForm.touched }}</p>
+      <p><strong>Email Exists:</strong> {{ email?.errors?.['emailExists'] || false }}</p>
+      <p><strong>Email Check In Progress:</strong> {{ email?.pending || false }}</p>
+    </div>
   </div>
 </div>
