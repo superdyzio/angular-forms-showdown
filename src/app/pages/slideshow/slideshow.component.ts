@@ -21,7 +21,7 @@ export class SlideshowComponent implements OnInit, OnDestroy {
     { id: 2, title: 'UseCase'},
     { id: 3, title: 'Template-Driven Forms' },
     { id: 4, title: 'Reactive Forms' },
-    { id: 5, title: 'Signal Forms' }
+    { id: 7, title: 'Signal Forms' }
   ]);
   
   // Computed values
