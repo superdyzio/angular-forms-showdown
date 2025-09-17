@@ -1,4 +1,4 @@
-import { Component, signal, computed, OnInit, OnDestroy } from '@angular/core';
+import { Component, signal, computed, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -57,6 +57,17 @@ export class SlideshowComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
   
+  @HostListener('document:keydown', ['$event'])
+  onKeydown(event: KeyboardEvent) {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      this.nextSlide();
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      this.previousSlide();
+    }
+  }
+
   private updateCurrentSlideFromUrl(url: string) {
     const urlSegments = url.split('/');
     const slideNumber = urlSegments[urlSegments.length - 1] || '1';
