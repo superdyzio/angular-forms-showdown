@@ -23,7 +23,8 @@ export class SlideshowComponent implements OnInit, OnDestroy {
     { id: 4, title: 'Reactive Forms' },
     { id: 5, title: 'Comparison' },
     { id: 6, title: 'Signals' },
-    { id: 7, title: 'Signal Forms' }
+    { id: 7, title: 'Signal Forms' },
+    { id: 8, title: 'Signal Forms API' }
   ]);
   
   // Computed values

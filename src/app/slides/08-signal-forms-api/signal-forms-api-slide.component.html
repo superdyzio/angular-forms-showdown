@@ -1,0 +1,13 @@
+<div class="slide-container">
+  <h1>Signal Forms API</h1>
+  <div class="slide-content">
+    <ul>
+      <li><pre><code [innerHTML]="`f = form(signal({ firstName: '', lastName: '' }))`"></code></pre></li>
+      <li><pre><code>{{ formSnippet }}</code></pre></li>
+      <li><pre><code [innerHTML]="`f = form(signal({ firstName: '', lastName: '' }), p => {
+  disabled(p.lastName, ({ valueOf }) => valueOf(p.firstName) === '');
+});`"></code></pre></li>
+      <li><pre><code>{{ errorSnippet }}</code></pre></li>
+    </ul>
+  </div>
+</div>

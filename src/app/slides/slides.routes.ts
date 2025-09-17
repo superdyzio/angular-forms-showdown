@@ -6,6 +6,7 @@ import { ReactiveFormsSlideComponent } from './04-reactive-forms/reactive-forms-
 import { ComparisonSlideComponent } from './05-comparison/comparison-slide.component';
 import { SignalsSlideComponent } from './06-signals/signals-slide.component';
 import { SignalFormsSlideComponent } from './07-signal-forms/signal-forms-slide.component';
+import { SignalFormsApiSlideComponent } from './08-signal-forms-api/signal-forms-api-slide.component';
 
 export const slidesRoutes: Routes = [
   { path: '', redirectTo: '1', pathMatch: 'full' },
@@ -16,5 +17,6 @@ export const slidesRoutes: Routes = [
   { path: '5', component: ComparisonSlideComponent },
   { path: '6', component: SignalsSlideComponent },
   { path: '7', component: SignalFormsSlideComponent },
+  { path: '8', component: SignalFormsApiSlideComponent },
   { path: '**', redirectTo: '1' }
 ];
