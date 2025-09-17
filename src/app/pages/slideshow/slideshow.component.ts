@@ -25,6 +25,7 @@ export class SlideshowComponent implements OnInit, OnDestroy {
     { id: 6, title: 'Signals' },
     { id: 7, title: 'Signal Forms' },
     { id: 8, title: 'Signal Forms API' },
+    { id: 9, title: 'Control Value Accessor' },
     { id: 10, title: 'Feature Mapping' }
   ]);
   
