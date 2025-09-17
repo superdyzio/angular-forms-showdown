@@ -7,7 +7,7 @@ import { ComparisonSlideComponent } from './05-comparison/comparison-slide.compo
 import { SignalsSlideComponent } from './06-signals/signals-slide.component';
 import { SignalFormsSlideComponent } from './07-signal-forms/signal-forms-slide.component';
 import { SignalFormsApiSlideComponent } from './08-signal-forms-api/signal-forms-api-slide.component';
-import { FeatureMappingSlideComponent } from './09-feature-mapping/feature-mapping-slide.component';
+import { FeatureMappingSlideComponent } from './10-feature-mapping/feature-mapping-slide.component';
 
 export const slidesRoutes: Routes = [
   { path: '', redirectTo: '1', pathMatch: 'full' },
@@ -19,6 +19,6 @@ export const slidesRoutes: Routes = [
   { path: '6', component: SignalsSlideComponent },
   { path: '7', component: SignalFormsSlideComponent },
   { path: '8', component: SignalFormsApiSlideComponent },
-  { path: '9', component: FeatureMappingSlideComponent },
+  { path: '10', component: FeatureMappingSlideComponent },
   { path: '**', redirectTo: '1' }
 ];
