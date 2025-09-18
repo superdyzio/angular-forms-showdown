@@ -1,13 +1,14 @@
-import { Component, signal, inject, computed, WritableSignal } from '@angular/core';
+import { Component, signal, inject, computed, WritableSignal, effect } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, FormsModule, ValidationErrors } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { form, Control, required, minLength, email, validate, requiredError, customError } from '@angular/forms/signals';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 import { EmailCheckService } from '../../services/email-check.service';
 import { Address } from '../../types/address';
 import { User, UserForm } from '../../types/user';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { catchError, map, take } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'afs-signal',
@@ -34,9 +35,6 @@ export class SignalComponent {
     minLength(data.name, 2, { message: 'Name must be at least 2 characters' }),
     required(data.email, { message: 'Email is required' }),
     email(data.email, { message: 'Please enter a valid email' }),
-    // validateAsync(data.email, {
-
-    // })
     required(data.password, { message: 'Password is required' }),
     minLength(data.password, 8, { message: 'Password must be at least 8 characters' }),
     validate(data.password, ({ valueOf }) => {
@@ -160,27 +158,30 @@ export class SignalComponent {
   constructor() {
     // Add initial address
     this.addAddress();
-  }
 
-  // Async email existence validator
-  emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
-    const email = control.value;
-    if (!email || !email.includes('@')) {
-      this.emailExists.set(false);
-      return of(null);
-    }
-    this.emailCheckInProgress.set(true);
-    return this.emailCheck.checkEmailExists(email).pipe(
-      map(exists => {
-        this.emailCheckInProgress.set(false);
-        this.emailExists.set(exists);
-        return exists ? { emailExists: true } : null;
-      }),
-      catchError(() => {
-        this.emailCheckInProgress.set(false);
-        return of(null);
-      })
-    );
+    effect(() => {
+      const email = this.form().value().email;
+      if (!email || !email.includes('@')) {
+        this.emailExists.set(false);
+        return null;
+      }
+      this.emailCheckInProgress.set(true);
+
+      return this.emailCheck.checkEmailExists(email).pipe(
+        map(exists => {
+          console.log(exists);
+          this.emailCheckInProgress.set(false);
+          this.emailExists.set(exists);
+          return exists ? { emailExists: true } : null;
+        }),
+        take(1),
+        catchError(() => {
+          this.emailCheckInProgress.set(false);
+          return of(null);
+        })
+      ).subscribe();
+    });
+  
   }
 
   // Check if country is USA

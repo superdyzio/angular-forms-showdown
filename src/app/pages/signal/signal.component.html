@@ -55,9 +55,15 @@
             </div>
           }
           @if (form.email().valid() && form.email().touched() && !emailCheckInProgress()) {
-            <div class="success-message">
-              <span>Email is available</span>
-            </div>
+            @if (emailExists()) {
+              <div class="error-message">
+                <span>Email already taken</span>
+              </div>
+            } @else {
+              <div class="success-message">
+                <span>Email is available</span>
+              </div>
+            }
           }
         </div>
 
