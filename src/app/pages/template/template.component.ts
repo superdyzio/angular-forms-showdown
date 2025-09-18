@@ -94,6 +94,14 @@ export class TemplateComponent {
     this.calculateProfileCompletion();
   }
 
+  // Remove all addresses and reset to single empty
+  removeAllAddresses() {
+    this.user.addresses = [];
+    this.addAddress();
+    this.bulkAddressesAdded = false;
+    this.calculateProfileCompletion();
+  }
+
   // Async email validation is now handled by afsEmailExists directive
 
   // Custom password confirmation validator

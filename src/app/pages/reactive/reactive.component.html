@@ -196,6 +196,9 @@
             <button type="button" class="add-button" (click)="addOrUpdateHundredAddresses()">
               {{ bulkAddressesAdded ? 'Update 1k addresses' : 'Add 1k addresses' }}
             </button>
+            <button type="button" class="remove-button" (click)="removeAllAddresses()" [disabled]="addresses.length <= 1">
+              Remove all addresses
+            </button>
           </div>
           @for (address of addresses.controls; track $index; let i = $index) {
             <div class="address-item" [formGroupName]="i">

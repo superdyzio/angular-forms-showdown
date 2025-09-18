@@ -210,6 +210,14 @@ export class SignalComponent {
     this.form().value().addresses.splice(index, 1);
   }
 
+  // Remove all addresses and reset to single empty
+  removeAllAddresses() {
+    const addresses = this.form().value().addresses;
+    addresses.splice(0, addresses.length);
+    this.addAddress();
+    this.bulkAddressesAdded = false;
+  }
+
   onSubmit() {
     if (this.form().valid()) {
       const formValue = this.form().value();

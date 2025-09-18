@@ -187,6 +187,15 @@ export class ReactiveComponent implements OnInit {
     this.addresses.removeAt(index);
   }
 
+  // Remove all addresses and reset to single empty
+  removeAllAddresses() {
+    while (this.addresses.length > 0) {
+      this.addresses.removeAt(0);
+    }
+    this.addAddress();
+    this.bulkAddressesAdded = false;
+  }
+
   // Check if country is USA
   isUSA(): boolean {
     return this.userForm.get('country')?.value === 'usa';
