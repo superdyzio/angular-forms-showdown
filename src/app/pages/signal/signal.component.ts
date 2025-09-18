@@ -230,11 +230,11 @@ export class SignalComponent {
     const addresses = this.form().value().addresses as WritableSignal<Address>[];
     if (!this.bulkAddressesAdded) {
       const start = performance.now();
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 1000; i++) {
         this.addAddress();
       }
       const end = performance.now();
-      console.log('add 100 address time: ', end - start);
+      console.log('add 1k address time: ', end - start);
       this.bulkAddressesAdded = true;
     } else {
       const total = addresses.length;
@@ -253,7 +253,7 @@ export class SignalComponent {
         });
       }
       const end = performance.now();
-      console.log('add 100 address time: ', end - start);
+      console.log('add 1k address time: ', end - start);
     }
   }
 }
