@@ -1,8 +1,8 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { form, Control, required, minLength, email, validateAsync, FieldState } from '@angular/forms/signals';
+import { form, Control, required, minLength, email, validateAsync, FieldState, validate, requiredError } from '@angular/forms/signals';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { EmailCheckService } from '../../services/email-check.service';
@@ -39,18 +39,48 @@ export class SignalComponent {
     // })
     required(data.password, { message: 'Password is required' }),
     minLength(data.password, 8, { message: 'Password must be at least 8 characters' }),
-    // passwordc complexity
+    // password complexity
     required(data.confirmPassword, { message: 'Please confirm your password' }),
-    // passwords match
     required(data.country, { message: 'Country is required' }),
-    required(data.state, { message: 'State is required for USA' })
+    validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: 'State is required for USA' }) : null)
   })
   
   // Signal-based state
   submittedData = signal<User | null>(null);
-  profileCompletion = signal(0);
   emailCheckInProgress = signal(false);
   emailExists = signal(false);
+
+  // Calculate profile completion percentage
+  profileCompletion = computed(() => {
+    const formValue = this.form().value();
+    const fields = [
+      formValue.name,
+      formValue.email,
+      formValue.password,
+      formValue.confirmPassword,
+      formValue.country
+    ];
+    if (formValue.country.toString().trim() !== '') {
+      fields.push(formValue.state);
+    }
+
+    const filledFields = fields.filter(field => field && field.toString().trim() !== '').length;
+    
+    // Add address completion
+    const addressCompletion = formValue.addresses && formValue.addresses.length > 0 ? 
+      formValue.addresses.reduce((acc: number, addr: Address) => {
+        const addrFields = [addr.street, addr.city, addr.zipCode];
+        const filledAddrFields = addrFields.filter(field => field && field.trim() !== '').length;
+        return acc + (filledAddrFields / addrFields.length);
+      }, 0) / formValue.addresses.length : 0;
+
+    return Math.round(((filledFields + addressCompletion) / (fields.length + 1)) * 100);
+  });
+
+  // Custom password confirmation validator
+  passwordsMatch = computed(() => {
+    return this.form.password().value() === this.form.confirmPassword().value();
+  });
 
   // Available options
   countries = [
@@ -86,16 +116,6 @@ export class SignalComponent {
   constructor() {
     // Add initial address
     this.addAddress();
-    
-    // Subscribe to form changes to update completion and form state
-    // this.f.valueChanges.subscribe(() => {
-    //   this.calculateProfileCompletion();
-    //   this.updateFormState();
-    // });
-
-    // this.f.statusChanges.subscribe(() => {
-    //   this.updateFormState();
-    // });
   }
 
   // Custom password complexity validator
@@ -188,12 +208,6 @@ export class SignalComponent {
     // this.form.addresses()..removeAt(index);
   }
 
-  // Custom password confirmation validator
-  passwordsMatch(): boolean {
-    return false;
-    // return this.f.get('password')?.value === this.f.get('confirmPassword')?.value;
-  }
-
   // Calculate password strength
   getPasswordStrength(): { score: number; label: string; color: string } {
     const password = this.form.password().value();
@@ -221,35 +235,6 @@ export class SignalComponent {
     } else {
       return { score, label: 'Strong', color: '#00aa00' };
     }
-  }
-
-  // Calculate profile completion percentage
-  calculateProfileCompletion() {
-    const formValue = this.form().value();
-    const fields = [
-      formValue.name,
-      formValue.email,
-      formValue.password,
-      formValue.confirmPassword,
-      formValue.country
-    ];
-
-    const filledFields = fields.filter(field => field && field.toString().trim() !== '').length;
-    
-    // Add address completion
-    const addressCompletion = formValue.addresses && formValue.addresses.length > 0 ? 
-      formValue.addresses.reduce((acc: number, addr: Address) => {
-        const addrFields = [addr.street, addr.city, addr.zipCode];
-        const filledAddrFields = addrFields.filter(field => field && field.trim() !== '').length;
-        return acc + (filledAddrFields / addrFields.length);
-      }, 0) / formValue.addresses.length : 0;
-
-    this.profileCompletion.set(Math.round(((filledFields + addressCompletion) / (fields.length + 1)) * 100));
-  }
-
-  // Track changes to update completion
-  onFieldChange() {
-    this.calculateProfileCompletion();
   }
 
   // Update address field

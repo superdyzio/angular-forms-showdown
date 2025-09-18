@@ -27,7 +27,6 @@
             [control]="form.name"
             class="form-input"
             [class.error]="form.name().invalid() && form.name().touched()"
-            (input)="onFieldChange()"
           />
           @if (form.name().invalid() && form.name().touched()) {
             <div class="error-message">
@@ -44,7 +43,6 @@
             [control]="form.email"
             class="form-input"
             [class.error]="form.email().invalid() && form.email().touched()"
-            (blur)="onFieldChange()"
           />
           @if (form.email().invalid() && form.email().touched()) {
             <div class="error-message">
@@ -71,7 +69,6 @@
             [control]="form.password"
             class="form-input"
             [class.error]="form.password().invalid() && form.password().touched()"
-            (input)="onFieldChange()"
           />
           @if (form.password().value()) {
             <div class="password-strength">
@@ -102,11 +99,15 @@
             [control]="form.confirmPassword"
             class="form-input"
             [class.error]="form.confirmPassword().invalid() && form.confirmPassword().touched()"
-            (input)="onFieldChange()"
           />
           @if (form.confirmPassword().invalid() && form.confirmPassword().touched()) {
             <div class="error-message">
               <span>{{ form.confirmPassword().errors()[0].message }}</span>
+            </div>
+          }
+          @if (form.confirmPassword().touched() && form.confirmPassword().valid() && !passwordsMatch()) {
+            <div class="error-message">
+              <span>Passwords do not match</span>
             </div>
           }
         </div>
@@ -123,7 +124,6 @@
             [control]="form.country"
             class="form-input"
             [class.error]="form.country().invalid() && form.country().touched()"
-            (change)="onFieldChange()"
           >
             @for (country of countries; track country.value) {
               <option [value]="country.value">
@@ -146,7 +146,6 @@
               [control]="form.state"
               class="form-input"
               [class.error]="form.state().invalid() && form.state().touched()"
-              (change)="onFieldChange()"
             >
               @for (state of states; track state.value) {
                 <option [value]="state.value">
@@ -261,7 +260,6 @@
               type="checkbox" 
               [control]="form.newsletter"
               class="checkbox"
-              (change)="onFieldChange()"
             />
             Subscribe to newsletter
           </label>
@@ -274,7 +272,6 @@
               id="newsletterFrequency" 
               [control]="form.newsletterFrequency"
               class="form-input"
-              (change)="onFieldChange()"
             >
               <option value="">Select frequency</option>
               @for (freq of newsletterFrequencies; track freq.value) {
@@ -290,6 +287,7 @@
       <button 
         type="submit" 
         class="submit-button"
+        [disabled]="!passwordsMatch()"
         (click)="onSubmit()"
       >
         Register Account
