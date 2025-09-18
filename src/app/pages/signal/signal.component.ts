@@ -2,7 +2,7 @@ import { Component, signal, inject, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { form, Control, required, minLength, email, validateAsync, FieldState, validate, requiredError } from '@angular/forms/signals';
+import { form, Control, required, minLength, email, validateAsync, FieldState, validate, requiredError, customError } from '@angular/forms/signals';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { EmailCheckService } from '../../services/email-check.service';
@@ -39,12 +39,24 @@ export class SignalComponent {
     // })
     required(data.password, { message: 'Password is required' }),
     minLength(data.password, 8, { message: 'Password must be at least 8 characters' }),
-    // password complexity
+    validate(data.password, ({ valueOf }) => {
+      const password = valueOf(data.password);
+      if (!password) return null;
+
+      const hasUpperCase = /[A-Z]/.test(password);
+      const hasLowerCase = /[a-z]/.test(password);
+      const hasNumeric = /\d/.test(password);
+      const hasSpecialChar = /[@$!%*?&]/.test(password);
+
+      if (!hasUpperCase || !hasLowerCase || !hasNumeric || !hasSpecialChar) {
+        return customError({ message: 'Password must contain uppercase, lowercase, number, and special character' })
+      }
+      return null;
+    }),
     required(data.confirmPassword, { message: 'Please confirm your password' }),
     required(data.country, { message: 'Country is required' }),
     validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: 'State is required for USA' }) : null)
-  })
-  
+  });
   // Signal-based state
   submittedData = signal<User | null>(null);
   emailCheckInProgress = signal(false);
@@ -82,6 +94,35 @@ export class SignalComponent {
     return this.form.password().value() === this.form.confirmPassword().value();
   });
 
+  // Calculate password strength
+  passwordsStrength = computed((): { score: number; label: string; color: string } => {
+    const password = this.form.password().value();
+    if (!password) {
+      return { score: 0, label: '', color: '' };
+    }
+
+    let score = 0;
+    const checks = {
+      length: password.length >= 8,
+      lowercase: /[a-z]/.test(password),
+      uppercase: /[A-Z]/.test(password),
+      number: /\d/.test(password),
+      special: /[@$!%*?&]/.test(password)
+    };
+
+    score = Object.values(checks).filter(Boolean).length;
+
+    if (score <= 2) {
+      return { score, label: 'Weak', color: '#ff4444' };
+    } else if (score <= 3) {
+      return { score, label: 'Fair', color: '#ffaa00' };
+    } else if (score <= 4) {
+      return { score, label: 'Good', color: '#00aa00' };
+    } else {
+      return { score, label: 'Strong', color: '#00aa00' };
+    }
+  });
+
   // Available options
   countries = [
     { value: '', label: 'Select a country' },
@@ -116,39 +157,6 @@ export class SignalComponent {
   constructor() {
     // Add initial address
     this.addAddress();
-  }
-
-  // Custom password complexity validator
-  passwordComplexityValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
-    if (!value) return null;
-
-    const hasUpperCase = /[A-Z]/.test(value);
-    const hasLowerCase = /[a-z]/.test(value);
-    const hasNumeric = /\d/.test(value);
-    const hasSpecialChar = /[@$!%*?&]/.test(value);
-
-    if (!hasUpperCase || !hasLowerCase || !hasNumeric || !hasSpecialChar) {
-      return { passwordComplexity: true };
-    }
-    return null;
-  }
-
-  // Cross-field password match validator
-  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-
-    if (password && confirmPassword && password.value !== confirmPassword.value) {
-      confirmPassword.setErrors({ passwordMismatch: true });
-      return { passwordMismatch: true };
-    } else if (confirmPassword && confirmPassword.errors?.['passwordMismatch']) {
-      delete confirmPassword.errors['passwordMismatch'];
-      if (Object.keys(confirmPassword.errors).length === 0) {
-        confirmPassword.setErrors(null);
-      }
-    }
-    return null;
   }
 
   // Async email existence validator
@@ -206,35 +214,6 @@ export class SignalComponent {
   // Remove address
   removeAddress(index: number) {
     // this.form.addresses()..removeAt(index);
-  }
-
-  // Calculate password strength
-  getPasswordStrength(): { score: number; label: string; color: string } {
-    const password = this.form.password().value();
-    if (!password) {
-      return { score: 0, label: '', color: '' };
-    }
-
-    let score = 0;
-    const checks = {
-      length: password.length >= 8,
-      lowercase: /[a-z]/.test(password),
-      uppercase: /[A-Z]/.test(password),
-      number: /\d/.test(password),
-      special: /[@$!%*?&]/.test(password)
-    };
-
-    score = Object.values(checks).filter(Boolean).length;
-
-    if (score <= 2) {
-      return { score, label: 'Weak', color: '#ff4444' };
-    } else if (score <= 3) {
-      return { score, label: 'Fair', color: '#ffaa00' };
-    } else if (score <= 4) {
-      return { score, label: 'Good', color: '#00aa00' };
-    } else {
-      return { score, label: 'Strong', color: '#00aa00' };
-    }
   }
 
   // Update address field

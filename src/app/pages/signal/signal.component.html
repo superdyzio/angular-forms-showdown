@@ -75,12 +75,12 @@
               <div class="strength-bar">
                 <div 
                   class="strength-fill" 
-                  [style.width.%]="(getPasswordStrength().score / 5) * 100"
-                  [style.background-color]="getPasswordStrength().color"
+                  [style.width.%]="(passwordsStrength().score / 5) * 100"
+                  [style.background-color]="passwordsStrength().color"
                 ></div>
               </div>
-              <span class="strength-label" [style.color]="getPasswordStrength().color">
-                {{ getPasswordStrength().label }}
+              <span class="strength-label" [style.color]="passwordsStrength().color">
+                {{ passwordsStrength().label }}
               </span>
             </div>
           }
