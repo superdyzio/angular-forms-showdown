@@ -38,12 +38,14 @@ p {
 }
 
 .form-container {
-  max-width: 600px;
+  max-width: 800px;
+  width: 100%;
   margin: 0 auto;
   background: white;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
 
 .form-group {
@@ -64,6 +66,7 @@ label {
   border-radius: 6px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .form-input:focus {
@@ -78,6 +81,12 @@ label {
 
 .error-message {
   color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.success-message {
+  color: #16a34a;
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
@@ -141,6 +150,166 @@ label {
   color: #374151;
 }
 
+// Profile completion indicator
+.completion-indicator {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.completion-indicator h3 {
+  margin: 0 0 0.5rem 0;
+  color: #374151;
+  font-size: 1.1rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #a855f7, #7c3aed);
+  transition: width 0.3s ease;
+}
+
+// Form sections
+.form-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+.form-section legend {
+  font-weight: 600;
+  color: #374151;
+  padding: 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+// Address management (kept for parity even if section is hidden)
+.addresses-container {
+  margin-top: 1rem;
+}
+
+.address-item {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  box-sizing: border-box;
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.address-header h4 {
+  margin: 0;
+  color: #374151;
+  font-size: 1rem;
+}
+
+.remove-button {
+  padding: 0.25rem 0.75rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.remove-button:hover {
+  background: #dc2626;
+}
+
+.add-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #f3f4f6;
+  color: #374151;
+  border: 2px dashed #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-button:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+// Form rows for side-by-side fields
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
+}
+
+.form-row .form-group:last-child {
+  grid-column: span 1;
+}
+
+// Loading message
+.loading-message {
+  color: #3b82f6;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+// Password strength indicator
+.password-strength {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  border-radius: 2px;
+}
+
+.strength-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 50px;
+  text-align: right;
+}
+
 @media (max-width: 768px) {
   .page-container {
     padding: 1rem;
@@ -152,5 +321,11 @@ label {
   
   .form-container {
     padding: 1.5rem;
+    max-width: 100%;
+    margin: 0 0.5rem;
+  }
+
+  .form-section {
+    padding: 1rem;
   }
 }
