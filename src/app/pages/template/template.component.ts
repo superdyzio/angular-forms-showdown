@@ -168,12 +168,16 @@ export class TemplateComponent {
   // Bulk add or update 100 addresses for performance testing
   addOrUpdateHundredAddresses() {
     if (!this.bulkAddressesAdded) {
+      const start = performance.now();
       for (let i = 0; i < 100; i++) {
         this.addAddress();
       }
+      const end = performance.now();
+      console.log('add 100 address time: ', end - start);
       this.bulkAddressesAdded = true;
     } else {
       const total = this.user.addresses.length;
+      const start = performance.now();
       for (let i = 0; i < total; i++) {
         const index = i + 1;
         const addr = this.user.addresses[i];
@@ -186,6 +190,8 @@ export class TemplateComponent {
           zipCode: `${10000 + index}`
         };
       }
+      const end = performance.now();
+      console.log('add 100 address time: ', end - start);
     }
     this.calculateProfileCompletion();
   }
