@@ -222,4 +222,38 @@ export class SignalComponent {
     }
     return false;
   }
+
+  // Bulk add/update similar to template/reactive components for performance testing
+  bulkAddressesAdded = false;
+
+  addOrUpdateHundredAddresses() {
+    const addresses = this.form().value().addresses as WritableSignal<Address>[];
+    if (!this.bulkAddressesAdded) {
+      const start = performance.now();
+      for (let i = 0; i < 100; i++) {
+        this.addAddress();
+      }
+      const end = performance.now();
+      console.log('add 100 address time: ', end - start);
+      this.bulkAddressesAdded = true;
+    } else {
+      const total = addresses.length;
+      const start = performance.now();
+      for (let i = 0; i < total; i++) {
+        const index = i + 1;
+        const addrSignal = addresses[i];
+        const current = addrSignal();
+        addrSignal.set({
+          ...current,
+          type: 'work',
+          street: `Bulk Street ${index}`,
+          city: `Bulk City ${index}`,
+          state: '',
+          zipCode: `${10000 + index}`
+        });
+      }
+      const end = performance.now();
+      console.log('add 100 address time: ', end - start);
+    }
+  }
 }
