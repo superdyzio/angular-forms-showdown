@@ -76,6 +76,7 @@ h1 {
   width: 100%;
   justify-content: center; /* center content horizontally */
   align-items: flex-start;  /* pin content to top */
+  
 }
 
 .slide {
@@ -83,7 +84,7 @@ h1 {
   min-height: 100%; /* fill available space between header and footer when no overflow */
   display: flex;
   justify-content: center;  /* center slide content horizontally */
-  align-items: flex-start;   /* align slide content to top */
+  align-items: stretch;
 }
 
 .slideshow-footer {
