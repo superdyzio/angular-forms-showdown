@@ -1,129 +1,270 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
-interface User {
-  name: string;
-  email: string;
-  age: number | null;
-  country: string;
-  newsletter: boolean;
-}
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { form, Control, required, minLength, email, validateAsync, FieldState } from '@angular/forms/signals';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { EmailCheckService } from '../../services/email-check.service';
+import { Address } from '../../types/address';
+import { User } from '../../types/user';
 
 @Component({
   selector: 'afs-signal',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, Control],
   templateUrl: './signal.component.html',
   styleUrl: './signal.component.scss'
 })
 export class SignalComponent {
-  // Form signals
-  name = signal('');
-  email = signal('');
-  age = signal<number | null>(null);
-  country = signal('');
-  newsletter = signal(false);
+  private emailCheck = inject(EmailCheckService);
+
+  protected form = form<User>(signal({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    country: '',
+    state: '',
+    newsletter: false,
+    newsletterFrequency: '',
+    addresses: [] as Address[]
+  }), data => {
+    required(data.name, { message: 'Name is required' }),
+    minLength(data.name, 2, { message: 'Name must be at least 2 characters' }),
+    required(data.email, { message: 'Email is required' }),
+    email(data.email, { message: 'Please enter a valid email' }),
+    // validateAsync(data.email, {
+
+    // })
+    required(data.password, { message: 'Password is required' }),
+    minLength(data.password, 8, { message: 'Password must be at least 8 characters' }),
+    // passwordc complexity
+    required(data.confirmPassword, { message: 'Please confirm your password' }),
+    // passwords match
+    required(data.country, { message: 'Country is required' }),
+    required(data.state, { message: 'State is required for USA' })
+  })
+  
+  // Signal-based state
   submittedData = signal<User | null>(null);
+  profileCompletion = signal(0);
+  emailCheckInProgress = signal(false);
+  emailExists = signal(false);
 
-  // Computed validation signals
-  nameError = computed(() => {
-    const value = this.name();
-    return value.length > 0 && value.length < 2;
-  });
+  // Available options
+  countries = [
+    { value: '', label: 'Select a country' },
+    { value: 'usa', label: 'United States' },
+    { value: 'uk', label: 'United Kingdom' },
+    { value: 'ca', label: 'Canada' },
+    { value: 'au', label: 'Australia' },
+    { value: 'de', label: 'Germany' }
+  ];
 
-  emailError = computed(() => {
-    const value = this.email();
-    return value.length > 0 && !this.isValidEmail(value);
-  });
+  states = [
+    { value: '', label: 'Select a state' },
+    { value: 'ca', label: 'California' },
+    { value: 'ny', label: 'New York' },
+    { value: 'tx', label: 'Texas' },
+    { value: 'fl', label: 'Florida' },
+    { value: 'il', label: 'Illinois' }
+  ];
 
-  ageError = computed(() => {
-    const value = this.age();
-    return value !== null && (value < 18 || value > 100);
-  });
+  addressTypes = [
+    { value: 'home', label: 'Home' },
+    { value: 'work', label: 'Work' },
+    { value: 'other', label: 'Other' }
+  ];
 
-  countryError = computed(() => {
-    return this.country().length === 0;
-  });
+  newsletterFrequencies = [
+    { value: 'daily', label: 'Daily' },
+    { value: 'weekly', label: 'Weekly' },
+    { value: 'monthly', label: 'Monthly' }
+  ];
 
-  // Computed error messages
-  nameErrorMessage = computed(() => {
-    const value = this.name();
-    if (value.length === 0) return 'Name is required';
-    if (value.length < 2) return 'Name must be at least 2 characters';
-    return '';
-  });
+  constructor() {
+    // Add initial address
+    this.addAddress();
+    
+    // Subscribe to form changes to update completion and form state
+    // this.f.valueChanges.subscribe(() => {
+    //   this.calculateProfileCompletion();
+    //   this.updateFormState();
+    // });
 
-  emailErrorMessage = computed(() => {
-    const value = this.email();
-    if (value.length === 0) return 'Email is required';
-    if (!this.isValidEmail(value)) return 'Please enter a valid email';
-    return '';
-  });
-
-  ageErrorMessage = computed(() => {
-    const value = this.age();
-    if (value === null) return 'Age is required';
-    if (value < 18) return 'Age must be at least 18';
-    if (value > 100) return 'Age must be at most 100';
-    return '';
-  });
-
-  countryErrorMessage = computed(() => {
-    return 'Country is required';
-  });
-
-  // Computed form validity
-  isFormValid = computed(() => {
-    return this.name().length >= 2 &&
-           this.email().length > 0 && this.isValidEmail(this.email()) &&
-           this.age() !== null && this.age()! >= 18 && this.age()! <= 100 &&
-           this.country().length > 0;
-  });
-
-  private isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    // this.f.statusChanges.subscribe(() => {
+    //   this.updateFormState();
+    // });
   }
 
-  onNameChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.name.set(target.value);
+  // Custom password complexity validator
+  passwordComplexityValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) return null;
+
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumeric = /\d/.test(value);
+    const hasSpecialChar = /[@$!%*?&]/.test(value);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumeric || !hasSpecialChar) {
+      return { passwordComplexity: true };
+    }
+    return null;
   }
 
-  onEmailChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.email.set(target.value);
+  // Cross-field password match validator
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    } else if (confirmPassword && confirmPassword.errors?.['passwordMismatch']) {
+      delete confirmPassword.errors['passwordMismatch'];
+      if (Object.keys(confirmPassword.errors).length === 0) {
+        confirmPassword.setErrors(null);
+      }
+    }
+    return null;
   }
 
-  onAgeChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const value = target.value;
-    this.age.set(value ? +value : null);
+  // Async email existence validator
+  emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
+    const email = control.value;
+    if (!email || !email.includes('@')) {
+      this.emailExists.set(false);
+      return of(null);
+    }
+    this.emailCheckInProgress.set(true);
+    return this.emailCheck.checkEmailExists(email).pipe(
+      map(exists => {
+        this.emailCheckInProgress.set(false);
+        this.emailExists.set(exists);
+        return exists ? { emailExists: true } : null;
+      }),
+      catchError(() => {
+        this.emailCheckInProgress.set(false);
+        return of(null);
+      })
+    );
   }
 
-  onCountryChange(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    this.country.set(target.value);
+  // Get addresses FieldState
+  get addresses(): FieldState<Address[], string> {
+    return this.form.addresses()
   }
 
-  onNewsletterChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.newsletter.set(target.checked);
+  // Create address FormGroup
+  createAddressFormGroup(): any {
+    // return this.fb.group({
+    //   type: ['home'],
+    //   street: [''],
+    //   city: [''],
+    //   state: [''],
+    //   zipCode: ['']
+    // });
+  }
+
+  // Check if country is USA
+  isUSA(): boolean {
+    return this.form.country().value() === 'usa';
+  }
+
+  // Check if newsletter is subscribed
+  isNewsletterSubscribed(): boolean {
+    return this.form.newsletter().value();
+  }
+
+  // Add new address
+  addAddress() {
+    // this.form.addresses().push(this.createAddressFormGroup());
+  }
+
+  // Remove address
+  removeAddress(index: number) {
+    // this.form.addresses()..removeAt(index);
+  }
+
+  // Custom password confirmation validator
+  passwordsMatch(): boolean {
+    return false;
+    // return this.f.get('password')?.value === this.f.get('confirmPassword')?.value;
+  }
+
+  // Calculate password strength
+  getPasswordStrength(): { score: number; label: string; color: string } {
+    const password = this.form.password().value();
+    if (!password) {
+      return { score: 0, label: '', color: '' };
+    }
+
+    let score = 0;
+    const checks = {
+      length: password.length >= 8,
+      lowercase: /[a-z]/.test(password),
+      uppercase: /[A-Z]/.test(password),
+      number: /\d/.test(password),
+      special: /[@$!%*?&]/.test(password)
+    };
+
+    score = Object.values(checks).filter(Boolean).length;
+
+    if (score <= 2) {
+      return { score, label: 'Weak', color: '#ff4444' };
+    } else if (score <= 3) {
+      return { score, label: 'Fair', color: '#ffaa00' };
+    } else if (score <= 4) {
+      return { score, label: 'Good', color: '#00aa00' };
+    } else {
+      return { score, label: 'Strong', color: '#00aa00' };
+    }
+  }
+
+  // Calculate profile completion percentage
+  calculateProfileCompletion() {
+    const formValue = this.form().value();
+    const fields = [
+      formValue.name,
+      formValue.email,
+      formValue.password,
+      formValue.confirmPassword,
+      formValue.country
+    ];
+
+    const filledFields = fields.filter(field => field && field.toString().trim() !== '').length;
+    
+    // Add address completion
+    const addressCompletion = formValue.addresses && formValue.addresses.length > 0 ? 
+      formValue.addresses.reduce((acc: number, addr: Address) => {
+        const addrFields = [addr.street, addr.city, addr.zipCode];
+        const filledAddrFields = addrFields.filter(field => field && field.trim() !== '').length;
+        return acc + (filledAddrFields / addrFields.length);
+      }, 0) / formValue.addresses.length : 0;
+
+    this.profileCompletion.set(Math.round(((filledFields + addressCompletion) / (fields.length + 1)) * 100));
+  }
+
+  // Track changes to update completion
+  onFieldChange() {
+    this.calculateProfileCompletion();
+  }
+
+  // Update address field
+  updateAddressField(index: number, field: keyof Address, event: Event) {
+    // const target = event.target as HTMLInputElement | HTMLSelectElement;
+    // const addressGroup = this.addresses.at(index) as FormGroup;
+    // addressGroup.get(field)?.setValue(target.value);
+    // this.onFieldChange();
   }
 
   onSubmit() {
-    if (this.isFormValid()) {
-      const userData: User = {
-        name: this.name(),
-        email: this.email(),
-        age: this.age(),
-        country: this.country(),
-        newsletter: this.newsletter()
-      };
-      
-      this.submittedData.set(userData);
-      console.log('Form submitted:', userData);
-    }
+    // if (this.form().valid()) {
+      this.submittedData.set({ ...this.form().value() });
+      console.log('Form submitted:', this.submittedData());
+      return false;
+    // }
   }
 }
