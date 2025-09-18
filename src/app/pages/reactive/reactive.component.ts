@@ -21,6 +21,7 @@ export class ReactiveComponent implements OnInit {
   emailExists = false;
   emailCheckInProgress = false;
   profileCompletion = 0;
+  bulkAddressesAdded = false;
 
   // Available options
   countries = [
@@ -225,5 +226,29 @@ export class ReactiveComponent implements OnInit {
       this.submittedData = this.userForm.value;
       console.log('Form submitted:', this.submittedData);
     }
+  }
+
+  // Bulk add or update 100 addresses for performance testing
+  addOrUpdateHundredAddresses() {
+    if (!this.bulkAddressesAdded) {
+      for (let i = 0; i < 100; i++) {
+        this.addAddress();
+      }
+      this.bulkAddressesAdded = true;
+    } else {
+      const total = this.addresses.length;
+      for (let i = 0; i < total; i++) {
+        const index = i + 1;
+        const group = this.addresses.at(i) as FormGroup;
+        group.patchValue({
+          type: 'work',
+          street: `Bulk Street ${index}`,
+          city: `Bulk City ${index}`,
+          state: '',
+          zipCode: `${10000 + index}`
+        });
+      }
+    }
+    this.calculateProfileCompletion();
   }
 }

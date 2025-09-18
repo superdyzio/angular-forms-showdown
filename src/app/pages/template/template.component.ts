@@ -28,6 +28,7 @@ export class TemplateComponent {
 
   submittedData: User | null = null;
   profileCompletion = 0;
+  bulkAddressesAdded = false;
 
   // Available options
   countries = [
@@ -162,5 +163,30 @@ export class TemplateComponent {
       this.submittedData = { ...this.user };
       console.log('Form submitted:', this.submittedData);
     }
+  }
+
+  // Bulk add or update 100 addresses for performance testing
+  addOrUpdateHundredAddresses() {
+    if (!this.bulkAddressesAdded) {
+      for (let i = 0; i < 100; i++) {
+        this.addAddress();
+      }
+      this.bulkAddressesAdded = true;
+    } else {
+      const total = this.user.addresses.length;
+      for (let i = 0; i < total; i++) {
+        const index = i + 1;
+        const addr = this.user.addresses[i];
+        this.user.addresses[i] = {
+          ...addr,
+          type: 'work',
+          street: `Bulk Street ${index}`,
+          city: `Bulk City ${index}`,
+          state: '',
+          zipCode: `${10000 + index}`
+        };
+      }
+    }
+    this.calculateProfileCompletion();
   }
 }

@@ -218,6 +218,11 @@
         <legend>Addresses</legend>
         
         <div class="addresses-container">
+          <div class="bulk-actions" style="margin-bottom: 12px; display: flex; gap: 8px;">
+            <button type="button" class="add-button" (click)="addOrUpdateHundredAddresses()">
+              {{ bulkAddressesAdded ? 'Update 100 addresses' : 'Add 100 addresses' }}
+            </button>
+          </div>
           @for (address of user.addresses; track $index; let i = $index) {
             <div class="address-item">
               <div class="address-header">
