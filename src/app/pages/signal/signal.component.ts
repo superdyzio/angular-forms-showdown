@@ -225,10 +225,10 @@ export class SignalComponent {
   }
 
   onSubmit() {
-    // if (this.form().valid()) {
+    if (this.form().valid()) {
       this.submittedData.set({ ...this.form().value() });
       console.log('Form submitted:', this.submittedData());
-      return false;
-    // }
+    }
+    return false;
   }
 }
