@@ -1,4 +1,5 @@
 import { Address } from "./address";
+import { WritableSignal } from "@angular/core";
 
 export interface User {
     name: string;
@@ -12,3 +13,6 @@ export interface User {
     addresses: Address[];
   }
   
+export type UserForm = Omit<User, 'addresses'> & {
+  addresses: WritableSignal<Address>[];
+}

@@ -1,25 +1,25 @@
-import { Component, signal, inject, computed } from '@angular/core';
+import { Component, signal, inject, computed, WritableSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { form, Control, required, minLength, email, validateAsync, FieldState, validate, requiredError, customError } from '@angular/forms/signals';
+import { AbstractControl, FormsModule, ValidationErrors } from '@angular/forms';
+import { form, Control, required, minLength, email, validate, requiredError, customError } from '@angular/forms/signals';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { EmailCheckService } from '../../services/email-check.service';
 import { Address } from '../../types/address';
-import { User } from '../../types/user';
+import { User, UserForm } from '../../types/user';
 
 @Component({
   selector: 'afs-signal',
   standalone: true,
-  imports: [RouterLink, CommonModule, Control],
+  imports: [RouterLink, FormsModule, CommonModule, Control],
   templateUrl: './signal.component.html',
   styleUrl: './signal.component.scss'
 })
 export class SignalComponent {
   private emailCheck = inject(EmailCheckService);
 
-  protected form = form<User>(signal({
+  protected form = form<UserForm>(signal({
     name: '',
     email: '',
     password: '',
@@ -28,7 +28,7 @@ export class SignalComponent {
     state: '',
     newsletter: false,
     newsletterFrequency: '',
-    addresses: [] as Address[]
+    addresses: []
   }), data => {
     required(data.name, { message: 'Name is required' }),
     minLength(data.name, 2, { message: 'Name must be at least 2 characters' }),
@@ -57,6 +57,7 @@ export class SignalComponent {
     required(data.country, { message: 'Country is required' }),
     validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: 'State is required for USA' }) : null)
   });
+
   // Signal-based state
   submittedData = signal<User | null>(null);
   emailCheckInProgress = signal(false);
@@ -77,14 +78,16 @@ export class SignalComponent {
     }
 
     const filledFields = fields.filter(field => field && field.toString().trim() !== '').length;
-    
+
+    const addresses = formValue.addresses;
     // Add address completion
-    const addressCompletion = formValue.addresses && formValue.addresses.length > 0 ? 
-      formValue.addresses.reduce((acc: number, addr: Address) => {
+    const addressCompletion = addresses && addresses.length > 0 ? 
+      addresses.reduce((acc: number, addrSignal: WritableSignal<Address>) => {
+        const addr = addrSignal();
         const addrFields = [addr.street, addr.city, addr.zipCode];
         const filledAddrFields = addrFields.filter(field => field && field.trim() !== '').length;
         return acc + (filledAddrFields / addrFields.length);
-      }, 0) / formValue.addresses.length : 0;
+      }, 0) / addresses.length : 0;
 
     return Math.round(((filledFields + addressCompletion) / (fields.length + 1)) * 100);
   });
@@ -180,22 +183,6 @@ export class SignalComponent {
     );
   }
 
-  // Get addresses FieldState
-  get addresses(): FieldState<Address[], string> {
-    return this.form.addresses()
-  }
-
-  // Create address FormGroup
-  createAddressFormGroup(): any {
-    // return this.fb.group({
-    //   type: ['home'],
-    //   street: [''],
-    //   city: [''],
-    //   state: [''],
-    //   zipCode: ['']
-    // });
-  }
-
   // Check if country is USA
   isUSA(): boolean {
     return this.form.country().value() === 'usa';
@@ -208,25 +195,28 @@ export class SignalComponent {
 
   // Add new address
   addAddress() {
-    // this.form.addresses().push(this.createAddressFormGroup());
+    this.form().value().addresses.push(signal({
+      type: 'home',
+      street: '',
+      city: '',
+      state: '',
+      zipCode: ''
+    }));
   }
 
   // Remove address
   removeAddress(index: number) {
-    // this.form.addresses()..removeAt(index);
-  }
-
-  // Update address field
-  updateAddressField(index: number, field: keyof Address, event: Event) {
-    // const target = event.target as HTMLInputElement | HTMLSelectElement;
-    // const addressGroup = this.addresses.at(index) as FormGroup;
-    // addressGroup.get(field)?.setValue(target.value);
-    // this.onFieldChange();
+    this.form().value().addresses.splice(index, 1);
   }
 
   onSubmit() {
     if (this.form().valid()) {
-      this.submittedData.set({ ...this.form().value() });
+      const formValue = this.form().value();
+      const userPayload: User = {
+        ...formValue,
+        addresses: formValue.addresses.map(adr => adr()),
+      };
+      this.submittedData.set(userPayload);
       console.log('Form submitted:', this.submittedData());
     }
     return false;
