@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { EmailCheckService } from '../../services/email-check.service';
 import { Address } from '../../types/address';
+import { User } from '../../types/user';
 
 @Component({
   selector: 'afs-reactive',
@@ -16,7 +17,7 @@ import { Address } from '../../types/address';
 })
 export class ReactiveComponent implements OnInit {
   userForm: FormGroup;
-  submittedData: any = null;
+  submittedData: User | null = null;
   emailExists = false;
   emailCheckInProgress = false;
   profileCompletion = 0;

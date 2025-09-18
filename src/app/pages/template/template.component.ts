@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TemplateEmailAsyncValidatorDirective } from './template-email-async.validator';
 import { CommonModule } from '@angular/common';
 import { Address } from '../../types/address';
+import { User } from '../../types/user';
 
 @Component({
   selector: 'afs-template',
@@ -13,7 +14,7 @@ import { Address } from '../../types/address';
   styleUrl: './template.component.scss'
 })
 export class TemplateComponent {
-  user = {
+  user: User = {
     name: '',
     email: '',
     password: '',
@@ -25,7 +26,7 @@ export class TemplateComponent {
     addresses: [] as Address[]
   };
 
-  submittedData: any = null;
+  submittedData: User | null = null;
   profileCompletion = 0;
 
   // Available options
