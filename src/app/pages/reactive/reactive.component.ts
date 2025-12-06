@@ -265,7 +265,7 @@ export class ReactiveComponent implements OnInit {
         });
       }
       const end = performance.now();
-      console.log('add 1k address time: ', end - start);
+      console.log('update 1k address time: ', end - start);
     }
     this.calculateProfileCompletion();
   }
