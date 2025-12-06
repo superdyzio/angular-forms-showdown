@@ -1,58 +1,58 @@
 <div class="slide-container">
-  <h1>Feature Mapping Table</h1>
+  <h1>{{ 'slide.featureMapping.title' | translate }}</h1>
   <div class="slide-content">
-    <h2>Porównanie trzech podejść</h2>
+    <h2>{{ 'slide.featureMapping.subtitle' | translate }}</h2>
     <table class="feature-mapping-table">
       <thead>
         <tr>
-          <th>Feature</th>
-          <th>Template Forms</th>
-          <th>Reactive Forms</th>
-          <th>Signal Forms</th>
+          <th>{{ 'slide.featureMapping.feature' | translate }}</th>
+          <th>{{ 'slide.featureMapping.templateForms' | translate }}</th>
+          <th>{{ 'slide.featureMapping.reactiveForms' | translate }}</th>
+          <th>{{ 'slide.featureMapping.signalForms' | translate }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Dynamic Fields</td>
-          <td>V (ngFor, ngModelGroup, manual work)</td>
-          <td>V (FormArray)</td>
-          <td>V (Signal FormArray)</td>
+          <td>{{ 'slide.featureMapping.dynamicFields' | translate }}</td>
+          <td>{{ 'slide.featureMapping.templateWith' | translate }}</td>
+          <td>{{ 'slide.featureMapping.reactiveWith' | translate }}</td>
+          <td>{{ 'slide.featureMapping.signalWith' | translate }}</td>
         </tr>
         <tr>
-          <td>Sync Validation</td>
-          <td>V (validators in template)</td>
-          <td>V (Validators API)</td>
-          <td>V (Signal Validators)</td>
+          <td>{{ 'slide.featureMapping.syncValidation' | translate }}</td>
+          <td>{{ 'slide.featureMapping.templateValidators' | translate }}</td>
+          <td>{{ 'slide.featureMapping.reactiveValidators' | translate }}</td>
+          <td>{{ 'slide.featureMapping.signalValidators' | translate }}</td>
         </tr>
         <tr>
-          <td>Async Validation</td>
-          <td>V (manual, hard)</td>
-          <td>V (AsyncValidator)</td>
-          <td>V (Signal async)</td>
+          <td>{{ 'slide.featureMapping.asyncValidation' | translate }}</td>
+          <td>{{ 'slide.featureMapping.templateAsync' | translate }}</td>
+          <td>{{ 'slide.featureMapping.reactiveAsync' | translate }}</td>
+          <td>{{ 'slide.featureMapping.signalAsync' | translate }}</td>
         </tr>
         <tr>
-          <td>Dependent Fields</td>
-          <td>V (ngIf/ngModel)</td>
-          <td>V (valueChanges)</td>
-          <td>V (computed signals)</td>
+          <td>{{ 'slide.featureMapping.dependentFields' | translate }}</td>
+          <td>{{ 'slide.featureMapping.templateDependent' | translate }}</td>
+          <td>{{ 'slide.featureMapping.reactiveDependent' | translate }}</td>
+          <td>{{ 'slide.featureMapping.signalDependent' | translate }}</td>
         </tr>
         <tr>
-          <td>Cross-field Validation</td>
-          <td>V (custom logic)</td>
-          <td>V (group validator)</td>
-          <td>V (form-level signal validator)</td>
+          <td>{{ 'slide.featureMapping.crossFieldValidation' | translate }}</td>
+          <td>{{ 'slide.featureMapping.templateCross' | translate }}</td>
+          <td>{{ 'slide.featureMapping.reactiveCross' | translate }}</td>
+          <td>{{ 'slide.featureMapping.signalCross' | translate }}</td>
         </tr>
         <tr>
-          <td>Side effects</td>
-          <td>V (listeners)</td>
-          <td>V (rxjs streams and operators)</td>
-          <td>V (effects, linkedSignals)</td>
+          <td>{{ 'slide.featureMapping.sideEffects' | translate }}</td>
+          <td>{{ 'slide.featureMapping.templateSide' | translate }}</td>
+          <td>{{ 'slide.featureMapping.reactiveSide' | translate }}</td>
+          <td>{{ 'slide.featureMapping.signalSide' | translate }}</td>
         </tr>
         <tr>
-          <td>Control Value Accessor</td>
-          <td>V</td>
-          <td>V</td>
-          <td>V/V</td>
+          <td>{{ 'slide.featureMapping.controlValueAccessor' | translate }}</td>
+          <td>{{ 'slide.featureMapping.cvaAll' | translate }}</td>
+          <td>{{ 'slide.featureMapping.cvaAll' | translate }}</td>
+          <td>{{ 'slide.featureMapping.cvaSignal' | translate }}</td>
         </tr>
       </tbody>
     </table>

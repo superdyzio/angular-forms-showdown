@@ -220,7 +220,7 @@
         <div class="addresses-container">
           <div class="bulk-actions" style="margin-bottom: 12px; display: flex; gap: 8px;">
             <button type="button" class="add-button" (click)="addOrUpdateHundredAddresses()">
-              {{ bulkAddressesAdded ? 'form.update1kAddresses' : 'form.add1kAddresses' | translate }}
+              {{ (bulkAddressesAdded ? 'form.update1kAddresses' : 'form.add1kAddresses') | translate }}
             </button>
             <button type="button" class="remove-button" (click)="removeAllAddresses()" [disabled]="user.addresses.length <= 1">
               {{ 'form.removeAllAddresses' | translate }}
