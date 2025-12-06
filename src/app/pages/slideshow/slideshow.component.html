@@ -2,8 +2,8 @@
   <!-- Header with navigation and progress -->
   <header class="slideshow-header">
     <div class="header-content">
-      <a routerLink="/" class="back-button">{{ t()('common.backToMain') }}</a>
-      <h1>{{ t()('slideshow.title') }}</h1>
+      <a routerLink="/" class="back-button">{{ 'common.backToMain' | translate }}</a>
+      <h1>{{ 'slideshow.title' | translate }}</h1>
       <div class="slide-counter">
         {{ currentSlide() }} / {{ totalSlides() }}
       </div>
@@ -32,7 +32,7 @@
       class="nav-button prev" 
       (click)="previousSlide()" 
       [disabled]="currentSlide() === 1">
-      {{ t()('slideshow.previous') }}
+      {{ 'slideshow.previous' | translate }}
     </button>
     
     <div class="slide-indicators">
@@ -50,7 +50,7 @@
       class="nav-button next" 
       (click)="nextSlide()" 
       [disabled]="currentSlide() === totalSlides()">
-      {{ t()('slideshow.next') }}
+      {{ 'slideshow.next' | translate }}
     </button>
   </footer>
 </div>

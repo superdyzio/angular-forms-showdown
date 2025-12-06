@@ -1,0 +1,161 @@
+{
+  "main": {
+    "title": "Angular Forms Showdown",
+    "selectForm": "Select form type to check:",
+    "whichForm": "Which form variant?",
+    "template": {
+      "title": "Template-Driven",
+      "description": "Those with directives and two-way bindings"
+    },
+    "reactive": {
+      "title": "Reactive Forms",
+      "description": "Those with FormControls, FormGroups and RxJS"
+    },
+    "signal": {
+      "title": "Signal-Based",
+      "description": "Those new shiny fresh ones with signals"
+    },
+    "presentation": {
+      "title": "📊 Presentation",
+      "description": "Helper presentation about Angular forms"
+    }
+  },
+  "common": {
+    "backToMain": "← Back to Main",
+    "profileCompletion": "Profile Completion",
+    "basicInformation": "Basic Information",
+    "locationInformation": "Location Information",
+    "addresses": "Addresses",
+    "newsletterPreferences": "Newsletter Preferences",
+    "registerAccount": "Register Account",
+    "registrationSuccessful": "Registration Successful!",
+    "formStatus": "Form Status",
+    "valid": "Valid",
+    "pristine": "Pristine",
+    "touched": "Touched",
+    "emailExists": "Email Exists",
+    "emailCheckInProgress": "Email Check In Progress"
+  },
+  "form": {
+    "fullName": "Full Name",
+    "email": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "country": "Country",
+    "state": "State",
+    "streetAddress": "Street Address",
+    "city": "City",
+    "zipCode": "ZIP Code",
+    "type": "Type",
+    "subscribeNewsletter": "Subscribe to newsletter",
+    "newsletterFrequency": "Newsletter Frequency",
+    "selectFrequency": "Select frequency",
+    "addAnotherAddress": "+ Add Another Address",
+    "remove": "Remove",
+    "removeAllAddresses": "Remove all addresses",
+    "add1kAddresses": "Add 1k addresses",
+    "update1kAddresses": "Update 1k addresses"
+  },
+  "validation": {
+    "name": {
+      "required": "Name is required",
+      "minlength": "Name must be at least 2 characters"
+    },
+    "email": {
+      "required": "Email is required",
+      "invalid": "Please enter a valid email",
+      "exists": "This email is already registered",
+      "checking": "Checking email availability...",
+      "available": "Email is available",
+      "alreadyTaken": "Email already taken"
+    },
+    "password": {
+      "required": "Password is required",
+      "minlength": "Password must be at least 8 characters",
+      "complexity": "Password must contain uppercase, lowercase, number, and special character"
+    },
+    "confirmPassword": {
+      "required": "Please confirm your password",
+      "mismatch": "Passwords do not match"
+    },
+    "country": {
+      "required": "Country is required"
+    },
+    "state": {
+      "required": "State is required for USA"
+    }
+  },
+  "password": {
+    "weak": "Weak",
+    "fair": "Fair",
+    "good": "Good",
+    "strong": "Strong"
+  },
+  "option": {
+    "selectCountry": "Select a country",
+    "selectState": "Select a state",
+    "unitedStates": "United States",
+    "unitedKingdom": "United Kingdom",
+    "canada": "Canada",
+    "australia": "Australia",
+    "germany": "Germany",
+    "california": "California",
+    "newYork": "New York",
+    "texas": "Texas",
+    "florida": "Florida",
+    "illinois": "Illinois",
+    "home": "Home",
+    "work": "Work",
+    "other": "Other",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly"
+  },
+  "forms": {
+    "template": {
+      "title": "Template-Driven Forms - User Registration",
+      "description": "Forms using template directives and two-way binding with dynamic features"
+    },
+    "reactive": {
+      "title": "Reactive Forms - User Registration",
+      "description": "Forms using FormControl, FormGroup, FormArray, and reactive patterns with advanced validation"
+    },
+    "signal": {
+      "title": "Signal Forms - User Registration",
+      "description": "Forms using Reactive Forms with Angular signals for state management and validation"
+    }
+  },
+  "slideshow": {
+    "title": "Angular Forms Presentation",
+    "previous": "← Previous",
+    "next": "Next →"
+  },
+  "slide": {
+    "assumptions": {
+      "title": "Assumptions",
+      "knowAngular": "Do we know Angular?",
+      "raiseHand": "Raise your hand if yes",
+      "templateDriven": "Template-driven forms - those forms with directives",
+      "reactive": "Reactive forms - those forms with observables",
+      "signals": "Signals - new reactive type",
+      "signalForms": "Signal-based forms - new forms with signals",
+      "goThrough": "We will go through all three approaches today and compare them a bit!"
+    },
+    "useCase": {
+      "title": "Use Case",
+      "what": "What exactly will we work on?",
+      "userRegistration": "User registration form",
+      "dynamicAddresses": "Dynamic address list",
+      "syncValidation": "Synchronous validation (e.g. required fields)",
+      "asyncValidation": "Asynchronous validation (whether email is taken)",
+      "fieldDependencies": "Dependencies between fields",
+      "passwordStrength": "Password strength checking",
+      "errorMessages": "Error messages"
+    },
+    "thankYou": {
+      "title": "Thank you very much",
+      "links": "Some links"
+    }
+  }
+}
+

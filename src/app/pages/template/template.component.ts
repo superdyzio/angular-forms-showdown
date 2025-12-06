@@ -1,24 +1,24 @@
-import { Component, inject, computed, effect } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TemplateEmailAsyncValidatorDirective } from './template-email-async.validator';
 import { CommonModule } from '@angular/common';
 import { Address } from '../../types/address';
 import { User } from '../../types/user';
-import { TranslationService } from '../../services/translation.service';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'afs-template',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule, TemplateEmailAsyncValidatorDirective],
+  imports: [RouterLink, FormsModule, CommonModule, TemplateEmailAsyncValidatorDirective, TranslateModule],
   templateUrl: './template.component.html',
   styleUrl: './template.component.scss'
 })
 export class TemplateComponent {
-  private translationService = inject(TranslationService);
-  protected t = this.translationService.t;
+  private translate = inject(TranslateService);
 
   user: User = {
+
     name: '',
     email: '',
     password: '',
@@ -36,33 +36,33 @@ export class TemplateComponent {
 
   // Available options - computed to use translations
   countries = computed(() => [
-    { value: '', label: this.t()('option.selectCountry') },
-    { value: 'usa', label: this.t()('option.unitedStates') },
-    { value: 'uk', label: this.t()('option.unitedKingdom') },
-    { value: 'ca', label: this.t()('option.canada') },
-    { value: 'au', label: this.t()('option.australia') },
-    { value: 'de', label: this.t()('option.germany') }
+    { value: '', label: this.translate.instant('option.selectCountry') },
+    { value: 'usa', label: this.translate.instant('option.unitedStates') },
+    { value: 'uk', label: this.translate.instant('option.unitedKingdom') },
+    { value: 'ca', label: this.translate.instant('option.canada') },
+    { value: 'au', label: this.translate.instant('option.australia') },
+    { value: 'de', label: this.translate.instant('option.germany') }
   ]);
 
   states = computed(() => [
-    { value: '', label: this.t()('option.selectState') },
-    { value: 'ca', label: this.t()('option.california') },
-    { value: 'ny', label: this.t()('option.newYork') },
-    { value: 'tx', label: this.t()('option.texas') },
-    { value: 'fl', label: this.t()('option.florida') },
-    { value: 'il', label: this.t()('option.illinois') }
+    { value: '', label: this.translate.instant('option.selectState') },
+    { value: 'ca', label: this.translate.instant('option.california') },
+    { value: 'ny', label: this.translate.instant('option.newYork') },
+    { value: 'tx', label: this.translate.instant('option.texas') },
+    { value: 'fl', label: this.translate.instant('option.florida') },
+    { value: 'il', label: this.translate.instant('option.illinois') }
   ]);
 
   addressTypes = computed(() => [
-    { value: 'home', label: this.t()('option.home') },
-    { value: 'work', label: this.t()('option.work') },
-    { value: 'other', label: this.t()('option.other') }
+    { value: 'home', label: this.translate.instant('option.home') },
+    { value: 'work', label: this.translate.instant('option.work') },
+    { value: 'other', label: this.translate.instant('option.other') }
   ]);
 
   newsletterFrequencies = computed(() => [
-    { value: 'daily', label: this.t()('option.daily') },
-    { value: 'weekly', label: this.t()('option.weekly') },
-    { value: 'monthly', label: this.t()('option.monthly') }
+    { value: 'daily', label: this.translate.instant('option.daily') },
+    { value: 'weekly', label: this.translate.instant('option.weekly') },
+    { value: 'monthly', label: this.translate.instant('option.monthly') }
   ]);
 
   constructor() {
@@ -132,13 +132,13 @@ export class TemplateComponent {
     score = Object.values(checks).filter(Boolean).length;
 
     if (score <= 2) {
-      return { score, label: this.t()('password.weak'), color: '#ff4444' };
+      return { score, label: this.translate.instant('password.weak'), color: '#ff4444' };
     } else if (score <= 3) {
-      return { score, label: this.t()('password.fair'), color: '#ffaa00' };
+      return { score, label: this.translate.instant('password.fair'), color: '#ffaa00' };
     } else if (score <= 4) {
-      return { score, label: this.t()('password.good'), color: '#00aa00' };
+      return { score, label: this.translate.instant('password.good'), color: '#00aa00' };
     } else {
-      return { score, label: this.t()('password.strong'), color: '#00aa00' };
+      return { score, label: this.translate.instant('password.strong'), color: '#00aa00' };
     }
   }
 

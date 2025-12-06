@@ -27,6 +27,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*.json",
+                "input": "src/app/lang",
+                "output": "/assets/i18n"
               }
             ],
             "styles": [
@@ -85,6 +90,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*.json",
+                "input": "src/app/lang",
+                "output": "/assets/i18n"
               }
             ],
             "styles": [

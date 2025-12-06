@@ -1,31 +1,31 @@
 <div class="main-container">
-  <h1>{{ t()('main.title') }}</h1>
-  <p>{{ t()('main.selectForm') }}</p>
+  <h1>{{ 'main.title' | translate }}</h1>
+  <p>{{ 'main.selectForm' | translate }}</p>
   
   <div class="forms-section">
-    <h3>{{ t()('main.whichForm') }}</h3>
+    <h3>{{ 'main.whichForm' | translate }}</h3>
     <div class="forms-grid">
       <a routerLink="/template" class="nav-button template">
-        <h2>{{ t()('main.template.title') }}</h2>
-        <p>{{ t()('main.template.description') }}</p>
+        <h2>{{ 'main.template.title' | translate }}</h2>
+        <p>{{ 'main.template.description' | translate }}</p>
       </a>
       
       <a routerLink="/reactive" class="nav-button reactive">
-        <h2>{{ t()('main.reactive.title') }}</h2>
-        <p>{{ t()('main.reactive.description') }}</p>
+        <h2>{{ 'main.reactive.title' | translate }}</h2>
+        <p>{{ 'main.reactive.description' | translate }}</p>
       </a>
       
       <a routerLink="/signal" class="nav-button signal">
-        <h2>{{ t()('main.signal.title') }}</h2>
-        <p>{{ t()('main.signal.description') }}</p>
+        <h2>{{ 'main.signal.title' | translate }}</h2>
+        <p>{{ 'main.signal.description' | translate }}</p>
       </a>
     </div>
   </div>
 
   <div class="presentation-section">
     <a routerLink="/slideshow" class="nav-button presentation">
-      <h2>{{ t()('main.presentation.title') }}</h2>
-      <p>{{ t()('main.presentation.description') }}</p>
+      <h2>{{ 'main.presentation.title' | translate }}</h2>
+      <p>{{ 'main.presentation.description' | translate }}</p>
     </a>
   </div>
 </div>

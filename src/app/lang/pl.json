@@ -1,0 +1,161 @@
+{
+  "main": {
+    "title": "Angular Forms Showdown",
+    "selectForm": "Wybierz typ formularza do sprawdzenia:",
+    "whichForm": "Jaki form wariacie?",
+    "template": {
+      "title": "Template-Driven",
+      "description": "Te z dyrektywami oraz two-way bindingami"
+    },
+    "reactive": {
+      "title": "Reactive Forms",
+      "description": "Te z FormControlami, FormGroupami i RxJSem"
+    },
+    "signal": {
+      "title": "Signal-Based",
+      "description": "Te nowe błyszczące świeżutkie z sygnałami"
+    },
+    "presentation": {
+      "title": "📊 Prezentacja",
+      "description": "Pomocnicza prezentacja o Angular forms"
+    }
+  },
+  "common": {
+    "backToMain": "← Wróć do głównej",
+    "profileCompletion": "Ukończenie profilu",
+    "basicInformation": "Podstawowe informacje",
+    "locationInformation": "Informacje o lokalizacji",
+    "addresses": "Adresy",
+    "newsletterPreferences": "Preferencje newslettera",
+    "registerAccount": "Zarejestruj konto",
+    "registrationSuccessful": "Rejestracja zakończona sukcesem!",
+    "formStatus": "Status formularza",
+    "valid": "Ważny",
+    "pristine": "Nienaruszony",
+    "touched": "Dotknięty",
+    "emailExists": "Email istnieje",
+    "emailCheckInProgress": "Sprawdzanie emaila w toku"
+  },
+  "form": {
+    "fullName": "Imię i nazwisko",
+    "email": "Adres email",
+    "password": "Hasło",
+    "confirmPassword": "Potwierdź hasło",
+    "country": "Kraj",
+    "state": "Województwo",
+    "streetAddress": "Ulica",
+    "city": "Miasto",
+    "zipCode": "Kod pocztowy",
+    "type": "Typ",
+    "subscribeNewsletter": "Zapisz się do newslettera",
+    "newsletterFrequency": "Częstotliwość newslettera",
+    "selectFrequency": "Wybierz częstotliwość",
+    "addAnotherAddress": "+ Dodaj kolejny adres",
+    "remove": "Usuń",
+    "removeAllAddresses": "Usuń wszystkie adresy",
+    "add1kAddresses": "Dodaj 1k adresów",
+    "update1kAddresses": "Aktualizuj 1k adresów"
+  },
+  "validation": {
+    "name": {
+      "required": "Imię jest wymagane",
+      "minlength": "Imię musi mieć co najmniej 2 znaki"
+    },
+    "email": {
+      "required": "Email jest wymagany",
+      "invalid": "Wprowadź poprawny adres email",
+      "exists": "Ten email jest już zarejestrowany",
+      "checking": "Sprawdzanie dostępności emaila...",
+      "available": "Email jest dostępny",
+      "alreadyTaken": "Email jest już zajęty"
+    },
+    "password": {
+      "required": "Hasło jest wymagane",
+      "minlength": "Hasło musi mieć co najmniej 8 znaków",
+      "complexity": "Hasło musi zawierać wielkie litery, małe litery, cyfry i znak specjalny"
+    },
+    "confirmPassword": {
+      "required": "Potwierdź hasło",
+      "mismatch": "Hasła nie pasują do siebie"
+    },
+    "country": {
+      "required": "Kraj jest wymagany"
+    },
+    "state": {
+      "required": "Województwo jest wymagane dla USA"
+    }
+  },
+  "password": {
+    "weak": "Słabe",
+    "fair": "Średnie",
+    "good": "Dobre",
+    "strong": "Silne"
+  },
+  "option": {
+    "selectCountry": "Wybierz kraj",
+    "selectState": "Wybierz województwo",
+    "unitedStates": "Stany Zjednoczone",
+    "unitedKingdom": "Wielka Brytania",
+    "canada": "Kanada",
+    "australia": "Australia",
+    "germany": "Niemcy",
+    "california": "Kalifornia",
+    "newYork": "Nowy Jork",
+    "texas": "Teksas",
+    "florida": "Floryda",
+    "illinois": "Illinois",
+    "home": "Dom",
+    "work": "Praca",
+    "other": "Inne",
+    "daily": "Codziennie",
+    "weekly": "Tygodniowo",
+    "monthly": "Miesięcznie"
+  },
+  "forms": {
+    "template": {
+      "title": "Template-Driven Forms - Rejestracja użytkownika",
+      "description": "Formularze używające dyrektyw szablonu i dwukierunkowego wiązania z dynamicznymi funkcjami"
+    },
+    "reactive": {
+      "title": "Reactive Forms - Rejestracja użytkownika",
+      "description": "Formularze używające FormControl, FormGroup, FormArray i wzorców reaktywnych z zaawansowaną walidacją"
+    },
+    "signal": {
+      "title": "Signal Forms - Rejestracja użytkownika",
+      "description": "Formularze używające Reactive Forms z sygnałami Angular do zarządzania stanem i walidacji"
+    }
+  },
+  "slideshow": {
+    "title": "Prezentacja Angular Forms",
+    "previous": "← Poprzedni",
+    "next": "Następny →"
+  },
+  "slide": {
+    "assumptions": {
+      "title": "Założenia",
+      "knowAngular": "Znamy Angulara?",
+      "raiseHand": "Ręka do góry jeśli tak",
+      "templateDriven": "Template-driven forms - te formularze z dyrektywami",
+      "reactive": "Reactive forms - te formularze z obserwablami",
+      "signals": "Signals - nowy typ reaktywny",
+      "signalForms": "Signal-based forms - nowe formularze z signalami",
+      "goThrough": "Przejdziemy dzisiaj przez wszystkie trzy podejścia i trochę je porównamy!"
+    },
+    "useCase": {
+      "title": "Use Case",
+      "what": "Czym dokładnie się zajmiemy?",
+      "userRegistration": "Formularz rejestracji użytkownika",
+      "dynamicAddresses": "Dynamiczna lista adresów",
+      "syncValidation": "Walidacja synchroniczna (np. wymagane pola)",
+      "asyncValidation": "Walidacja asynchroniczna (czy email jest zajęty)",
+      "fieldDependencies": "Zależności pomiędzy polami",
+      "passwordStrength": "Sprawdzanie siły hasła",
+      "errorMessages": "Komunikaty błędów"
+    },
+    "thankYou": {
+      "title": "Dziękuję bardzo",
+      "links": "Kilka linków"
+    }
+  }
+}
+
