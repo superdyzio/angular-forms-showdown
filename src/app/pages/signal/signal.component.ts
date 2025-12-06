@@ -2,7 +2,7 @@ import { Component, signal, inject, computed, WritableSignal, effect } from '@an
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { form, Control, required, minLength, email, validate, requiredError, customError } from '@angular/forms/signals';
+import { form, Field, required, minLength, email, validate, requiredError, customError } from '@angular/forms/signals';
 import { EmailCheckService } from '../../services/email-check.service';
 import { Address } from '../../types/address';
 import { User, UserForm } from '../../types/user';
@@ -13,7 +13,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'afs-signal',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule, Control, TranslateModule],
+  imports: [RouterLink, FormsModule, CommonModule, Field, TranslateModule],
   templateUrl: './signal.component.html',
   styleUrl: './signal.component.scss'
 })
