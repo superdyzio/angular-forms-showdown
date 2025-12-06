@@ -169,7 +169,6 @@ export class SignalComponent {
 
       return this.emailCheck.checkEmailExists(email).pipe(
         map(exists => {
-          console.log(exists);
           this.emailCheckInProgress.set(false);
           this.emailExists.set(exists);
           return exists ? { emailExists: true } : null;
