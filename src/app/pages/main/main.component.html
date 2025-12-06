@@ -1,31 +1,31 @@
 <div class="main-container">
-  <h1>Angular Forms Showdown</h1>
-  <p>Wybierz typ formularza do sprawdzenia:</p>
+  <h1>{{ t()('main.title') }}</h1>
+  <p>{{ t()('main.selectForm') }}</p>
   
   <div class="forms-section">
-    <h3>Jaki form wariacie?</h3>
+    <h3>{{ t()('main.whichForm') }}</h3>
     <div class="forms-grid">
       <a routerLink="/template" class="nav-button template">
-        <h2>Template-Driven</h2>
-        <p>Te z dyrektywami oraz two-way bindingami</p>
+        <h2>{{ t()('main.template.title') }}</h2>
+        <p>{{ t()('main.template.description') }}</p>
       </a>
       
       <a routerLink="/reactive" class="nav-button reactive">
-        <h2>Reactive Forms</h2>
-        <p>Te z FormControlami, FormGroupami i RxJSem</p>
+        <h2>{{ t()('main.reactive.title') }}</h2>
+        <p>{{ t()('main.reactive.description') }}</p>
       </a>
       
       <a routerLink="/signal" class="nav-button signal">
-        <h2>Signal-Based</h2>
-        <p>Te nowe błyszczące świeżutkie z sygnałami</p>
+        <h2>{{ t()('main.signal.title') }}</h2>
+        <p>{{ t()('main.signal.description') }}</p>
       </a>
     </div>
   </div>
 
   <div class="presentation-section">
     <a routerLink="/slideshow" class="nav-button presentation">
-      <h2>📊 Prezentacja</h2>
-      <p>Pomocnicza prezentacja o Angular forms</p>
+      <h2>{{ t()('main.presentation.title') }}</h2>
+      <p>{{ t()('main.presentation.description') }}</p>
     </a>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, computed } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,7 @@ import { map, catchError } from 'rxjs/operators';
 import { EmailCheckService } from '../../services/email-check.service';
 import { Address } from '../../types/address';
 import { User } from '../../types/user';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'afs-reactive',
@@ -16,6 +17,9 @@ import { User } from '../../types/user';
   styleUrl: './reactive.component.scss'
 })
 export class ReactiveComponent implements OnInit {
+  private translationService = inject(TranslationService);
+  protected t = this.translationService.t;
+
   userForm: FormGroup;
   submittedData: User | null = null;
   emailExists = false;
@@ -23,36 +27,36 @@ export class ReactiveComponent implements OnInit {
   profileCompletion = 0;
   bulkAddressesAdded = false;
 
-  // Available options
-  countries = [
-    { value: '', label: 'Select a country' },
-    { value: 'usa', label: 'United States' },
-    { value: 'uk', label: 'United Kingdom' },
-    { value: 'ca', label: 'Canada' },
-    { value: 'au', label: 'Australia' },
-    { value: 'de', label: 'Germany' }
-  ];
+  // Available options - computed to use translations
+  countries = computed(() => [
+    { value: '', label: this.t()('option.selectCountry') },
+    { value: 'usa', label: this.t()('option.unitedStates') },
+    { value: 'uk', label: this.t()('option.unitedKingdom') },
+    { value: 'ca', label: this.t()('option.canada') },
+    { value: 'au', label: this.t()('option.australia') },
+    { value: 'de', label: this.t()('option.germany') }
+  ]);
 
-  states = [
-    { value: '', label: 'Select a state' },
-    { value: 'ca', label: 'California' },
-    { value: 'ny', label: 'New York' },
-    { value: 'tx', label: 'Texas' },
-    { value: 'fl', label: 'Florida' },
-    { value: 'il', label: 'Illinois' }
-  ];
+  states = computed(() => [
+    { value: '', label: this.t()('option.selectState') },
+    { value: 'ca', label: this.t()('option.california') },
+    { value: 'ny', label: this.t()('option.newYork') },
+    { value: 'tx', label: this.t()('option.texas') },
+    { value: 'fl', label: this.t()('option.florida') },
+    { value: 'il', label: this.t()('option.illinois') }
+  ]);
 
-  addressTypes = [
-    { value: 'home', label: 'Home' },
-    { value: 'work', label: 'Work' },
-    { value: 'other', label: 'Other' }
-  ];
+  addressTypes = computed(() => [
+    { value: 'home', label: this.t()('option.home') },
+    { value: 'work', label: this.t()('option.work') },
+    { value: 'other', label: this.t()('option.other') }
+  ]);
 
-  newsletterFrequencies = [
-    { value: 'daily', label: 'Daily' },
-    { value: 'weekly', label: 'Weekly' },
-    { value: 'monthly', label: 'Monthly' }
-  ];
+  newsletterFrequencies = computed(() => [
+    { value: 'daily', label: this.t()('option.daily') },
+    { value: 'weekly', label: this.t()('option.weekly') },
+    { value: 'monthly', label: this.t()('option.monthly') }
+  ]);
 
   constructor(private fb: FormBuilder, private emailCheck: EmailCheckService) {
     this.userForm = this.fb.group({
@@ -113,13 +117,13 @@ export class ReactiveComponent implements OnInit {
     score = Object.values(checks).filter(Boolean).length;
 
     if (score <= 2) {
-      return { score, label: 'Weak', color: '#ff4444' };
+      return { score, label: this.t()('password.weak'), color: '#ff4444' };
     } else if (score <= 3) {
-      return { score, label: 'Fair', color: '#ffaa00' };
+      return { score, label: this.t()('password.fair'), color: '#ffaa00' };
     } else if (score <= 4) {
-      return { score, label: 'Good', color: '#00aa00' };
+      return { score, label: this.t()('password.good'), color: '#00aa00' };
     } else {
-      return { score, label: 'Strong', color: '#00aa00' };
+      return { score, label: this.t()('password.strong'), color: '#00aa00' };
     }
   }
 

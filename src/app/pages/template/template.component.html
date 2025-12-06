@@ -1,14 +1,14 @@
 <div class="page-container">
   <div class="header">
-    <a routerLink="/" class="back-button">← Back to Main</a>
-    <h1>Template-Driven Forms - User Registration</h1>
-    <p>Forms using template directives and two-way binding with dynamic features</p>
+    <a routerLink="/" class="back-button">{{ t()('common.backToMain') }}</a>
+    <h1>{{ t()('forms.template.title') }}</h1>
+    <p>{{ t()('forms.template.description') }}</p>
   </div>
   
   <div class="form-container">
     <!-- Profile Completion Indicator -->
     <div class="completion-indicator">
-      <h3>Profile Completion: {{ profileCompletion }}%</h3>
+      <h3>{{ t()('common.profileCompletion') }}: {{ profileCompletion }}%</h3>
       <div class="progress-bar">
         <div class="progress-fill" [style.width.%]="profileCompletion"></div>
       </div>
@@ -17,10 +17,10 @@
     <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
       <!-- Basic Information -->
       <fieldset class="form-section">
-        <legend>Basic Information</legend>
+        <legend>{{ t()('common.basicInformation') }}</legend>
         
         <div class="form-group">
-          <label for="name">Full Name *</label>
+          <label for="name">{{ t()('form.fullName') }} *</label>
           <input 
             type="text" 
             id="name" 
@@ -36,17 +36,17 @@
           @if (name.invalid && name.touched) {
             <div class="error-message">
               @if (name.errors?.['required']) {
-                <span>Name is required</span>
+                <span>{{ t()('validation.name.required') }}</span>
               }
               @if (name.errors?.['minlength']) {
-                <span>Name must be at least 2 characters</span>
+                <span>{{ t()('validation.name.minlength') }}</span>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="email">Email Address *</label>
+          <label for="email">{{ t()('form.email') }} *</label>
           <input 
             type="email" 
             id="email" 
@@ -63,32 +63,32 @@
           @if (email.invalid && email.touched) {
             <div class="error-message">
               @if (email.errors?.['required']) {
-                <span>Email is required</span>
+                <span>{{ t()('validation.email.required') }}</span>
               }
               @if (email.errors?.['email']) {
-                <span>Please enter a valid email</span>
+                <span>{{ t()('validation.email.invalid') }}</span>
               }
             </div>
           }
           @if (email.errors?.['emailExists']) {
             <div class="error-message">
-              <span>This email is already registered</span>
+              <span>{{ t()('validation.email.exists') }}</span>
             </div>
           }
           @if (email.pending) {
             <div class="loading-message">
-              <span>Checking email availability...</span>
+              <span>{{ t()('validation.email.checking') }}</span>
             </div>
           }
           @if (email.valid && email.touched && !email.pending) {
             <div class="success-message">
-              <span>Email is available</span>
+              <span>{{ t()('validation.email.available') }}</span>
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="password">Password *</label>
+          <label for="password">{{ t()('form.password') }} *</label>
           <input 
             type="password" 
             id="password" 
@@ -119,20 +119,20 @@
           @if (password.invalid && password.touched) {
             <div class="error-message">
               @if (password.errors?.['required']) {
-                <span>Password is required</span>
+                <span>{{ t()('validation.password.required') }}</span>
               }
               @if (password.errors?.['minlength']) {
-                <span>Password must be at least 8 characters</span>
+                <span>{{ t()('validation.password.minlength') }}</span>
               }
               @if (password.errors?.['pattern']) {
-                <span>Password must contain uppercase, lowercase, number, and special character</span>
+                <span>{{ t()('validation.password.complexity') }}</span>
               }
             </div>
           }
         </div>
 
         <div class="form-group">
-          <label for="confirmPassword">Confirm Password *</label>
+          <label for="confirmPassword">{{ t()('form.confirmPassword') }} *</label>
           <input 
             type="password" 
             id="confirmPassword" 
@@ -146,7 +146,7 @@
           />
           @if (!passwordsMatch() && confirmPassword.touched) {
             <div class="error-message">
-              <span>Passwords do not match</span>
+              <span>{{ t()('validation.confirmPassword.mismatch') }}</span>
             </div>
           }
         </div>
@@ -154,10 +154,10 @@
 
       <!-- Location Information -->
       <fieldset class="form-section">
-        <legend>Location Information</legend>
+        <legend>{{ t()('common.locationInformation') }}</legend>
         
         <div class="form-group">
-          <label for="country">Country *</label>
+          <label for="country">{{ t()('form.country') }} *</label>
           <select 
             id="country" 
             name="country" 
@@ -168,7 +168,7 @@
             [class.error]="country.invalid && country.touched"
             (change)="onFieldChange()"
           >
-            @for (country of countries; track country.value) {
+            @for (country of countries(); track country.value) {
               <option [value]="country.value">
                 {{ country.label }}
               </option>
@@ -177,7 +177,7 @@
           @if (country.invalid && country.touched) {
             <div class="error-message">
               @if (country.errors?.['required']) {
-                <span>Country is required</span>
+                <span>{{ t()('validation.country.required') }}</span>
               }
             </div>
           }
@@ -185,7 +185,7 @@
 
         @if (isUSA()) {
           <div class="form-group">
-            <label for="state">State *</label>
+            <label for="state">{{ t()('form.state') }} *</label>
             <select 
               id="state" 
               name="state" 
@@ -196,7 +196,7 @@
               [class.error]="state.invalid && state.touched"
               (change)="onFieldChange()"
             >
-              @for (state of states; track state.value) {
+              @for (state of states(); track state.value) {
                 <option [value]="state.value">
                   {{ state.label }}
                 </option>
@@ -205,7 +205,7 @@
             @if (state.invalid && state.touched) {
               <div class="error-message">
                 @if (state.errors?.['required']) {
-                  <span>State is required for USA</span>
+                  <span>{{ t()('validation.state.required') }}</span>
                 }
               </div>
             }
@@ -215,31 +215,31 @@
 
       <!-- Addresses -->
       <fieldset class="form-section">
-        <legend>Addresses</legend>
+        <legend>{{ t()('common.addresses') }}</legend>
         
         <div class="addresses-container">
           <div class="bulk-actions" style="margin-bottom: 12px; display: flex; gap: 8px;">
             <button type="button" class="add-button" (click)="addOrUpdateHundredAddresses()">
-              {{ bulkAddressesAdded ? 'Update 1k addresses' : 'Add 1k addresses' }}
+              {{ bulkAddressesAdded ? t()('form.update1kAddresses') : t()('form.add1kAddresses') }}
             </button>
             <button type="button" class="remove-button" (click)="removeAllAddresses()" [disabled]="user.addresses.length <= 1">
-              Remove all addresses
+              {{ t()('form.removeAllAddresses') }}
             </button>
           </div>
           @for (address of user.addresses; track $index; let i = $index) {
             <div class="address-item">
               <div class="address-header">
-                <h4>Address {{ i + 1 }}</h4>
+                <h4>{{ t()('common.addresses') }} {{ i + 1 }}</h4>
                 @if (user.addresses.length > 1) {
                   <button type="button" class="remove-button" (click)="removeAddress(i)">
-                    Remove
+                    {{ t()('form.remove') }}
                   </button>
                 }
               </div>
             
             <div class="form-row">
               <div class="form-group">
-                <label [for]="'addressType' + i">Type</label>
+                <label [for]="'addressType' + i">{{ t()('form.type') }}</label>
                 <select 
                   [id]="'addressType' + i" 
                   [name]="'addressType' + i" 
@@ -247,7 +247,7 @@
                   class="form-input"
                   (change)="onFieldChange()"
                 >
-                  @for (type of addressTypes; track type.value) {
+                  @for (type of addressTypes(); track type.value) {
                     <option [value]="type.value">
                       {{ type.label }}
                     </option>
@@ -257,7 +257,7 @@
             </div>
 
             <div class="form-group">
-              <label [for]="'street' + i">Street Address</label>
+              <label [for]="'street' + i">{{ t()('form.streetAddress') }}</label>
               <input 
                 type="text" 
                 [id]="'street' + i" 
@@ -270,7 +270,7 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label [for]="'city' + i">City</label>
+                <label [for]="'city' + i">{{ t()('form.city') }}</label>
                 <input 
                   type="text" 
                   [id]="'city' + i" 
@@ -282,7 +282,7 @@
               </div>
               @if (isUSA()) {
                 <div class="form-group">
-                  <label [for]="'state' + i">State</label>
+                  <label [for]="'state' + i">{{ t()('form.state') }}</label>
                   <select 
                     [id]="'state' + i" 
                     [name]="'state' + i" 
@@ -290,7 +290,7 @@
                     class="form-input"
                     (change)="onFieldChange()"
                   >
-                    @for (state of states; track state.value) {
+                    @for (state of states(); track state.value) {
                       <option [value]="state.value">
                         {{ state.label }}
                       </option>
@@ -299,7 +299,7 @@
                 </div>
               }
               <div class="form-group">
-                <label [for]="'zipCode' + i">ZIP Code</label>
+                <label [for]="'zipCode' + i">{{ t()('form.zipCode') }}</label>
                 <input 
                   type="text" 
                   [id]="'zipCode' + i" 
@@ -314,14 +314,14 @@
           }
           
           <button type="button" class="add-button" (click)="addAddress()">
-            + Add Another Address
+            {{ t()('form.addAnotherAddress') }}
           </button>
         </div>
       </fieldset>
 
       <!-- Newsletter Preferences -->
       <fieldset class="form-section">
-        <legend>Newsletter Preferences</legend>
+        <legend>{{ t()('common.newsletterPreferences') }}</legend>
         
         <div class="form-group">
           <label class="checkbox-label">
@@ -332,13 +332,13 @@
               class="checkbox"
               (change)="onFieldChange()"
             />
-            Subscribe to newsletter
+            {{ t()('form.subscribeNewsletter') }}
           </label>
         </div>
 
         @if (isNewsletterSubscribed()) {
           <div class="form-group">
-            <label for="newsletterFrequency">Newsletter Frequency</label>
+            <label for="newsletterFrequency">{{ t()('form.newsletterFrequency') }}</label>
             <select 
               id="newsletterFrequency" 
               name="newsletterFrequency" 
@@ -346,8 +346,8 @@
               class="form-input"
               (change)="onFieldChange()"
             >
-              <option value="">Select frequency</option>
-              @for (freq of newsletterFrequencies; track freq.value) {
+              <option value="">{{ t()('form.selectFrequency') }}</option>
+              @for (freq of newsletterFrequencies(); track freq.value) {
                 <option [value]="freq.value">
                   {{ freq.label }}
                 </option>
@@ -362,24 +362,24 @@
         class="submit-button"
         [disabled]="userForm.invalid || !passwordsMatch() || email.pending || email.errors?.['emailExists']"
       >
-        Register Account
+        {{ t()('common.registerAccount') }}
       </button>
     </form>
 
     @if (submittedData) {
       <div class="form-data">
-        <h3>Registration Successful!</h3>
+        <h3>{{ t()('common.registrationSuccessful') }}</h3>
         <pre>{{ submittedData | json }}</pre>
       </div>
     }
 
     <div class="form-status">
-      <h3>Form Status:</h3>
-      <p><strong>Valid:</strong> {{ userForm.valid }}</p>
-      <p><strong>Pristine:</strong> {{ userForm.pristine }}</p>
-      <p><strong>Touched:</strong> {{ userForm.touched }}</p>
-      <p><strong>Email Exists:</strong> {{ email?.errors?.['emailExists'] || false }}</p>
-      <p><strong>Email Check In Progress:</strong> {{ email?.pending || false }}</p>
+      <h3>{{ t()('common.formStatus') }}:</h3>
+      <p><strong>{{ t()('common.valid') }}:</strong> {{ userForm.valid }}</p>
+      <p><strong>{{ t()('common.pristine') }}:</strong> {{ userForm.pristine }}</p>
+      <p><strong>{{ t()('common.touched') }}:</strong> {{ userForm.touched }}</p>
+      <p><strong>{{ t()('common.emailExists') }}:</strong> {{ email?.errors?.['emailExists'] || false }}</p>
+      <p><strong>{{ t()('common.emailCheckInProgress') }}:</strong> {{ email?.pending || false }}</p>
     </div>
   </div>
 </div>

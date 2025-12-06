@@ -6,9 +6,9 @@ import { form, Control, required, minLength, email, validate, requiredError, cus
 import { EmailCheckService } from '../../services/email-check.service';
 import { Address } from '../../types/address';
 import { User, UserForm } from '../../types/user';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, map, take } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'afs-signal',
@@ -19,6 +19,8 @@ import { of } from 'rxjs';
 })
 export class SignalComponent {
   private emailCheck = inject(EmailCheckService);
+  private translationService = inject(TranslationService);
+  protected t = this.translationService.t;
 
   protected form = form<UserForm>(signal({
     name: '',
@@ -31,12 +33,13 @@ export class SignalComponent {
     newsletterFrequency: '',
     addresses: []
   }), data => {
-    required(data.name, { message: 'Name is required' }),
-    minLength(data.name, 2, { message: 'Name must be at least 2 characters' }),
-    required(data.email, { message: 'Email is required' }),
-    email(data.email, { message: 'Please enter a valid email' }),
-    required(data.password, { message: 'Password is required' }),
-    minLength(data.password, 8, { message: 'Password must be at least 8 characters' }),
+    required(data.name, { message: () => this.t()('validation.name.required') }),
+    minLength(data.name, 2, { message: () => this.t()('validation.name.minlength') }),
+    required(data.email, { message: () => this.t()('validation.email.required') }),
+    email(data.email, { message: () => this.t()('validation.email.invalid') }),
+    required(data.password, { message: () => this.t()('validation.password.required') }),
+    minLength(data.password, 8, { message: () => this.t()('validation.password.minlength') }),
+    // @ts-ignore
     validate(data.password, ({ valueOf }) => {
       const password = valueOf(data.password);
       if (!password) return null;
@@ -47,13 +50,15 @@ export class SignalComponent {
       const hasSpecialChar = /[@$!%*?&]/.test(password);
 
       if (!hasUpperCase || !hasLowerCase || !hasNumeric || !hasSpecialChar) {
-        return customError({ message: 'Password must contain uppercase, lowercase, number, and special character' })
+    // @ts-ignore
+        return customError({ message: () => this.t()('validation.password.complexity') })
       }
       return null;
     }),
-    required(data.confirmPassword, { message: 'Please confirm your password' }),
-    required(data.country, { message: 'Country is required' }),
-    validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: 'State is required for USA' }) : null)
+    required(data.confirmPassword, { message: () => this.t()('validation.confirmPassword.required') }),
+    required(data.country, { message: () => this.t()('validation.country.required') }),
+    // @ts-ignore
+    validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: () => this.t()('validation.state.required') }) : null)
   });
 
   // Signal-based state
@@ -114,46 +119,46 @@ export class SignalComponent {
     score = Object.values(checks).filter(Boolean).length;
 
     if (score <= 2) {
-      return { score, label: 'Weak', color: '#ff4444' };
+      return { score, label: this.t()('password.weak'), color: '#ff4444' };
     } else if (score <= 3) {
-      return { score, label: 'Fair', color: '#ffaa00' };
+      return { score, label: this.t()('password.fair'), color: '#ffaa00' };
     } else if (score <= 4) {
-      return { score, label: 'Good', color: '#00aa00' };
+      return { score, label: this.t()('password.good'), color: '#00aa00' };
     } else {
-      return { score, label: 'Strong', color: '#00aa00' };
+      return { score, label: this.t()('password.strong'), color: '#00aa00' };
     }
   });
 
-  // Available options
-  countries = [
-    { value: '', label: 'Select a country' },
-    { value: 'usa', label: 'United States' },
-    { value: 'uk', label: 'United Kingdom' },
-    { value: 'ca', label: 'Canada' },
-    { value: 'au', label: 'Australia' },
-    { value: 'de', label: 'Germany' }
-  ];
+  // Available options - computed to use translations
+  countries = computed(() => [
+    { value: '', label: this.t()('option.selectCountry') },
+    { value: 'usa', label: this.t()('option.unitedStates') },
+    { value: 'uk', label: this.t()('option.unitedKingdom') },
+    { value: 'ca', label: this.t()('option.canada') },
+    { value: 'au', label: this.t()('option.australia') },
+    { value: 'de', label: this.t()('option.germany') }
+  ]);
 
-  states = [
-    { value: '', label: 'Select a state' },
-    { value: 'ca', label: 'California' },
-    { value: 'ny', label: 'New York' },
-    { value: 'tx', label: 'Texas' },
-    { value: 'fl', label: 'Florida' },
-    { value: 'il', label: 'Illinois' }
-  ];
+  states = computed(() => [
+    { value: '', label: this.t()('option.selectState') },
+    { value: 'ca', label: this.t()('option.california') },
+    { value: 'ny', label: this.t()('option.newYork') },
+    { value: 'tx', label: this.t()('option.texas') },
+    { value: 'fl', label: this.t()('option.florida') },
+    { value: 'il', label: this.t()('option.illinois') }
+  ]);
 
-  addressTypes = [
-    { value: 'home', label: 'Home' },
-    { value: 'work', label: 'Work' },
-    { value: 'other', label: 'Other' }
-  ];
+  addressTypes = computed(() => [
+    { value: 'home', label: this.t()('option.home') },
+    { value: 'work', label: this.t()('option.work') },
+    { value: 'other', label: this.t()('option.other') }
+  ]);
 
-  newsletterFrequencies = [
-    { value: 'daily', label: 'Daily' },
-    { value: 'weekly', label: 'Weekly' },
-    { value: 'monthly', label: 'Monthly' }
-  ];
+  newsletterFrequencies = computed(() => [
+    { value: 'daily', label: this.t()('option.daily') },
+    { value: 'weekly', label: this.t()('option.weekly') },
+    { value: 'monthly', label: this.t()('option.monthly') }
+  ]);
 
   constructor() {
     // Add initial address

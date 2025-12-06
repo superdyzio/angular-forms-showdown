@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'afs-use-case-slide',
@@ -8,4 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './use-case-slide.component.html',
   styleUrl: './use-case-slide.component.scss'
 })
-export class UseCaseSlideComponent {}
+export class UseCaseSlideComponent {
+  protected translationService = inject(TranslationService);
+  protected t = this.translationService.t;
+}

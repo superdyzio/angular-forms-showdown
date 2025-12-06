@@ -1,8 +1,9 @@
-import { Component, signal, computed, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, signal, computed, OnInit, OnDestroy, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'afs-slideshow',
@@ -12,6 +13,9 @@ import { Subject } from 'rxjs';
   styleUrl: './slideshow.component.scss'
 })
 export class SlideshowComponent implements OnInit, OnDestroy {
+  private translationService = inject(TranslationService);
+  protected t = this.translationService.t;
+
   // Current slide index (1-based)
   currentSlide = signal(1);
   

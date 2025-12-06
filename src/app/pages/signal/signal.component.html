@@ -1,14 +1,14 @@
 <div class="page-container">
   <div class="header">
-    <a routerLink="/" class="back-button">← Back to Main</a>
-    <h1>Signal Forms - User Registration</h1>
-    <p>Forms using Reactive Forms with Angular signals for state management and validation</p>
+    <a routerLink="/" class="back-button">{{ t()('common.backToMain') }}</a>
+    <h1>{{ t()('forms.signal.title') }}</h1>
+    <p>{{ t()('forms.signal.description') }}</p>
   </div>
   
   <div class="form-container">
     <!-- Profile Completion Indicator -->
     <div class="completion-indicator">
-      <h3>Profile Completion: {{ profileCompletion() }}%</h3>
+      <h3>{{ t()('common.profileCompletion') }}: {{ profileCompletion() }}%</h3>
       <div class="progress-bar">
         <div class="progress-fill" [style.width.%]="profileCompletion()"></div>
       </div>
@@ -17,10 +17,10 @@
     <form>
       <!-- Basic Information -->
       <fieldset class="form-section">
-        <legend>Basic Information</legend>
+        <legend>{{ t()('common.basicInformation') }}</legend>
         
         <div class="form-group">
-          <label for="name">Full Name *</label>
+          <label for="name">{{ t()('form.fullName') }} *</label>
           <input 
             type="text" 
             id="name" 
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group">
-          <label for="email">Email Address *</label>
+          <label for="email">{{ t()('form.email') }} *</label>
           <input 
             type="email" 
             id="email" 
@@ -51,24 +51,24 @@
           }
           @if (emailCheckInProgress()) {
             <div class="loading-message">
-              <span>Checking email availability...</span>
+              <span>{{ t()('validation.email.checking') }}</span>
             </div>
           }
           @if (form.email().valid() && form.email().touched() && !emailCheckInProgress()) {
             @if (emailExists()) {
               <div class="error-message">
-                <span>Email already taken</span>
+                <span>{{ t()('validation.email.alreadyTaken') }}</span>
               </div>
             } @else {
               <div class="success-message">
-                <span>Email is available</span>
+                <span>{{ t()('validation.email.available') }}</span>
               </div>
             }
           }
         </div>
 
         <div class="form-group">
-          <label for="password">Password *</label>
+          <label for="password">{{ t()('form.password') }} *</label>
           <input 
             type="password" 
             id="password" 
@@ -98,7 +98,7 @@
         </div>
 
         <div class="form-group">
-          <label for="confirmPassword">Confirm Password *</label>
+          <label for="confirmPassword">{{ t()('form.confirmPassword') }} *</label>
           <input 
             type="password" 
             id="confirmPassword" 
@@ -113,7 +113,7 @@
           }
           @if (form.confirmPassword().touched() && form.confirmPassword().valid() && !passwordsMatch()) {
             <div class="error-message">
-              <span>Passwords do not match</span>
+              <span>{{ t()('validation.confirmPassword.mismatch') }}</span>
             </div>
           }
         </div>
@@ -121,17 +121,17 @@
 
       <!-- Location Information -->
       <fieldset class="form-section">
-        <legend>Location Information</legend>
+        <legend>{{ t()('common.locationInformation') }}</legend>
         
         <div class="form-group">
-          <label for="country">Country *</label>
+          <label for="country">{{ t()('form.country') }} *</label>
           <select 
             id="country" 
             [control]="form.country"
             class="form-input"
             [class.error]="form.country().invalid() && form.country().touched()"
           >
-            @for (country of countries; track country.value) {
+            @for (country of countries(); track country.value) {
               <option [value]="country.value">
                 {{ country.label }}
               </option>
@@ -146,14 +146,14 @@
 
         @if (isUSA()) {
           <div class="form-group">
-            <label for="state">State *</label>
+            <label for="state">{{ t()('form.state') }} *</label>
             <select 
               id="state" 
               [control]="form.state"
               class="form-input"
               [class.error]="form.state().invalid() && form.state().touched()"
             >
-              @for (state of states; track state.value) {
+              @for (state of states(); track state.value) {
                 <option [value]="state.value">
                   {{ state.label }}
                 </option>
@@ -170,38 +170,38 @@
 
       <!-- Addresses -->
       <fieldset class="form-section">
-        <legend>Addresses</legend>
+        <legend>{{ t()('common.addresses') }}</legend>
         
         <div class="addresses-container" formArrayName="addresses">
           <div class="bulk-actions" style="margin-bottom: 12px; display: flex; gap: 8px;">
             <button type="button" class="add-button" (click)="addOrUpdateHundredAddresses()">
-              {{ bulkAddressesAdded ? 'Update 1k addresses' : 'Add 1k addresses' }}
+              {{ bulkAddressesAdded ? t()('form.update1kAddresses') : t()('form.add1kAddresses') }}
             </button>
             <button type="button" class="remove-button" (click)="removeAllAddresses()" [disabled]="form().value().addresses.length <= 1">
-              Remove all addresses
+              {{ t()('form.removeAllAddresses') }}
             </button>
           </div>
           @for (address of form().value().addresses; track $index; let i = $index) {
             <div class="address-item">
               <div class="address-header">
-                <h4>Address {{ i + 1 }}</h4>
+                <h4>{{ t()('common.addresses') }} {{ i + 1 }}</h4>
                 @if (form().value().addresses.length > 1) {
                   <button type="button" class="remove-button" (click)="removeAddress(i)">
-                    Remove
+                    {{ t()('form.remove') }}
                   </button>
                 }
               </div>
 
               <div class="form-row">
                 <div class="form-group">
-                  <label [for]="'addressType' + i">Type</label>
+                  <label [for]="'addressType' + i">{{ t()('form.type') }}</label>
                   <select 
                     [id]="'addressType' + i"
                     name="addressType"
                     [(ngModel)]="address().type"
                     class="form-input"
                   >
-                    @for (type of addressTypes; track type.value) {
+                    @for (type of addressTypes(); track type.value) {
                       <option [value]="type.value">
                         {{ type.label }}
                       </option>
@@ -211,7 +211,7 @@
               </div>
 
               <div class="form-group">
-                <label [for]="'street' + i">Street Address</label>
+                <label [for]="'street' + i">{{ t()('form.streetAddress') }}</label>
                 <input 
                   type="text" 
                   [id]="'street' + i" 
@@ -223,7 +223,7 @@
 
               <div class="form-row">
                 <div class="form-group">
-                  <label [for]="'city' + i">City</label>
+                  <label [for]="'city' + i">{{ t()('form.city') }}</label>
                   <input 
                     type="text" 
                     [id]="'city' + i"
@@ -234,14 +234,14 @@
                 </div>
                 @if (isUSA()) {
                   <div class="form-group">
-                    <label [for]="'state' + i">State</label>
+                    <label [for]="'state' + i">{{ t()('form.state') }}</label>
                     <select 
                       [id]="'state' + i" 
                       name="addressState"
                       [(ngModel)]="address().state"
                       class="form-input"
                     >
-                      @for (state of states; track state.value) {
+                      @for (state of states(); track state.value) {
                         <option [value]="state.value">
                           {{ state.label }}
                         </option>
@@ -250,7 +250,7 @@
                   </div>
                 }
                 <div class="form-group">
-                  <label [for]="'zipCode' + i">ZIP Code</label>
+                  <label [for]="'zipCode' + i">{{ t()('form.zipCode') }}</label>
                   <input 
                     type="text" 
                     [id]="'zipCode' + i"
@@ -264,14 +264,14 @@
           }
           
           <button type="button" class="add-button" (click)="addAddress()">
-            + Add Another Address
+            {{ t()('form.addAnotherAddress') }}
           </button>
         </div>
       </fieldset>
 
       <!-- Newsletter Preferences -->
       <fieldset class="form-section">
-        <legend>Newsletter Preferences</legend>
+        <legend>{{ t()('common.newsletterPreferences') }}</legend>
         
         <div class="form-group">
           <label class="checkbox-label">
@@ -280,20 +280,20 @@
               [control]="form.newsletter"
               class="checkbox"
             />
-            Subscribe to newsletter
+            {{ t()('form.subscribeNewsletter') }}
           </label>
         </div>
 
         @if (isNewsletterSubscribed()) {
           <div class="form-group">
-            <label for="newsletterFrequency">Newsletter Frequency</label>
+            <label for="newsletterFrequency">{{ t()('form.newsletterFrequency') }}</label>
             <select 
               id="newsletterFrequency" 
               [control]="form.newsletterFrequency"
               class="form-input"
             >
-              <option value="">Select frequency</option>
-              @for (freq of newsletterFrequencies; track freq.value) {
+              <option value="">{{ t()('form.selectFrequency') }}</option>
+              @for (freq of newsletterFrequencies(); track freq.value) {
                 <option [value]="freq.value">
                   {{ freq.label }}
                 </option>
@@ -309,24 +309,24 @@
         [disabled]="form().invalid() || !passwordsMatch()"
         (click)="onSubmit()"
       >
-        Register Account
+        {{ t()('common.registerAccount') }}
       </button>
     </form>
 
     @if (submittedData()) {
       <div class="form-data">
-        <h3>Registration Successful!</h3>
+        <h3>{{ t()('common.registrationSuccessful') }}</h3>
         <pre>{{ submittedData() | json }}</pre>
       </div>
     }
 
     <div class="form-status">
-      <h3>Form Status:</h3>
-      <p><strong>Valid:</strong> {{ form().valid() }}</p>
-      <p><strong>Pristine:</strong> {{ !form().dirty() }}</p>
-      <p><strong>Touched:</strong> {{ form().touched() }}</p>
-      <p><strong>Email Exists:</strong> {{ emailExists() }}</p>
-      <p><strong>Email Check In Progress:</strong> {{ emailCheckInProgress() }}</p>
+      <h3>{{ t()('common.formStatus') }}:</h3>
+      <p><strong>{{ t()('common.valid') }}:</strong> {{ form().valid() }}</p>
+      <p><strong>{{ t()('common.pristine') }}:</strong> {{ !form().dirty() }}</p>
+      <p><strong>{{ t()('common.touched') }}:</strong> {{ form().touched() }}</p>
+      <p><strong>{{ t()('common.emailExists') }}:</strong> {{ emailExists() }}</p>
+      <p><strong>{{ t()('common.emailCheckInProgress') }}:</strong> {{ emailCheckInProgress() }}</p>
     </div>
   </div>
 </div>
