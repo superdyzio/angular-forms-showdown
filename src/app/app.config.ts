@@ -5,7 +5,6 @@ import { provideTranslateService } from "@ngx-translate/core";
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { routes } from './app.routes';
-import { LanguageService } from './services/language.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +19,6 @@ export const appConfig: ApplicationConfig = {
         prefix: '/assets/i18n/',
         suffix: '.json'
       })
-    }),
-    LanguageService
+    })
   ]
 };
