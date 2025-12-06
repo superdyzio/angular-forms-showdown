@@ -100,13 +100,13 @@
           @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
             <div class="error-message">
               @if (userForm.get('password')?.errors?.['required']) {
-                <span>{{ 'validation.password.required' | translate }}</span>
+                <div>{{ 'validation.password.required' | translate }}</div>
               }
               @if (userForm.get('password')?.errors?.['minlength']) {
-                <span>{{ 'validation.password.minlength' | translate }}</span>
+                <div>{{ 'validation.password.minlength' | translate }}</div>
               }
               @if (userForm.get('password')?.errors?.['passwordComplexity']) {
-                <span>{{ 'validation.password.complexity' | translate }}</span>
+                <div>{{ 'validation.password.complexity' | translate }}</div>
               }
             </div>
           }

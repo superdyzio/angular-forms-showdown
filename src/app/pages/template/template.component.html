@@ -119,13 +119,13 @@
           @if (password.invalid && password.touched) {
             <div class="error-message">
               @if (password.errors?.['required']) {
-                <span>{{ 'validation.password.required' | translate }}</span>
+                <div>{{ 'validation.password.required' | translate }}</div>
               }
               @if (password.errors?.['minlength']) {
-                <span>{{ 'validation.password.minlength' | translate }}</span>
+                <div>{{ 'validation.password.minlength' | translate }}</div>
               }
               @if (password.errors?.['pattern']) {
-                <span>{{ 'validation.password.complexity' | translate }}</span>
+                <div>{{ 'validation.password.complexity' | translate }}</div>
               }
             </div>
           }
