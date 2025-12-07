@@ -91,9 +91,11 @@
             </div>
           }
           @if (form.password().invalid() && form.password().touched()) {
-            <div class="error-message">
-              <span>{{ form.password().errors()[0].message }}</span>
-            </div>
+            @for (error of form.password().errors(); track error.message) {
+              <div class="error-message">
+                <span>{{ error.message }}</span>
+              </div>
+            }
           }
         </div>
 

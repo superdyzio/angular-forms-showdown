@@ -38,7 +38,6 @@ export class SignalComponent {
     email(data.email, { message: () => this.translate.instant('validation.email.invalid') }),
     required(data.password, { message: () => this.translate.instant('validation.password.required') }),
     minLength(data.password, 8, { message: () => this.translate.instant('validation.password.minlength') }),
-    // @ts-ignore
     validate(data.password, ({ valueOf }) => {
       const password = valueOf(data.password);
       if (!password) return null;
@@ -49,15 +48,13 @@ export class SignalComponent {
       const hasSpecialChar = /[@$!%*?&]/.test(password);
 
       if (!hasUpperCase || !hasLowerCase || !hasNumeric || !hasSpecialChar) {
-    // @ts-ignore
-        return customError({ message: () => this.translate.instant('validation.password.complexity') })
+        return customError({ message: this.translate.instant('validation.password.complexity') })
       }
       return null;
     }),
     required(data.confirmPassword, { message: () => this.translate.instant('validation.confirmPassword.required') }),
     required(data.country, { message: () => this.translate.instant('validation.country.required') }),
-    // @ts-ignore
-    validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: () => this.translate.instant('validation.state.required') }) : null)
+    validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: this.translate.instant('validation.state.required') }) : null)
   });
 
   // Signal-based state
