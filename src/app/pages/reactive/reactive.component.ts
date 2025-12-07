@@ -146,7 +146,8 @@ export class ReactiveComponent implements OnInit {
   // Async email existence validator
   emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
     const email = control.value;
-    if (!email || !email.includes('@')) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)*\.[a-zA-Z]{2,}$/;
+    if (!email || !emailRegex.test(email)) {
       this.emailExists = false;
       return of(null);
     }

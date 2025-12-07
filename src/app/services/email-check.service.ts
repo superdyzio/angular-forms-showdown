@@ -11,7 +11,8 @@ export class EmailCheckService {
   ]);
 
   checkEmailExists(email: string | null | undefined): Observable<boolean> {
-    if (!email || !email.includes('@')) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)*\.[a-zA-Z]{2,}$/;
+    if (!email || !emailRegex.test(email)) {
       return of(false);
     }
     return of(email)

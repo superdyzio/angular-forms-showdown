@@ -165,7 +165,8 @@ export class SignalComponent {
 
     effect(() => {
       const email = this.form().value().email;
-      if (!email || !email.includes('@')) {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)*\.[a-zA-Z]{2,}$/;
+      if (!email || !emailRegex.test(email)) {
         this.emailExists.set(false);
         return null;
       }

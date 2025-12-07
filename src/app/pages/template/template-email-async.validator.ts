@@ -20,7 +20,8 @@ export class TemplateEmailAsyncValidatorDirective implements AsyncValidator {
       return of(null);
     }
     const email = control.value as string;
-    if (!email || !email.includes('@')) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)*\.[a-zA-Z]{2,}$/;
+    if (!email || !emailRegex.test(email)) {
       return of(null);
     }
     return this.emailCheck.checkEmailExists(email).pipe(
