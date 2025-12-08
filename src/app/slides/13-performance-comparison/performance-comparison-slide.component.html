@@ -1,8 +1,8 @@
 <div class="slide-container">
-  <h1>{{ 'slide.performance.title' | translate }}</h1>
+  <h1>{{ 'slide.performance.comparisonTitle' | translate }}</h1>
   <div class="slide-content">
     <h2>{{ 'slide.performance.subtitle' | translate }}</h2>
-    <table class="feature-mapping-table">
+    <table class="performance-table">
       <thead>
         <tr>
           <th>{{ 'slide.performance.action' | translate }}</th>
@@ -14,44 +14,44 @@
       <tbody>
         <tr>
           <td>{{ 'slide.performance.add1kFieldsJs' | translate }}</td>
-          <td>8,8 ms</td>
-          <td>162,22 ms</td>
+          <td>8,74 ms <span class="diff better">(-0.7%)</span></td>
+          <td>127,07 ms <span class="diff better">(-21.7%)</span></td>
           <td>3,44 ms</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.update1kFieldsJs' | translate }}</td>
-          <td>2,24 ms</td>
-          <td>155,44 ms</td>
+          <td>2,26 ms <span class="diff worse">(+0.9%)</span></td>
+          <td>156,13 ms <span class="diff worse">(+0.4%)</span></td>
           <td>3,88 ms</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.add1kFieldsInp' | translate }}</td>
-          <td>5254 ms</td>
-          <td>1321 ms</td>
+          <td>5584 ms <span class="diff worse">(+6.3%)</span></td>
+          <td>1338 ms <span class="diff worse">(+1.3%)</span></td>
           <td>1750 ms</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.update1kFieldsInp' | translate }}</td>
-          <td>4093 ms</td>
-          <td>248 ms</td>
+          <td>4803 ms <span class="diff worse">(+17.3%)</span></td>
+          <td>270 ms <span class="diff worse">(+8.9%)</span></td>
           <td>2659 ms</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.memoryHeapStart' | translate }}</td>
-          <td>23 mb</td>
-          <td>24 mb</td>
+          <td>14,7 mb <span class="diff better">(-36.1%)</span></td>
+          <td>15,3 mb <span class="diff better">(-36.3%)</span></td>
           <td>25 mb</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.memoryHeapMax' | translate }}</td>
-          <td>151 mb</td>
-          <td>154 mb</td>
+          <td>134,1 mb <span class="diff better">(-11.2%)</span></td>
+          <td>133 mb <span class="diff better">(-13.6%)</span></td>
           <td>134 mb</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.memoryHeapEnd' | translate }}</td>
-          <td>28 mb</td>
-          <td>29 mb</td>
+          <td>19,9 mb <span class="diff better">(-28.9%)</span></td>
+          <td>20,9 mb <span class="diff better">(-27.9%)</span></td>
           <td>73 mb</td>
         </tr>
       </tbody>

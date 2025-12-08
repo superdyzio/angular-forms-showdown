@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'afs-performance-second-slide',
+  selector: 'afs-performance-comparison-slide',
   standalone: true,
   imports: [CommonModule, TranslateModule],
-  templateUrl: './performance-slide.component.html',
-  styleUrl: './performance-slide.component.scss'
+  templateUrl: './performance-comparison-slide.component.html',
+  styleUrl: './performance-comparison-slide.component.scss'
 })
-export class PerformanceSecondSlideComponent {}
+export class PerformanceComparisonSlideComponent {}

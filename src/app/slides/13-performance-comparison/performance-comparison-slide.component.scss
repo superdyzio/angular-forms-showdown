@@ -30,7 +30,7 @@ h2 {
   color: #ffd700;
 }
 
-.feature-mapping-table {
+.performance-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1.5rem;
@@ -109,6 +109,19 @@ h2 {
         
         &:last-child {
           padding-right: 1.5rem;
+        }
+
+        .diff {
+          font-size: 0.8rem;
+          font-weight: 600;
+
+          &.better {
+            color: green;
+          }
+
+          &.worse {
+            color: red;
+          }
         }
       }
     }
