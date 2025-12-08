@@ -18,7 +18,6 @@ export class TemplateComponent {
   private translate = inject(TranslateService);
 
   user: User = {
-
     name: '',
     email: '',
     password: '',
