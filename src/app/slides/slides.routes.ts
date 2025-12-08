@@ -11,7 +11,8 @@ import { CvaSlideComponent } from './09-cva/cva-slide.component';
 import { FeatureMappingSlideComponent } from './10-feature-mapping/feature-mapping-slide.component';
 import { DemoSlideComponent } from './11-demo/demo-slide.component';
 import { PerformanceSlideComponent } from './12-performance/performance-slide.component';
-import { ThankYouSlideComponent } from './13-thank-you/thank-you-slide.component';
+import { PerformanceSecondSlideComponent } from './13-performance/performance-slide.component';
+import { ThankYouSlideComponent } from './14-thank-you/thank-you-slide.component';
 
 export const slidesRoutes: Routes = [
   { path: '', redirectTo: '1', pathMatch: 'full' },
@@ -27,6 +28,7 @@ export const slidesRoutes: Routes = [
   { path: '10', component: FeatureMappingSlideComponent },
   { path: '11', component: DemoSlideComponent },
   { path: '12', component: PerformanceSlideComponent },
-  { path: '13', component: ThankYouSlideComponent },
+  { path: '13', component: PerformanceSecondSlideComponent },
+  { path: '14', component: ThankYouSlideComponent },
   { path: '**', redirectTo: '1' }
 ];

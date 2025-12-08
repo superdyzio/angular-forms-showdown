@@ -30,7 +30,8 @@ export class SlideshowComponent implements OnInit, OnDestroy {
     { id: 10, title: 'Feature Mapping' },
     { id: 11, title: 'Demo' },
     { id: 12, title: 'Performance' },
-    { id: 13, title: 'Thank You' }
+    { id: 13, title: 'Performance' },
+    { id: 14, title: 'Thank You' }
   ]);
   
   // Computed values
