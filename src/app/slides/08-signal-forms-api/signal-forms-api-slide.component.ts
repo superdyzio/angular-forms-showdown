@@ -12,8 +12,8 @@ import { TranslateModule } from '@ngx-translate/core';
 export class SignalFormsApiSlideComponent {
   protected formSnippet = `
 <form>
-  <label>First Name: <input [control]="f.firstName" /></label>
-  <label>Last Name: <input [control]="f.lastName" /></label>
+  <label>First Name: <input [field]="f.firstName" /></label>
+  <label>Last Name: <input [field]="f.lastName" /></label>
 </form>
   `
 

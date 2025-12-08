@@ -242,7 +242,7 @@
       "signalAsync": "V (Signal async)",
       "templateDependent": "V (ngIf/ngModel)",
       "reactiveDependent": "V (valueChanges)",
-      "signalDependent": "V (computed signals)",
+      "signalDependent": "V (computed / linked signals)",
       "templateCross": "V (custom logic)",
       "reactiveCross": "V (group validator)",
       "signalCross": "V (form-level signal validator)",
@@ -250,7 +250,7 @@
       "reactiveSide": "V (rxjs streams and operators)",
       "signalSide": "V (effects, linkedSignals)",
       "cvaAll": "V",
-      "cvaSignal": "V/V"
+      "cvaSignal": "V"
     },
     "demo": {
       "title": "CODE"

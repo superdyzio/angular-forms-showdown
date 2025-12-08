@@ -163,7 +163,7 @@
       "point2": "Mało kodu TypeScript, większość logiki w HTML",
       "point3": "Walidacja i stany kontroli obsługiwane przez atrybuty i klasy CSS",
       "point4": "Trudności przy obsłudze dynamicznych lub złożonych struktur formularzy",
-      "point5": "Mniej wydajna przy dużych lub silnie zagnieżdżonych formularzach",
+      "point5": "Mniej wydajne przy dużych lub silnie zagnieżdżonych formularzach",
       "point6": "Naturalna integracja z prostymi formularzami"
     },
     "reactiveForms": {
@@ -196,12 +196,12 @@
     "signalForms": {
       "title": "Signal Forms",
       "subtitle": "Krótka charakterystyka",
-      "point1": "Wykorzystują sygnały (signals) do reaktywnego zarządzania stanem formularza",
+      "point1": "Wykorzystują Signals do reaktywnego zarządzania stanem formularza",
       "point2": "Deklaratywna, czytelna składnia integrująca walidację i zależności między polami",
-      "point3": "Bardziej granularna, precyzyjna re-aktywność i aktualizacje UI",
+      "point3": "Bardziej granularna, precyzyjna reaktywność i aktualizacje UI",
       "point4": "Ułatwiają obsługę dynamicznych, złożonych i dużych formularzy",
-      "point5": "Optymalizują wydajność i minimalizują niepotrzebne zmiany detekcji",
-      "point6": "Nowoczesne podejście, wymagające poznania nowego API (Angular Signals)"
+      "point5": "Optymalizują wydajność i minimalizują niepotrzebne cykle change detection",
+      "point6": "Nowoczesne podejście, wymagające poznania nowych API"
     },
     "signalFormsApi": {
       "title": "Signal Forms API",
@@ -242,7 +242,7 @@
       "signalAsync": "V (Signal async)",
       "templateDependent": "V (ngIf/ngModel)",
       "reactiveDependent": "V (valueChanges)",
-      "signalDependent": "V (computed signals)",
+      "signalDependent": "V (computed / linked signals)",
       "templateCross": "V (custom logic)",
       "reactiveCross": "V (group validator)",
       "signalCross": "V (form-level signal validator)",
@@ -250,7 +250,7 @@
       "reactiveSide": "V (rxjs streams and operators)",
       "signalSide": "V (effects, linkedSignals)",
       "cvaAll": "V",
-      "cvaSignal": "V/V"
+      "cvaSignal": "V"
     },
     "demo": {
       "title": "KODZIK"
