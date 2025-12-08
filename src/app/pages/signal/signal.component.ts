@@ -1,4 +1,4 @@
-import { Component, signal, inject, computed, WritableSignal, effect } from '@angular/core';
+import { Component, signal, inject, computed, WritableSignal, effect, untracked } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -156,12 +156,15 @@ export class SignalComponent {
     { value: 'monthly', label: this.translate.instant('option.monthly') }
   ]);
 
+  // Dedicated email value signal to scope the async check to email changes only
+  emailValue = computed(() => this.form.email().value());
+
   constructor() {
     // Add initial address
     this.addAddress();
 
     effect(() => {
-      const email = this.form().value().email;
+      const email = this.emailValue();
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)*\.[a-zA-Z]{2,}$/;
       if (!email || !emailRegex.test(email)) {
         this.emailExists.set(false);
