@@ -14,45 +14,45 @@
       <tbody>
         <tr>
           <td>{{ 'slide.performance.add1kFieldsJs' | translate }}</td>
-          <td>8,8 ms</td>
-          <td>162,22 ms</td>
-          <td>3,44 ms</td>
+          <td>{{ b.template.add1kJs }} ms</td>
+          <td>{{ b.reactive.add1kJs }} ms</td>
+          <td>{{ b.signal.add1kJs }} ms</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.update1kFieldsJs' | translate }}</td>
-          <td>2,24 ms</td>
-          <td>155,44 ms</td>
-          <td>3,88 ms</td>
+          <td>{{ b.template.update1kJs }} ms</td>
+          <td>{{ b.reactive.update1kJs }} ms</td>
+          <td>{{ b.signal.update1kJs }} ms</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.add1kFieldsInp' | translate }}</td>
-          <td>5254 ms</td>
-          <td>1321 ms</td>
-          <td>1750 ms</td>
+          <td>{{ b.template.add1kInp }} ms</td>
+          <td>{{ b.reactive.add1kInp }} ms</td>
+          <td>{{ b.signal.add1kInp }} ms</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.update1kFieldsInp' | translate }}</td>
-          <td>4093 ms</td>
-          <td>248 ms</td>
-          <td>2659 ms</td>
+          <td>{{ b.template.update1kInp }} ms</td>
+          <td>{{ b.reactive.update1kInp }} ms</td>
+          <td>{{ b.signal.update1kInp }} ms</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.memoryHeapStart' | translate }}</td>
-          <td>23 mb</td>
-          <td>24 mb</td>
-          <td>25 mb</td>
+          <td>{{ b.template.memoryStart }} mb</td>
+          <td>{{ b.reactive.memoryStart }} mb</td>
+          <td>{{ b.signal.memoryStart }} mb</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.memoryHeapMax' | translate }}</td>
-          <td>151 mb</td>
-          <td>154 mb</td>
-          <td>134 mb</td>
+          <td>{{ b.template.memoryPeak }} mb</td>
+          <td>{{ b.reactive.memoryPeak }} mb</td>
+          <td>{{ b.signal.memoryPeak }} mb</td>
         </tr>
         <tr>
           <td>{{ 'slide.performance.memoryHeapEnd' | translate }}</td>
-          <td>28 mb</td>
-          <td>29 mb</td>
-          <td>73 mb</td>
+          <td>{{ b.template.memoryEnd }} mb</td>
+          <td>{{ b.reactive.memoryEnd }} mb</td>
+          <td>{{ b.signal.memoryEnd }} mb</td>
         </tr>
       </tbody>
     </table>

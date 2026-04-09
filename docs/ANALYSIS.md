@@ -114,7 +114,7 @@ These are the measured figures already embedded in the presentation. They are st
 
 4. ~~**Add unit tests for validators** — Showing test-friendliness is a key differentiator between Template-Driven (hard to test) and Reactive/Signal (easy to test in isolation).~~
 
-5. **Automate performance tests** — Replace hard-coded slide numbers with a script that runs the benchmarks headlessly (Playwright + `window.performance`) and outputs a JSON fixture the slides can import. This makes results reproducible and trustworthy.
+5. ~~**Automate performance tests** — Replace hard-coded slide numbers with a script that runs the benchmarks headlessly (Playwright + `window.performance`) and outputs a JSON fixture the slides can import. This makes results reproducible and trustworthy.~~
 
 ### Medium Impact
 
