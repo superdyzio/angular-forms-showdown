@@ -136,7 +136,7 @@ These are the measured figures already embedded in the presentation. They are st
 
 13. ~~**Community & ecosystem slide** — Npm download trends, Stack Overflow questions, GitHub issue volume for each approach.~~
 
-14. **Migration guide** — A brief "how to migrate Template → Reactive" and "Reactive → Signal" guide as supplementary content.
+14. ~~**Migration guide** — A brief "how to migrate Template → Reactive" and "Reactive → Signal" guide as supplementary content.~~
 
 ---
 
