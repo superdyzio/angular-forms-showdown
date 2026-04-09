@@ -106,7 +106,7 @@ These are the measured figures already embedded in the presentation. They are st
 
 ### High Impact
 
-1. **Debounce async email validator** — Currently fires on every keystroke. Add `debounceTime(300)` and `distinctUntilChanged()` to avoid hammering the (simulated) backend and to show real-world best practice.
+1. ~~**Debounce async email validator** — Currently fires on every keystroke. Add `debounceTime(300)` and `distinctUntilChanged()` to avoid hammering the (simulated) backend and to show real-world best practice.~~
 
 2. ~~**Add `OnPush` change detection** — Especially relevant for the Signal form component, which should benefit most. Adding it to all three would make the performance comparison even more interesting.~~
 

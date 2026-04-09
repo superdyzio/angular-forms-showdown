@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, signal, inject, computed, WritableSignal, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject, computed, WritableSignal } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +8,7 @@ import { EmailCheckService } from '../../services/email-check.service';
 import { isValidEmailFormat } from '../../validators/email.validator';
 import { Address } from '../../types/address';
 import { User, UserForm } from '../../types/user';
-import { catchError, map, take } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
@@ -166,30 +167,31 @@ export class SignalComponent {
     // Add initial address
     this.addAddress();
 
-    effect(() => {
-      const email = this.emailValue();
-      if (!email || !isValidEmailFormat(email)) {
-        this.emailExists.set(false);
-        return null;
-      }
-      this.emailCheckInProgress.set(true);
-      this.emailCheckError.set(false);
-
-      return this.emailCheck.checkEmailExists(email).pipe(
-        map(exists => {
-          this.emailCheckInProgress.set(false);
-          this.emailExists.set(exists);
-          return exists ? { emailExists: true } : null;
-        }),
-        take(1),
-        catchError(() => {
-          this.emailCheckInProgress.set(false);
-          this.emailCheckError.set(true);
+    toObservable(this.emailValue).pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(email => {
+        if (!email || !isValidEmailFormat(email)) {
+          this.emailExists.set(false);
           return of(null);
-        })
-      ).subscribe();
-    });
-  
+        }
+        this.emailCheckInProgress.set(true);
+        this.emailCheckError.set(false);
+        return this.emailCheck.checkEmailExists(email).pipe(
+          map(exists => {
+            this.emailCheckInProgress.set(false);
+            this.emailExists.set(exists);
+            return exists ? { emailExists: true } : null;
+          }),
+          catchError(() => {
+            this.emailCheckInProgress.set(false);
+            this.emailCheckError.set(true);
+            return of(null);
+          })
+        );
+      }),
+      takeUntilDestroyed()
+    ).subscribe();
   }
 
   // Check if country is USA

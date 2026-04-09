@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, 
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, of, timer } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { EmailCheckService } from '../../services/email-check.service';
 import { isValidEmailFormat } from '../../validators/email.validator';
 import { Address } from '../../types/address';
@@ -160,7 +160,8 @@ export class ReactiveComponent implements OnInit {
     }
     this.emailCheckInProgress = true;
     this.emailCheckError = false;
-    return this.emailCheck.checkEmailExists(email).pipe(
+    return timer(300).pipe(
+      switchMap(() => this.emailCheck.checkEmailExists(email)),
       map(exists => {
         this.emailCheckInProgress = false;
         this.emailExists = exists;

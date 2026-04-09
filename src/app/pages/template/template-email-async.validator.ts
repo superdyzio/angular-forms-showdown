@@ -1,6 +1,6 @@
 import { Directive, Input, inject } from '@angular/core';
 import { AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors } from '@angular/forms';
-import { Observable, map, catchError, of } from 'rxjs';
+import { Observable, map, catchError, of, timer, switchMap } from 'rxjs';
 import { EmailCheckService } from '../../services/email-check.service';
 import { isValidEmailFormat } from '../../validators/email.validator';
 
@@ -24,7 +24,8 @@ export class TemplateEmailAsyncValidatorDirective implements AsyncValidator {
     if (!email || !isValidEmailFormat(email)) {
       return of(null);
     }
-    return this.emailCheck.checkEmailExists(email).pipe(
+    return timer(300).pipe(
+      switchMap(() => this.emailCheck.checkEmailExists(email)),
       map(exists => (exists ? { emailExists: true } : null)),
       catchError(() => of({ emailCheckError: true }))
     );
