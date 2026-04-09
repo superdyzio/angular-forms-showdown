@@ -1,4 +1,4 @@
-import { Component, signal, inject, computed, WritableSignal, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject, computed, WritableSignal, effect } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +16,8 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [RouterLink, FormsModule, CommonModule, FormField, TranslateModule],
   templateUrl: './signal.component.html',
-  styleUrl: './signal.component.scss'
+  styleUrl: './signal.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignalComponent {
   private emailCheck = inject(EmailCheckService);

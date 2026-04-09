@@ -1,4 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TemplateEmailAsyncValidatorDirective } from './template-email-async.validator';
@@ -13,11 +13,13 @@ import { EmailCheckService } from '../../services/email-check.service';
   standalone: true,
   imports: [RouterLink, FormsModule, CommonModule, TemplateEmailAsyncValidatorDirective, TranslateModule],
   templateUrl: './template.component.html',
-  styleUrl: './template.component.scss'
+  styleUrl: './template.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TemplateComponent {
   private translate = inject(TranslateService);
   private emailCheck = inject(EmailCheckService);
+  private cdr = inject(ChangeDetectorRef);
   protected emailErrorSimulation = this.emailCheck.simulateError;
 
   user: User = {
@@ -96,12 +98,14 @@ export class TemplateComponent {
       zipCode: ''
     });
     this.calculateProfileCompletion();
+    this.cdr.markForCheck();
   }
 
   // Remove address
   removeAddress(index: number) {
     this.user.addresses.splice(index, 1);
     this.calculateProfileCompletion();
+    this.cdr.markForCheck();
   }
 
   // Remove all addresses and reset to single empty
@@ -110,6 +114,7 @@ export class TemplateComponent {
     this.addAddress();
     this.bulkAddressesAdded = false;
     this.calculateProfileCompletion();
+    this.cdr.markForCheck();
   }
 
   // Async email validation is now handled by afsEmailExists directive
@@ -178,6 +183,7 @@ export class TemplateComponent {
   onSubmit(form: NgForm) {
     if (form.valid && this.passwordsMatch()) {
       this.submittedData = { ...this.user };
+      this.cdr.markForCheck();
       console.log('Form submitted:', this.submittedData);
     }
   }
@@ -192,6 +198,7 @@ export class TemplateComponent {
       const end = performance.now();
       console.log('add 1k address time: ', end - start);
       this.bulkAddressesAdded = true;
+      this.cdr.markForCheck();
     } else {
       const total = this.user.addresses.length;
       const start = performance.now();
@@ -209,6 +216,7 @@ export class TemplateComponent {
       }
       const end = performance.now();
       console.log('update 1k address time: ', end - start);
+      this.cdr.markForCheck();
     }
     this.calculateProfileCompletion();
   }

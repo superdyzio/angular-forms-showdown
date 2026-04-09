@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, computed } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject, computed } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -15,11 +15,13 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule, CommonModule, TranslateModule],
   templateUrl: './reactive.component.html',
-  styleUrl: './reactive.component.scss'
+  styleUrl: './reactive.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReactiveComponent implements OnInit {
   private fb = inject(FormBuilder);
   private emailCheck = inject(EmailCheckService);
+  private cdr = inject(ChangeDetectorRef);
   protected emailErrorSimulation = this.emailCheck.simulateError;
 
   private translate = inject(TranslateService);
@@ -84,6 +86,7 @@ export class ReactiveComponent implements OnInit {
     // Subscribe to form changes to update completion
     this.userForm.valueChanges.subscribe(() => {
       this.calculateProfileCompletion();
+      this.cdr.markForCheck();
     });
   }
 
@@ -161,11 +164,13 @@ export class ReactiveComponent implements OnInit {
       map(exists => {
         this.emailCheckInProgress = false;
         this.emailExists = exists;
+        this.cdr.markForCheck();
         return exists ? { emailExists: true } : null;
       }),
       catchError(() => {
         this.emailCheckInProgress = false;
         this.emailCheckError = true;
+        this.cdr.markForCheck();
         return of({ emailCheckError: true });
       })
     );
@@ -249,6 +254,7 @@ export class ReactiveComponent implements OnInit {
   onSubmit() {
     if (this.userForm.valid) {
       this.submittedData = this.userForm.value;
+      this.cdr.markForCheck();
       console.log('Form submitted:', this.submittedData);
     }
   }
