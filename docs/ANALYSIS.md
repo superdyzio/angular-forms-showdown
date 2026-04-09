@@ -120,7 +120,7 @@ These are the measured figures already embedded in the presentation. They are st
 
 6. ~~**Bundle size comparison** — Run `ng build --stats-json` and compare the output sizes for each form approach (they share most code, but the per-approach difference is slide-worthy).~~
 
-7. **Zoneless demo** — Signal Forms support zoneless Angular (`provideExperimentalZonelessChangeDetection()`). A side branch or toggle that runs without zone.js would be a compelling addition to the performance story.
+7. ~~**Zoneless demo** — Signal Forms support zoneless Angular (`provideExperimentalZonelessChangeDetection()`). A side branch or toggle that runs without zone.js would be a compelling addition to the performance story.~~
 
 8. ~~**Side-by-side code viewer in slides** — Slide 8 already shows API snippets. A three-column code comparison for a single validator (e.g. async email) would be very effective.~~
 

@@ -14,8 +14,8 @@ export class ZonelessSlideComponent {
 `// app.config.ts
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideExperimentalZonelessChangeDetection(),
-    // remove provideZoneChangeDetection() / zone.js polyfill
+    provideZonelessChangeDetection(),
+    // remove provideZoneChangeDetection() and zone.js polyfill
     provideRouter(appRoutes),
     ...
   ]

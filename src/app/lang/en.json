@@ -285,7 +285,7 @@
       "templateBroken": "UI freezes after input — [(ngModel)] changes don't trigger change detection",
       "reactiveBroken": "Partially broken — statusChanges / valueChanges fire, but async validators and markForCheck() need manual triggers",
       "signalWorks": "Fully compatible — signals push change notifications directly into Angular's scheduler, no Zone.js needed",
-      "footnote": "provideExperimentalZonelessChangeDetection() is available since Angular 18. Signal Forms are the only form approach fully compatible with it."
+      "footnote": "provideZonelessChangeDetection() is stable in Angular 21 (was experimental in Angular 18–20). Signal Forms are the only form approach fully compatible with it."
     },
     "migration": {
       "title": "Same Field, Three Approaches",
