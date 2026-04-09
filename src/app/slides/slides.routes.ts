@@ -13,7 +13,8 @@ import { DemoSlideComponent } from './11-demo/demo-slide.component';
 import { PerformanceSlideComponent } from './12-performance/performance-slide.component';
 import { PerformanceComparisonSlideComponent } from './13-performance-comparison/performance-comparison-slide.component';
 import { BundleSizeSlideComponent } from './14-bundle-size/bundle-size-slide.component';
-import { ThankYouSlideComponent } from './15-thank-you/thank-you-slide.component';
+import { LearningCurveSlideComponent } from './15-learning-curve/learning-curve-slide.component';
+import { ThankYouSlideComponent } from './16-thank-you/thank-you-slide.component';
 
 export const slidesRoutes: Routes = [
   { path: '', redirectTo: '1', pathMatch: 'full' },
@@ -31,6 +32,7 @@ export const slidesRoutes: Routes = [
   { path: '12', component: PerformanceSlideComponent },
   { path: '13', component: PerformanceComparisonSlideComponent },
   { path: '14', component: BundleSizeSlideComponent },
-  { path: '15', component: ThankYouSlideComponent },
+  { path: '15', component: LearningCurveSlideComponent },
+  { path: '16', component: ThankYouSlideComponent },
   { path: '**', redirectTo: '1' }
 ];
