@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+import { isValidEmailFormat } from '../validators/email.validator';
 
 @Injectable({ providedIn: 'root' })
 export class EmailCheckService {
@@ -11,8 +12,7 @@ export class EmailCheckService {
   ]);
 
   checkEmailExists(email: string | null | undefined): Observable<boolean> {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)*\.[a-zA-Z]{2,}$/;
-    if (!email || !emailRegex.test(email)) {
+    if (!email || !isValidEmailFormat(email)) {
       return of(false);
     }
     return of(email)

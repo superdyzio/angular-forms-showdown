@@ -2,6 +2,7 @@ import { Directive, Input, inject } from '@angular/core';
 import { AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors } from '@angular/forms';
 import { Observable, map, catchError, of } from 'rxjs';
 import { EmailCheckService } from '../../services/email-check.service';
+import { isValidEmailFormat } from '../../validators/email.validator';
 
 @Directive({
   selector: '[afsEmailExists]',
@@ -20,8 +21,7 @@ export class TemplateEmailAsyncValidatorDirective implements AsyncValidator {
       return of(null);
     }
     const email = control.value as string;
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)*\.[a-zA-Z]{2,}$/;
-    if (!email || !emailRegex.test(email)) {
+    if (!email || !isValidEmailFormat(email)) {
       return of(null);
     }
     return this.emailCheck.checkEmailExists(email).pipe(

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { EmailCheckService } from '../../services/email-check.service';
+import { isValidEmailFormat } from '../../validators/email.validator';
 import { Address } from '../../types/address';
 import { User } from '../../types/user';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -148,8 +149,7 @@ export class ReactiveComponent implements OnInit {
   // Async email existence validator
   emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
     const email = control.value;
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)*\.[a-zA-Z]{2,}$/;
-    if (!email || !emailRegex.test(email)) {
+    if (!email || !isValidEmailFormat(email)) {
       this.emailExists = false;
       return of(null);
     }

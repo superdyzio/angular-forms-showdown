@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { form, FormField, required, minLength, email, validate, requiredError } from '@angular/forms/signals';
 import { EmailCheckService } from '../../services/email-check.service';
+import { isValidEmailFormat } from '../../validators/email.validator';
 import { Address } from '../../types/address';
 import { User, UserForm } from '../../types/user';
 import { catchError, map, take } from 'rxjs/operators';
@@ -164,8 +165,7 @@ export class SignalComponent {
 
     effect(() => {
       const email = this.emailValue();
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9-]*(\.[a-zA-Z0-9][a-zA-Z0-9-]*)*\.[a-zA-Z]{2,}$/;
-      if (!email || !emailRegex.test(email)) {
+      if (!email || !isValidEmailFormat(email)) {
         this.emailExists.set(false);
         return null;
       }
