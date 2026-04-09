@@ -1,4 +1,4 @@
-import { Component, signal, computed, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, signal, computed, OnInit, OnDestroy, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -13,6 +13,9 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './slideshow.component.scss'
 })
 export class SlideshowComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   // Current slide index (1-based)
   currentSlide = signal(1);
   
@@ -42,11 +45,6 @@ export class SlideshowComponent implements OnInit, OnDestroy {
   );
   
   private destroy$ = new Subject<void>();
-  
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
   
   ngOnInit() {
     // Listen to route changes to update current slide

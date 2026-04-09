@@ -1,4 +1,4 @@
-import { Component, signal, inject, computed, WritableSignal, effect, untracked } from '@angular/core';
+import { Component, signal, inject, computed, WritableSignal, effect } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -32,12 +32,12 @@ export class SignalComponent {
     newsletterFrequency: '',
     addresses: []
   }), data => {
-    required(data.name, { message: () => this.translate.instant('validation.name.required') }),
-    minLength(data.name, 2, { message: () => this.translate.instant('validation.name.minlength') }),
-    required(data.email, { message: () => this.translate.instant('validation.email.required') }),
-    email(data.email, { message: () => this.translate.instant('validation.email.invalid') }),
-    required(data.password, { message: () => this.translate.instant('validation.password.required') }),
-    minLength(data.password, 8, { message: () => this.translate.instant('validation.password.minlength') }),
+    required(data.name, { message: () => this.translate.instant('validation.name.required') });
+    minLength(data.name, 2, { message: () => this.translate.instant('validation.name.minlength') });
+    required(data.email, { message: () => this.translate.instant('validation.email.required') });
+    email(data.email, { message: () => this.translate.instant('validation.email.invalid') });
+    required(data.password, { message: () => this.translate.instant('validation.password.required') });
+    minLength(data.password, 8, { message: () => this.translate.instant('validation.password.minlength') });
     validate(data.password, ({ valueOf }) => {
       const password = valueOf(data.password);
       if (!password) return null;
@@ -48,13 +48,13 @@ export class SignalComponent {
       const hasSpecialChar = /[@$!%*?&]/.test(password);
 
       if (!hasUpperCase || !hasLowerCase || !hasNumeric || !hasSpecialChar) {
-        return { kind: 'complexityError', message: this.translate.instant('validation.password.complexity') }
+        return { kind: 'complexityError', message: this.translate.instant('validation.password.complexity') };
       }
       return null;
-    }),
-    required(data.confirmPassword, { message: () => this.translate.instant('validation.confirmPassword.required') }),
-    required(data.country, { message: () => this.translate.instant('validation.country.required') }),
-    validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: this.translate.instant('validation.state.required') }) : null)
+    });
+    required(data.confirmPassword, { message: () => this.translate.instant('validation.confirmPassword.required') });
+    required(data.country, { message: () => this.translate.instant('validation.country.required') });
+    validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: this.translate.instant('validation.state.required') }) : null);
   });
 
   // Signal-based state
@@ -103,7 +103,6 @@ export class SignalComponent {
       return { score: 0, label: '', color: '' };
     }
 
-    let score = 0;
     const checks = {
       length: password.length >= 8,
       lowercase: /[a-z]/.test(password),
@@ -112,7 +111,7 @@ export class SignalComponent {
       special: /[@$!%*?&]/.test(password)
     };
 
-    score = Object.values(checks).filter(Boolean).length;
+    const score = Object.values(checks).filter(Boolean).length;
 
     if (score <= 2) {
       return { score, label: this.translate.instant('password.weak'), color: '#ff4444' };

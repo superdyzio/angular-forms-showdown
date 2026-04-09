@@ -1,4 +1,4 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, inject } from '@angular/core';
 import { AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors } from '@angular/forms';
 import { Observable, map, catchError, of } from 'rxjs';
 import { EmailCheckService } from '../../services/email-check.service';
@@ -11,9 +11,9 @@ import { EmailCheckService } from '../../services/email-check.service';
   ]
 })
 export class TemplateEmailAsyncValidatorDirective implements AsyncValidator {
-  @Input('afsEmailExists') enabled: boolean | string = true;
+  private emailCheck = inject(EmailCheckService);
 
-  constructor(private emailCheck: EmailCheckService) {}
+  @Input('afsEmailExists') enabled: boolean | string = true;
 
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
     if (this.enabled === false || this.enabled === 'false') {

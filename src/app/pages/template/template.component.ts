@@ -1,6 +1,6 @@
 import { Component, inject, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { TemplateEmailAsyncValidatorDirective } from './template-email-async.validator';
 import { CommonModule } from '@angular/common';
 import { Address } from '../../types/address';
@@ -119,7 +119,6 @@ export class TemplateComponent {
       return { score: 0, label: '', color: '' };
     }
 
-    let score = 0;
     const checks = {
       length: password.length >= 8,
       lowercase: /[a-z]/.test(password),
@@ -128,7 +127,7 @@ export class TemplateComponent {
       special: /[@$!%*?&]/.test(password)
     };
 
-    score = Object.values(checks).filter(Boolean).length;
+    const score = Object.values(checks).filter(Boolean).length;
 
     if (score <= 2) {
       return { score, label: this.translate.instant('password.weak'), color: '#ff4444' };
@@ -169,7 +168,7 @@ export class TemplateComponent {
     this.calculateProfileCompletion();
   }
 
-  onSubmit(form: any) {
+  onSubmit(form: NgForm) {
     if (form.valid && this.passwordsMatch()) {
       this.submittedData = { ...this.user };
       console.log('Form submitted:', this.submittedData);

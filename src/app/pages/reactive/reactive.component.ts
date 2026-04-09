@@ -17,6 +17,9 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
   styleUrl: './reactive.component.scss'
 })
 export class ReactiveComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private emailCheck = inject(EmailCheckService);
+
   private translate = inject(TranslateService);
 
   userForm: FormGroup;
@@ -57,7 +60,7 @@ export class ReactiveComponent implements OnInit {
     { value: 'monthly', label: this.translate.instant('option.monthly') }
   ]);
 
-  constructor(private fb: FormBuilder, private emailCheck: EmailCheckService) {
+  constructor() {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email], [this.emailExistsValidator.bind(this)]],
@@ -104,7 +107,6 @@ export class ReactiveComponent implements OnInit {
       return { score: 0, label: '', color: '' };
     }
 
-    let score = 0;
     const checks = {
       length: password.length >= 8,
       lowercase: /[a-z]/.test(password),
@@ -113,7 +115,7 @@ export class ReactiveComponent implements OnInit {
       special: /[@$!%*?&]/.test(password)
     };
 
-    score = Object.values(checks).filter(Boolean).length;
+    const score = Object.values(checks).filter(Boolean).length;
 
     if (score <= 2) {
       return { score, label: this.translate.instant('password.weak'), color: '#ff4444' };
