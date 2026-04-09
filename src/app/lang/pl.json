@@ -270,6 +270,11 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end"
     },
+    "migration": {
+      "title": "To samo pole, trzy podejścia",
+      "subtitle": "Wymagane pole email z walidacją — jak każde podejście to obsługuje",
+      "footnote": "Wszystkie trzy osiągają ten sam rezultat. Różnica tkwi w tym, gdzie żyje logika: szablon lub klasa."
+    },
     "whenToUse": {
       "title": "Kiedy użyć czego?",
       "subtitle": "Praktyczny przewodnik decyzyjny",

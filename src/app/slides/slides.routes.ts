@@ -16,7 +16,8 @@ import { BundleSizeSlideComponent } from './14-bundle-size/bundle-size-slide.com
 import { LearningCurveSlideComponent } from './15-learning-curve/learning-curve-slide.component';
 import { CommunitySlideComponent } from './16-community/community-slide.component';
 import { WhenToUseSlideComponent } from './17-when-to-use/when-to-use-slide.component';
-import { ThankYouSlideComponent } from './18-thank-you/thank-you-slide.component';
+import { MigrationSlideComponent } from './18-migration/migration-slide.component';
+import { ThankYouSlideComponent } from './19-thank-you/thank-you-slide.component';
 
 export const slidesRoutes: Routes = [
   { path: '', redirectTo: '1', pathMatch: 'full' },
@@ -37,6 +38,7 @@ export const slidesRoutes: Routes = [
   { path: '15', component: LearningCurveSlideComponent },
   { path: '16', component: CommunitySlideComponent },
   { path: '17', component: WhenToUseSlideComponent },
-  { path: '18', component: ThankYouSlideComponent },
+  { path: '18', component: MigrationSlideComponent },
+  { path: '19', component: ThankYouSlideComponent },
   { path: '**', redirectTo: '1' }
 ];

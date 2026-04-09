@@ -270,6 +270,11 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end"
     },
+    "migration": {
+      "title": "Same Field, Three Approaches",
+      "subtitle": "A required email field with validation — how each approach handles it",
+      "footnote": "All three achieve the same result. The difference is where the logic lives: template or class."
+    },
     "whenToUse": {
       "title": "When to Use What?",
       "subtitle": "A practical decision guide",
