@@ -270,6 +270,25 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end"
     },
+    "whenToUse": {
+      "title": "When to Use What?",
+      "subtitle": "A practical decision guide",
+      "scenario": "Scenario",
+      "recommendation": "Recommendation",
+      "reason": "Why",
+      "scenarioSimple": "Simple login / contact form",
+      "scenarioComplex": "Complex form with dynamic fields, cross-field validation",
+      "scenarioNew": "New project on Angular 18+, performance matters",
+      "scenarioExisting": "Existing Reactive Forms app",
+      "scenarioZoneless": "Zoneless Angular app",
+      "scenarioTesting": "Validator unit testing is a priority",
+      "reasonSimple": "Low boilerplate, two-way binding is sufficient",
+      "reasonComplex": "Explicit structure, strong types, mature ecosystem",
+      "reasonNew": "Best JS execution time, lower memory, minimal boilerplate",
+      "reasonExisting": "Signal Forms still experimental — wait for stable release",
+      "reasonZoneless": "Only Signal Forms are fully compatible with zoneless Angular",
+      "reasonTesting": "Both allow testing validators in isolation without DOM"
+    },
     "community": {
       "title": "Community & Ecosystem",
       "metric": "Metric",

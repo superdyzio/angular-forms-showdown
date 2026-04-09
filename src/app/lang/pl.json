@@ -270,6 +270,25 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end"
     },
+    "whenToUse": {
+      "title": "Kiedy użyć czego?",
+      "subtitle": "Praktyczny przewodnik decyzyjny",
+      "scenario": "Scenariusz",
+      "recommendation": "Rekomendacja",
+      "reason": "Dlaczego",
+      "scenarioSimple": "Prosty formularz logowania / kontaktowy",
+      "scenarioComplex": "Złożony formularz z dynamicznymi polami, walidacją między polami",
+      "scenarioNew": "Nowy projekt na Angular 18+, wydajność ma znaczenie",
+      "scenarioExisting": "Istniejąca aplikacja z Reactive Forms",
+      "scenarioZoneless": "Aplikacja Angular bez zone.js",
+      "scenarioTesting": "Testowanie walidatorów jest priorytetem",
+      "reasonSimple": "Mało kodu, two-way binding wystarczy",
+      "reasonComplex": "Explicytna struktura, silne typy, dojrzały ekosystem",
+      "reasonNew": "Najlepszy czas wykonania JS, mniejsze zużycie pamięci, mało kodu",
+      "reasonExisting": "Signal Forms nadal eksperymentalne — poczekaj na stabilną wersję",
+      "reasonZoneless": "Tylko Signal Forms są w pełni kompatybilne z zoneless Angular",
+      "reasonTesting": "Oba pozwalają testować walidatory w izolacji bez DOM"
+    },
     "community": {
       "title": "Społeczność i ekosystem",
       "metric": "Metryka",
