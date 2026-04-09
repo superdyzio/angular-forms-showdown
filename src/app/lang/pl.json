@@ -54,7 +54,9 @@
     "remove": "Usuń",
     "removeAllAddresses": "Usuń wszystkie adresy",
     "add1kAddresses": "Dodaj 1k adresów",
-    "update1kAddresses": "Aktualizuj 1k adresów"
+    "update1kAddresses": "Aktualizuj 1k adresów",
+    "simulateEmailError": "Symuluj błąd API",
+    "simulateEmailErrorActive": "Zatrzymaj symulację błędu API"
   },
   "validation": {
     "name": {
@@ -67,7 +69,8 @@
       "exists": "Ten email jest już zarejestrowany",
       "checking": "Sprawdzanie dostępności emaila...",
       "available": "Email jest dostępny",
-      "alreadyTaken": "Email jest już zajęty"
+      "alreadyTaken": "Email jest już zajęty",
+      "checkError": "Nie można zweryfikować emaila — spróbuj ponownie"
     },
     "password": {
       "required": "Hasło jest wymagane",

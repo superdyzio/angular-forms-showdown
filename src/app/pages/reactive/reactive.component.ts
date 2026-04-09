@@ -20,6 +20,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 export class ReactiveComponent implements OnInit {
   private fb = inject(FormBuilder);
   private emailCheck = inject(EmailCheckService);
+  protected emailErrorSimulation = this.emailCheck.simulateError;
 
   private translate = inject(TranslateService);
 
@@ -27,6 +28,7 @@ export class ReactiveComponent implements OnInit {
   submittedData: User | null = null;
   emailExists = false;
   emailCheckInProgress = false;
+  emailCheckError = false;
   profileCompletion = 0;
   bulkAddressesAdded = false;
 
@@ -154,6 +156,7 @@ export class ReactiveComponent implements OnInit {
       return of(null);
     }
     this.emailCheckInProgress = true;
+    this.emailCheckError = false;
     return this.emailCheck.checkEmailExists(email).pipe(
       map(exists => {
         this.emailCheckInProgress = false;
@@ -162,9 +165,16 @@ export class ReactiveComponent implements OnInit {
       }),
       catchError(() => {
         this.emailCheckInProgress = false;
-        return of(null);
+        this.emailCheckError = true;
+        return of({ emailCheckError: true });
       })
     );
+  }
+
+  toggleEmailErrorSimulation(): void {
+    this.emailCheck.toggleSimulateError();
+    // Retrigger validation when toggling error simulation
+    this.userForm.get('email')?.updateValueAndValidity();
   }
 
   // Get addresses FormArray

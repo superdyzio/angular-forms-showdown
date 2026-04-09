@@ -62,6 +62,8 @@ export class SignalComponent {
   submittedData = signal<User | null>(null);
   emailCheckInProgress = signal(false);
   emailExists = signal(false);
+  emailCheckError = signal(false);
+  protected emailErrorSimulation = this.emailCheck.simulateError;
 
   // Calculate profile completion percentage
   profileCompletion = computed(() => {
@@ -170,6 +172,7 @@ export class SignalComponent {
         return null;
       }
       this.emailCheckInProgress.set(true);
+      this.emailCheckError.set(false);
 
       return this.emailCheck.checkEmailExists(email).pipe(
         map(exists => {
@@ -180,6 +183,7 @@ export class SignalComponent {
         take(1),
         catchError(() => {
           this.emailCheckInProgress.set(false);
+          this.emailCheckError.set(true);
           return of(null);
         })
       ).subscribe();
@@ -188,6 +192,10 @@ export class SignalComponent {
   }
 
   // Check if country is USA
+  toggleEmailErrorSimulation(): void {
+    this.emailCheck.toggleSimulateError();
+  }
+
   isUSA(): boolean {
     return this.form.country().value() === 'usa';
   }

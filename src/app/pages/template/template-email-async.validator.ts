@@ -26,7 +26,7 @@ export class TemplateEmailAsyncValidatorDirective implements AsyncValidator {
     }
     return this.emailCheck.checkEmailExists(email).pipe(
       map(exists => (exists ? { emailExists: true } : null)),
-      catchError(() => of(null))
+      catchError(() => of({ emailCheckError: true }))
     );
   }
 }

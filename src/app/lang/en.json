@@ -54,7 +54,9 @@
     "remove": "Remove",
     "removeAllAddresses": "Remove all addresses",
     "add1kAddresses": "Add 1k addresses",
-    "update1kAddresses": "Update 1k addresses"
+    "update1kAddresses": "Update 1k addresses",
+    "simulateEmailError": "Simulate API error",
+    "simulateEmailErrorActive": "Stop simulating API error"
   },
   "validation": {
     "name": {
@@ -67,7 +69,8 @@
       "exists": "This email is already registered",
       "checking": "Checking email availability...",
       "available": "Email is available",
-      "alreadyTaken": "Email already taken"
+      "alreadyTaken": "Email already taken",
+      "checkError": "Could not verify email — please try again"
     },
     "password": {
       "required": "Password is required",

@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Address } from '../../types/address';
 import { User } from '../../types/user';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { EmailCheckService } from '../../services/email-check.service';
 
 @Component({
   selector: 'afs-template',
@@ -16,6 +17,8 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 })
 export class TemplateComponent {
   private translate = inject(TranslateService);
+  private emailCheck = inject(EmailCheckService);
+  protected emailErrorSimulation = this.emailCheck.simulateError;
 
   user: User = {
     name: '',
@@ -77,6 +80,10 @@ export class TemplateComponent {
   // Check if newsletter is subscribed
   isNewsletterSubscribed(): boolean {
     return this.user.newsletter;
+  }
+
+  toggleEmailErrorSimulation(): void {
+    this.emailCheck.toggleSimulateError();
   }
 
   // Add new address

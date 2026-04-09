@@ -75,16 +75,24 @@
               <span>{{ 'validation.email.exists' | translate }}</span>
             </div>
           }
+          @if (email.errors?.['emailCheckError']) {
+            <div class="error-message">
+              <span>{{ 'validation.email.checkError' | translate }}</span>
+            </div>
+          }
           @if (email.pending) {
             <div class="loading-message">
               <span>{{ 'validation.email.checking' | translate }}</span>
             </div>
           }
-          @if (email.valid && email.touched && !email.pending) {
+          @if (email.valid && email.touched && !email.pending && !email.errors?.['emailCheckError']) {
             <div class="success-message">
               <span>{{ 'validation.email.available' | translate }}</span>
             </div>
           }
+          <button type="button" class="simulate-error-button" [class.active]="emailErrorSimulation()" (click)="toggleEmailErrorSimulation()">
+            {{ (emailErrorSimulation() ? 'form.simulateEmailErrorActive' : 'form.simulateEmailError') | translate }}
+          </button>
         </div>
 
         <div class="form-group">

@@ -49,12 +49,17 @@
               <span>{{ form.email().errors()[0].message }}</span>
             </div>
           }
+          @if (emailCheckError()) {
+            <div class="error-message">
+              <span>{{ 'validation.email.checkError' | translate }}</span>
+            </div>
+          }
           @if (emailCheckInProgress()) {
             <div class="loading-message">
               <span>{{ 'validation.email.checking' | translate }}</span>
             </div>
           }
-          @if (form.email().valid() && form.email().touched() && !emailCheckInProgress()) {
+          @if (form.email().valid() && form.email().touched() && !emailCheckInProgress() && !emailCheckError()) {
             @if (emailExists()) {
               <div class="error-message">
                 <span>{{ 'validation.email.alreadyTaken' | translate }}</span>
@@ -65,6 +70,9 @@
               </div>
             }
           }
+          <button type="button" class="simulate-error-button" [class.active]="emailErrorSimulation()" (click)="toggleEmailErrorSimulation()">
+            {{ (emailErrorSimulation() ? 'form.simulateEmailErrorActive' : 'form.simulateEmailError') | translate }}
+          </button>
         </div>
 
         <div class="form-group">
