@@ -1,0 +1,37 @@
+<div class="slide-container">
+  <h1>{{ 'slide.bundleSize.title' | translate }}</h1>
+  <div class="slide-content">
+    <p class="subtitle">{{ 'slide.bundleSize.subtitle' | translate }}</p>
+    <table class="bundle-table">
+      <thead>
+        <tr>
+          <th>{{ 'slide.bundleSize.approach' | translate }}</th>
+          <th>{{ 'slide.bundleSize.rawSize' | translate }}</th>
+          <th>{{ 'slide.bundleSize.gzippedSize' | translate }}</th>
+          <th>{{ 'slide.bundleSize.note' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ 'slide.performance.templateForms' | translate }}</td>
+          <td>25.06 kB</td>
+          <td>5.58 kB</td>
+          <td>{{ 'slide.bundleSize.noteBaseline' | translate }}</td>
+        </tr>
+        <tr>
+          <td>{{ 'slide.performance.reactiveForms' | translate }}</td>
+          <td>24.56 kB</td>
+          <td>5.55 kB</td>
+          <td>{{ 'slide.bundleSize.noteSimilar' | translate }}</td>
+        </tr>
+        <tr class="highlight">
+          <td>{{ 'slide.performance.signalForms' | translate }}</td>
+          <td>55.57 kB <span class="diff">+121%</span></td>
+          <td>13.87 kB <span class="diff">+149%</span></td>
+          <td>{{ 'slide.bundleSize.noteSignal' | translate }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="footnote">{{ 'slide.bundleSize.footnote' | translate }}</p>
+  </div>
+</div>

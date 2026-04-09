@@ -1,0 +1,132 @@
+:host {
+  width: 100%;
+}
+
+.slide-container {
+  padding: 2rem;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #a8b2d8;
+  margin-bottom: 2rem;
+}
+
+.slide-content {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.bundle-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  thead {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+
+    th {
+      padding: 1rem 0.75rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 3px solid #e67e22;
+
+      &:first-child {
+        text-align: left;
+        padding-left: 1.5rem;
+      }
+
+      &:last-child {
+        padding-right: 1.5rem;
+        text-align: left;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background-color: rgba(236, 240, 241, 0.8);
+      }
+
+      &:nth-child(odd) {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      &.highlight {
+        background-color: rgba(230, 126, 34, 0.12) !important;
+
+        td {
+          font-weight: 600;
+        }
+      }
+
+      td {
+        padding: 1rem 0.75rem;
+        border-bottom: 1px solid #bdc3c7;
+        color: #2c3e50;
+        font-size: 0.95rem;
+        vertical-align: middle;
+
+        &:first-child {
+          font-weight: 600;
+          text-align: left;
+          padding-left: 1.5rem;
+          background-color: rgba(52, 152, 219, 0.05);
+          border-right: 2px solid #3498db;
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          text-align: center;
+          font-family: 'Courier New', monospace;
+          font-size: 0.95rem;
+        }
+
+        &:last-child {
+          padding-right: 1.5rem;
+          font-size: 0.85rem;
+          color: #555;
+        }
+      }
+    }
+  }
+}
+
+.diff {
+  display: inline-block;
+  margin-left: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #e67e22;
+}
+
+.footnote {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #a8b2d8;
+  text-align: center;
+  font-style: italic;
+}

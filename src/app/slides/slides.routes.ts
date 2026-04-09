@@ -12,7 +12,8 @@ import { FeatureMappingSlideComponent } from './10-feature-mapping/feature-mappi
 import { DemoSlideComponent } from './11-demo/demo-slide.component';
 import { PerformanceSlideComponent } from './12-performance/performance-slide.component';
 import { PerformanceComparisonSlideComponent } from './13-performance-comparison/performance-comparison-slide.component';
-import { ThankYouSlideComponent } from './14-thank-you/thank-you-slide.component';
+import { BundleSizeSlideComponent } from './14-bundle-size/bundle-size-slide.component';
+import { ThankYouSlideComponent } from './15-thank-you/thank-you-slide.component';
 
 export const slidesRoutes: Routes = [
   { path: '', redirectTo: '1', pathMatch: 'full' },
@@ -29,6 +30,7 @@ export const slidesRoutes: Routes = [
   { path: '11', component: DemoSlideComponent },
   { path: '12', component: PerformanceSlideComponent },
   { path: '13', component: PerformanceComparisonSlideComponent },
-  { path: '14', component: ThankYouSlideComponent },
+  { path: '14', component: BundleSizeSlideComponent },
+  { path: '15', component: ThankYouSlideComponent },
   { path: '**', redirectTo: '1' }
 ];

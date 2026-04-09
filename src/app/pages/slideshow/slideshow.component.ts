@@ -34,7 +34,8 @@ export class SlideshowComponent implements OnInit, OnDestroy {
     { id: 11, title: 'Demo' },
     { id: 12, title: 'Performance' },
     { id: 13, title: 'Performance' },
-    { id: 14, title: 'Thank You' }
+    { id: 14, title: 'Bundle Size' },
+    { id: 15, title: 'Thank You' }
   ]);
   
   // Computed values

@@ -271,6 +271,18 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end"
     },
+    "bundleSize": {
+      "title": "Rozmiar bundle",
+      "subtitle": "Rozmiar leniwego chunku per podejście (ng build, produkcja)",
+      "approach": "Podejście",
+      "rawSize": "Rozmiar surowy",
+      "gzippedSize": "Gzip",
+      "note": "Uwaga",
+      "noteBaseline": "Punkt odniesienia",
+      "noteSimilar": "Podobnie jak Template-Driven",
+      "noteSignal": "Zawiera eksperymentalne API @angular/forms/signals",
+      "footnote": "Wspólny kod Angular i aplikacji (~400 kB initial bundle) jest pominięty — porównywane są tylko lazy chunki per podejście."
+    },
     "thankYou": {
       "title": "Dziękuję bardzo",
       "links": "Kilka linków"
