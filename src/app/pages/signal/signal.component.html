@@ -24,7 +24,7 @@
           <input 
             type="text" 
             id="name" 
-            [field]="form.name"
+            [formField]="form.name"
             class="form-input"
             [class.error]="form.name().invalid() && form.name().touched()"
           />
@@ -40,7 +40,7 @@
           <input 
             type="email" 
             id="email" 
-            [field]="form.email"
+            [formField]="form.email"
             class="form-input"
             [class.error]="form.email().invalid() && form.email().touched()"
           />
@@ -72,7 +72,7 @@
           <input 
             type="password" 
             id="password" 
-            [field]="form.password"
+            [formField]="form.password"
             class="form-input"
             [class.error]="form.password().invalid() && form.password().touched()"
           />
@@ -104,7 +104,7 @@
           <input 
             type="password" 
             id="confirmPassword" 
-            [field]="form.confirmPassword"
+            [formField]="form.confirmPassword"
             class="form-input"
             [class.error]="form.confirmPassword().invalid() && form.confirmPassword().touched()"
           />
@@ -129,7 +129,7 @@
           <label for="country">{{ 'form.country' | translate }} *</label>
           <select 
             id="country" 
-            [field]="form.country"
+            [formField]="form.country"
             class="form-input"
             [class.error]="form.country().invalid() && form.country().touched()"
           >
@@ -151,7 +151,7 @@
             <label for="state">{{ 'form.state' | translate }} *</label>
             <select 
               id="state" 
-              [field]="form.state"
+              [formField]="form.state"
               class="form-input"
               [class.error]="form.state().invalid() && form.state().touched()"
             >
@@ -279,7 +279,7 @@
           <label class="checkbox-label">
             <input 
               type="checkbox" 
-              [field]="form.newsletter"
+              [formField]="form.newsletter"
               class="checkbox"
             />
             {{ 'form.subscribeNewsletter' | translate }}
@@ -291,7 +291,7 @@
             <label for="newsletterFrequency">{{ 'form.newsletterFrequency' | translate }}</label>
             <select 
               id="newsletterFrequency" 
-              [field]="form.newsletterFrequency"
+              [formField]="form.newsletterFrequency"
               class="form-input"
             >
               <option value="">{{ 'form.selectFrequency' | translate }}</option>
