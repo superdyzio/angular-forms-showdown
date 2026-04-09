@@ -271,6 +271,25 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end"
     },
+    "community": {
+      "title": "Społeczność i ekosystem",
+      "metric": "Metryka",
+      "soQuestions": "Pytania na Stack Overflow",
+      "soTag": "Tag Stack Overflow",
+      "angularDocsStatus": "Status w dokumentacji Angular",
+      "githubIssues": "Issues na GitHub (label)",
+      "tutorials": "Tutoriale / artykuły",
+      "recommendedFor": "Zalecane dla",
+      "docsStable": "Stabilne",
+      "docsRecommended": "Stabilne — zalecane",
+      "docsExperimental": "Eksperymentalne",
+      "tutorialsMany": "Dużo",
+      "tutorialsFew": "Mało (nowe API)",
+      "recommendedTemplate": "Proste formularze, szybkie prototypy",
+      "recommendedReactive": "Złożone formularze, aplikacje enterprise",
+      "recommendedSignal": "Nowoczesne aplikacje, zoneless Angular",
+      "footnote": "Liczba pytań SO na dzień {{ date }} — sprawdź tagi bezpośrednio dla aktualnych danych."
+    },
     "learningCurve": {
       "title": "Developer Experience",
       "subtitle": "Subiektywne porównanie DX dla trzech podejść",

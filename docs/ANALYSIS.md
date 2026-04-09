@@ -134,7 +134,7 @@ These are the measured figures already embedded in the presentation. They are st
 
 12. ~~**Learning curve / DX rating slide** — A subjective but useful slide: IDE autocompletion quality, error message clarity, migration difficulty (Template → Reactive → Signal).~~
 
-13. **Community & ecosystem slide** — Npm download trends, Stack Overflow questions, GitHub issue volume for each approach.
+13. ~~**Community & ecosystem slide** — Npm download trends, Stack Overflow questions, GitHub issue volume for each approach.~~
 
 14. **Migration guide** — A brief "how to migrate Template → Reactive" and "Reactive → Signal" guide as supplementary content.
 
