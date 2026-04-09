@@ -8,8 +8,13 @@
   <div class="form-container">
     <!-- Profile Completion Indicator -->
     <div class="completion-indicator">
-      <h3>{{ 'common.profileCompletion' | translate }}: {{ profileCompletion }}%</h3>
-      <div class="progress-bar">
+      <h3 id="profileCompletionLabel">{{ 'common.profileCompletion' | translate }}: {{ profileCompletion }}%</h3>
+      <div class="progress-bar"
+        role="progressbar"
+        [attr.aria-valuenow]="profileCompletion"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-labelledby="profileCompletionLabel">
         <div class="progress-fill" [style.width.%]="profileCompletion"></div>
       </div>
     </div>
@@ -21,15 +26,18 @@
         
         <div class="form-group">
           <label for="name">{{ 'form.fullName' | translate }} *</label>
-          <input 
-            type="text" 
-            id="name" 
+          <input
+            type="text"
+            id="name"
             formControlName="name"
             class="form-input"
             [class.error]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+            [attr.aria-invalid]="userForm.get('name')?.invalid && userForm.get('name')?.touched ? 'true' : null"
+            aria-required="true"
+            aria-describedby="nameError"
           />
           @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
-            <div class="error-message">
+            <div id="nameError" class="error-message" role="alert">
               @if (userForm.get('name')?.errors?.['required']) {
                 <span>{{ 'validation.name.required' | translate }}</span>
               }
@@ -42,15 +50,18 @@
 
         <div class="form-group">
           <label for="email">{{ 'form.email' | translate }} *</label>
-          <input 
-            type="email" 
-            id="email" 
+          <input
+            type="email"
+            id="email"
             formControlName="email"
             class="form-input"
             [class.error]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+            [attr.aria-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched ? 'true' : null"
+            aria-required="true"
+            aria-describedby="emailError emailStatus"
           />
           @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
-            <div class="error-message">
+            <div id="emailError" class="error-message" role="alert">
               @if (userForm.get('email')?.errors?.['required']) {
                 <span>{{ 'validation.email.required' | translate }}</span>
               }
@@ -62,21 +73,23 @@
               }
             </div>
           }
-          @if (emailCheckError) {
-            <div class="error-message">
-              <span>{{ 'validation.email.checkError' | translate }}</span>
-            </div>
-          }
-          @if (emailCheckInProgress) {
-            <div class="loading-message">
-              <span>{{ 'validation.email.checking' | translate }}</span>
-            </div>
-          }
-          @if (userForm.get('email')?.valid && userForm.get('email')?.touched && !emailCheckInProgress && !emailCheckError) {
-            <div class="success-message">
-              <span>{{ 'validation.email.available' | translate }}</span>
-            </div>
-          }
+          <div id="emailStatus" role="status" aria-live="polite">
+            @if (emailCheckError) {
+              <div class="error-message">
+                <span>{{ 'validation.email.checkError' | translate }}</span>
+              </div>
+            }
+            @if (emailCheckInProgress) {
+              <div class="loading-message">
+                <span>{{ 'validation.email.checking' | translate }}</span>
+              </div>
+            }
+            @if (userForm.get('email')?.valid && userForm.get('email')?.touched && !emailCheckInProgress && !emailCheckError) {
+              <div class="success-message">
+                <span>{{ 'validation.email.available' | translate }}</span>
+              </div>
+            }
+          </div>
           <button type="button" class="simulate-error-button" [class.active]="emailErrorSimulation()" (click)="toggleEmailErrorSimulation()">
             {{ (emailErrorSimulation() ? 'form.simulateEmailErrorActive' : 'form.simulateEmailError') | translate }}
           </button>
@@ -84,15 +97,18 @@
 
         <div class="form-group">
           <label for="password">{{ 'form.password' | translate }} *</label>
-          <input 
-            type="password" 
-            id="password" 
+          <input
+            type="password"
+            id="password"
             formControlName="password"
             class="form-input"
             [class.error]="userForm.get('password')?.invalid && userForm.get('password')?.touched"
+            [attr.aria-invalid]="userForm.get('password')?.invalid && userForm.get('password')?.touched ? 'true' : null"
+            aria-required="true"
+            aria-describedby="passwordStrength passwordError"
           />
           @if (userForm.get('password')?.value) {
-            <div class="password-strength">
+            <div id="passwordStrength" class="password-strength" role="status" aria-live="polite">
               <div class="strength-bar">
                 <div 
                   class="strength-fill" 
@@ -106,7 +122,7 @@
             </div>
           }
           @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
-            <div class="error-message">
+            <div id="passwordError" class="error-message" role="alert">
               @if (userForm.get('password')?.errors?.['required']) {
                 <div>{{ 'validation.password.required' | translate }}</div>
               }
@@ -122,15 +138,18 @@
 
         <div class="form-group">
           <label for="confirmPassword">{{ 'form.confirmPassword' | translate }} *</label>
-          <input 
-            type="password" 
-            id="confirmPassword" 
+          <input
+            type="password"
+            id="confirmPassword"
             formControlName="confirmPassword"
             class="form-input"
             [class.error]="userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched"
+            [attr.aria-invalid]="userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched ? 'true' : null"
+            aria-required="true"
+            aria-describedby="confirmPasswordError"
           />
           @if (userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched) {
-            <div class="error-message">
+            <div id="confirmPasswordError" class="error-message" role="alert">
               @if (userForm.get('confirmPassword')?.errors?.['required']) {
                 <span>{{ 'validation.confirmPassword.required' | translate }}</span>
               }
@@ -213,7 +232,8 @@
               <div class="address-header">
                 <h4>{{ 'common.addresses' | translate }} {{ i + 1 }}</h4>
                 @if (addresses.length > 1) {
-                  <button type="button" class="remove-button" (click)="removeAddress(i)">
+                  <button type="button" class="remove-button" (click)="removeAddress(i)"
+                    [attr.aria-label]="('form.removeAddress' | translate) + ' ' + (i + 1)">
                     {{ 'form.remove' | translate }}
                   </button>
                 }
@@ -335,7 +355,7 @@
     </form>
 
     @if (submittedData) {
-      <div class="form-data">
+      <div class="form-data" role="alert">
         <h3>{{ 'common.registrationSuccessful' | translate }}</h3>
         <pre>{{ submittedData | json }}</pre>
       </div>

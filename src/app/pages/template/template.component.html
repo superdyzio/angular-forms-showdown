@@ -8,8 +8,13 @@
   <div class="form-container">
     <!-- Profile Completion Indicator -->
     <div class="completion-indicator">
-      <h3>{{ 'common.profileCompletion' | translate }}: {{ profileCompletion }}%</h3>
-      <div class="progress-bar">
+      <h3 id="profileCompletionLabel">{{ 'common.profileCompletion' | translate }}: {{ profileCompletion }}%</h3>
+      <div class="progress-bar"
+        role="progressbar"
+        [attr.aria-valuenow]="profileCompletion"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-labelledby="profileCompletionLabel">
         <div class="progress-fill" [style.width.%]="profileCompletion"></div>
       </div>
     </div>
@@ -21,20 +26,23 @@
         
         <div class="form-group">
           <label for="name">{{ 'form.fullName' | translate }} *</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            [(ngModel)]="user.name" 
+          <input
+            type="text"
+            id="name"
+            name="name"
+            [(ngModel)]="user.name"
             #name="ngModel"
-            required 
+            required
+            aria-required="true"
             minlength="2"
             class="form-input"
             [class.error]="name.invalid && name.touched"
+            [attr.aria-invalid]="name.invalid && name.touched ? 'true' : null"
+            aria-describedby="nameError"
             (input)="onFieldChange()"
           />
           @if (name.invalid && name.touched) {
-            <div class="error-message">
+            <div id="nameError" class="error-message" role="alert">
               @if (name.errors?.['required']) {
                 <span>{{ 'validation.name.required' | translate }}</span>
               }
@@ -47,21 +55,24 @@
 
         <div class="form-group">
           <label for="email">{{ 'form.email' | translate }} *</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            [(ngModel)]="user.email" 
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="user.email"
             #email="ngModel"
-            required 
+            required
+            aria-required="true"
             email
             class="form-input"
             [class.error]="(email.invalid || email.errors?.['emailExists']) && email.touched"
+            [attr.aria-invalid]="(email.invalid || email.errors?.['emailExists']) && email.touched ? 'true' : null"
+            aria-describedby="emailError emailStatus"
             afsEmailExists
             (blur)="onFieldChange()"
           />
           @if (email.invalid && email.touched) {
-            <div class="error-message">
+            <div id="emailError" class="error-message" role="alert">
               @if (email.errors?.['required']) {
                 <span>{{ 'validation.email.required' | translate }}</span>
               }
@@ -70,26 +81,28 @@
               }
             </div>
           }
-          @if (email.errors?.['emailExists']) {
-            <div class="error-message">
-              <span>{{ 'validation.email.exists' | translate }}</span>
-            </div>
-          }
-          @if (email.errors?.['emailCheckError']) {
-            <div class="error-message">
-              <span>{{ 'validation.email.checkError' | translate }}</span>
-            </div>
-          }
-          @if (email.pending) {
-            <div class="loading-message">
-              <span>{{ 'validation.email.checking' | translate }}</span>
-            </div>
-          }
-          @if (email.valid && email.touched && !email.pending && !email.errors?.['emailCheckError']) {
-            <div class="success-message">
-              <span>{{ 'validation.email.available' | translate }}</span>
-            </div>
-          }
+          <div id="emailStatus" role="status" aria-live="polite">
+            @if (email.errors?.['emailExists']) {
+              <div class="error-message">
+                <span>{{ 'validation.email.exists' | translate }}</span>
+              </div>
+            }
+            @if (email.errors?.['emailCheckError']) {
+              <div class="error-message">
+                <span>{{ 'validation.email.checkError' | translate }}</span>
+              </div>
+            }
+            @if (email.pending) {
+              <div class="loading-message">
+                <span>{{ 'validation.email.checking' | translate }}</span>
+              </div>
+            }
+            @if (email.valid && email.touched && !email.pending && !email.errors?.['emailCheckError']) {
+              <div class="success-message">
+                <span>{{ 'validation.email.available' | translate }}</span>
+              </div>
+            }
+          </div>
           <button type="button" class="simulate-error-button" [class.active]="emailErrorSimulation()" (click)="toggleEmailErrorSimulation()">
             {{ (emailErrorSimulation() ? 'form.simulateEmailErrorActive' : 'form.simulateEmailError') | translate }}
           </button>
@@ -97,21 +110,24 @@
 
         <div class="form-group">
           <label for="password">{{ 'form.password' | translate }} *</label>
-          <input 
-            type="password" 
-            id="password" 
-            name="password" 
-            [(ngModel)]="user.password" 
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="user.password"
             #password="ngModel"
-            required 
+            required
+            aria-required="true"
             minlength="8"
             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
             class="form-input"
             [class.error]="password.invalid && password.touched"
+            [attr.aria-invalid]="password.invalid && password.touched ? 'true' : null"
+            aria-describedby="passwordStrength passwordError"
             (input)="onFieldChange()"
           />
           @if (user.password) {
-            <div class="password-strength">
+            <div id="passwordStrength" class="password-strength" role="status" aria-live="polite">
               <div class="strength-bar">
                 <div 
                   class="strength-fill" 
@@ -125,7 +141,7 @@
             </div>
           }
           @if (password.invalid && password.touched) {
-            <div class="error-message">
+            <div id="passwordError" class="error-message" role="alert">
               @if (password.errors?.['required']) {
                 <div>{{ 'validation.password.required' | translate }}</div>
               }
@@ -141,19 +157,22 @@
 
         <div class="form-group">
           <label for="confirmPassword">{{ 'form.confirmPassword' | translate }} *</label>
-          <input 
-            type="password" 
-            id="confirmPassword" 
-            name="confirmPassword" 
-            [(ngModel)]="user.confirmPassword" 
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="user.confirmPassword"
             #confirmPassword="ngModel"
             required
+            aria-required="true"
             class="form-input"
             [class.error]="!passwordsMatch() && confirmPassword.touched"
+            [attr.aria-invalid]="!passwordsMatch() && confirmPassword.touched ? 'true' : null"
+            aria-describedby="confirmPasswordError"
             (input)="onFieldChange()"
           />
           @if (!passwordsMatch() && confirmPassword.touched) {
-            <div class="error-message">
+            <div id="confirmPasswordError" class="error-message" role="alert">
               <span>{{ 'validation.confirmPassword.mismatch' | translate }}</span>
             </div>
           }
@@ -239,7 +258,8 @@
               <div class="address-header">
                 <h4>{{ 'common.addresses' | translate }} {{ i + 1 }}</h4>
                 @if (user.addresses.length > 1) {
-                  <button type="button" class="remove-button" (click)="removeAddress(i)">
+                  <button type="button" class="remove-button" (click)="removeAddress(i)"
+                    [attr.aria-label]="('form.removeAddress' | translate) + ' ' + (i + 1)">
                     {{ 'form.remove' | translate }}
                   </button>
                 }
@@ -375,7 +395,7 @@
     </form>
 
     @if (submittedData) {
-      <div class="form-data">
+      <div class="form-data" role="alert">
         <h3>{{ 'common.registrationSuccessful' | translate }}</h3>
         <pre>{{ submittedData | json }}</pre>
       </div>

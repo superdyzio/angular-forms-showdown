@@ -52,6 +52,7 @@
     "selectFrequency": "Select frequency",
     "addAnotherAddress": "+ Add Another Address",
     "remove": "Remove",
+    "removeAddress": "Remove address",
     "removeAllAddresses": "Remove all addresses",
     "add1kAddresses": "Add 1k addresses",
     "update1kAddresses": "Update 1k addresses",

@@ -130,7 +130,7 @@ These are the measured figures already embedded in the presentation. They are st
 
 ### Nice to Have
 
-11. **Add WCAG 2.1 AA compliance** — Proper ARIA labels, live regions for async validation feedback, keyboard-accessible dynamic address list.
+11. ~~**Add WCAG 2.1 AA compliance** — Proper ARIA labels, live regions for async validation feedback, keyboard-accessible dynamic address list.~~
 
 12. ~~**Learning curve / DX rating slide** — A subjective but useful slide: IDE autocompletion quality, error message clarity, migration difficulty (Template → Reactive → Signal).~~
 
