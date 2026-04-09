@@ -126,7 +126,7 @@ These are the measured figures already embedded in the presentation. They are st
 
 9. **Error messages from API failures** — The current email service always resolves. A toggle to simulate a network error and show how each approach handles it differently would add depth.
 
-10. **Remove leftover TODO comments** — "comparison with solid js" and "test with smaller form" are visible in the template component source. Clean these up before presenting.
+10. ~~**Remove leftover TODO comments** — "comparison with solid js" and "test with smaller form" are visible in the template component source. Clean these up before presenting.~~
 
 ### Nice to Have
 

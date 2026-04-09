@@ -61,7 +61,7 @@ Language can be switched via URL query param: `?lang=en` or `?lang=pl`
 - Async email validator has no debounce — fires on every keystroke
 - No `OnPush` change detection on any component
 - Tests are minimal (1 spec file `app.spec.ts` with 2 test cases)
-- Leftover TODO comments in `template.component.ts` about SolidJS comparison
+- ~~Leftover TODO comments in `template.component.ts` about SolidJS comparison~~ (already removed)
 
 ## Slide Architecture
 
