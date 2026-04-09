@@ -122,7 +122,7 @@ These are the measured figures already embedded in the presentation. They are st
 
 7. **Zoneless demo** — Signal Forms support zoneless Angular (`provideExperimentalZonelessChangeDetection()`). A side branch or toggle that runs without zone.js would be a compelling addition to the performance story.
 
-8. **Side-by-side code viewer in slides** — Slide 8 already shows API snippets. A three-column code comparison for a single validator (e.g. async email) would be very effective.
+8. ~~**Side-by-side code viewer in slides** — Slide 8 already shows API snippets. A three-column code comparison for a single validator (e.g. async email) would be very effective.~~
 
 9. ~~**Error messages from API failures** — The current email service always resolves. A toggle to simulate a network error and show how each approach handles it differently would add depth.~~
 

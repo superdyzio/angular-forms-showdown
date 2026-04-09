@@ -213,7 +213,8 @@
     },
     "signalFormsApi": {
       "title": "Signal Forms API",
-      "subtitle": "(@experimental API)"
+      "subtitle": "(@experimental API)",
+      "comparisonTitle": "Async Email Validator — Three Ways"
     },
     "cva": {
       "title": "Control Value Accessor",
