@@ -131,6 +131,11 @@
     "next": "Next →"
   },
   "slide": {
+    "shared": {
+      "templateForms": "Template Forms",
+      "reactiveForms": "Reactive Forms",
+      "signalForms": "Signal Forms"
+    },
     "assumptions": {
       "title": "Assumptions",
       "knowAngular": "Do we know Angular?",
@@ -221,9 +226,6 @@
       "title": "Feature Mapping Table",
       "subtitle": "Comparison of three approaches",
       "feature": "Feature",
-      "templateForms": "Template Forms",
-      "reactiveForms": "Reactive Forms",
-      "signalForms": "Signal Forms",
       "dynamicFields": "Dynamic Fields",
       "syncValidation": "Sync Validation",
       "asyncValidation": "Async Validation",
@@ -260,9 +262,6 @@
       "comparisonTitle": "Performance (21.0.3)",
       "subtitle": "Add / update / remove 1k addresses",
       "action": "action",
-      "templateForms": "Template Forms",
-      "reactiveForms": "Reactive Forms",
-      "signalForms": "Signal Forms",
       "add1kFieldsJs": "add 1k fields [js]",
       "update1kFieldsJs": "update 1k fields [js]",
       "add1kFieldsInp": "add 1k fields [INP]",
