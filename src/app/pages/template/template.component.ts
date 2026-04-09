@@ -152,9 +152,9 @@ export class TemplateComponent {
     ];
 
     const filledFields = fields.filter(field => field && field.toString().trim() !== '').length;
-    
+
     // Add address completion
-    const addressCompletion = this.user.addresses.length > 0 ? 
+    const addressCompletion = this.user.addresses.length > 0 ?
       this.user.addresses.reduce((acc, addr) => {
         const addrFields = [addr.street, addr.city, addr.zipCode];
         const filledAddrFields = addrFields.filter(field => field && field.trim() !== '').length;
