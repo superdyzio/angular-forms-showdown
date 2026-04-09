@@ -274,6 +274,19 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end"
     },
+    "zoneless": {
+      "title": "Zoneless Angular",
+      "subtitle": "Signal Forms są gotowe. A Ty?",
+      "whatChanges": "Co się zmienia",
+      "whatBreaks": "Co nie działa bez Zone.js",
+      "works": "Działa",
+      "broken": "Zepsute",
+      "configLabel": "app.config.ts — jedna linia",
+      "templateBroken": "UI zamraża się po wpisaniu — zmiany [(ngModel)] nie wywołują change detection",
+      "reactiveBroken": "Częściowo zepsute — statusChanges / valueChanges działają, ale asynchroniczne walidatory i markForCheck() wymagają ręcznego wyzwalania",
+      "signalWorks": "W pełni kompatybilne — sygnały przekazują powiadomienia o zmianach bezpośrednio do schedulera Angulara, bez Zone.js",
+      "footnote": "provideExperimentalZonelessChangeDetection() jest dostępne od Angular 18. Signal Forms to jedyne podejście do formularzy w pełni z nim kompatybilne."
+    },
     "migration": {
       "title": "To samo pole, trzy podejścia",
       "subtitle": "Wymagane pole email z walidacją — jak każde podejście to obsługuje",

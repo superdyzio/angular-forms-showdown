@@ -1,0 +1,35 @@
+<div class="slide-container">
+  <h1>{{ 'slide.zoneless.title' | translate }}</h1>
+  <p class="subtitle">{{ 'slide.zoneless.subtitle' | translate }}</p>
+
+  <div class="content">
+    <div class="config-section">
+      <h2>{{ 'slide.zoneless.whatChanges' | translate }}</h2>
+      <div class="config-label">{{ 'slide.zoneless.configLabel' | translate }}</div>
+      <pre><code>{{ configSnippet }}</code></pre>
+    </div>
+
+    <div class="compat-section">
+      <h2>{{ 'slide.zoneless.whatBreaks' | translate }}</h2>
+      <div class="compat-grid">
+        <div class="compat-row broken">
+          <div class="approach-label template">{{ 'slide.shared.templateForms' | translate }}</div>
+          <div class="badge broken-badge">{{ 'slide.zoneless.broken' | translate }}</div>
+          <div class="reason">{{ 'slide.zoneless.templateBroken' | translate }}</div>
+        </div>
+        <div class="compat-row broken">
+          <div class="approach-label reactive">{{ 'slide.shared.reactiveForms' | translate }}</div>
+          <div class="badge broken-badge">{{ 'slide.zoneless.broken' | translate }}</div>
+          <div class="reason">{{ 'slide.zoneless.reactiveBroken' | translate }}</div>
+        </div>
+        <div class="compat-row works">
+          <div class="approach-label signal">{{ 'slide.shared.signalForms' | translate }}</div>
+          <div class="badge works-badge">{{ 'slide.zoneless.works' | translate }}</div>
+          <div class="reason">{{ 'slide.zoneless.signalWorks' | translate }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footnote">{{ 'slide.zoneless.footnote' | translate }}</p>
+</div>

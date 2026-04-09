@@ -274,6 +274,19 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end"
     },
+    "zoneless": {
+      "title": "Zoneless Angular",
+      "subtitle": "Signal Forms are ready. Are you?",
+      "whatChanges": "What changes",
+      "whatBreaks": "What breaks without Zone.js",
+      "works": "Works",
+      "broken": "Broken",
+      "configLabel": "app.config.ts — one line",
+      "templateBroken": "UI freezes after input — [(ngModel)] changes don't trigger change detection",
+      "reactiveBroken": "Partially broken — statusChanges / valueChanges fire, but async validators and markForCheck() need manual triggers",
+      "signalWorks": "Fully compatible — signals push change notifications directly into Angular's scheduler, no Zone.js needed",
+      "footnote": "provideExperimentalZonelessChangeDetection() is available since Angular 18. Signal Forms are the only form approach fully compatible with it."
+    },
     "migration": {
       "title": "Same Field, Three Approaches",
       "subtitle": "A required email field with validation — how each approach handles it",
