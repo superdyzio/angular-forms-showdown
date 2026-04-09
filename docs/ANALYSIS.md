@@ -112,7 +112,7 @@ These are the measured figures already embedded in the presentation. They are st
 
 3. ~~**Extract email validation regex into a shared constant** — It's duplicated in at least 3 files. One `src/app/validators/email.validator.ts` would clean this up.~~
 
-4. **Add unit tests for validators** — Showing test-friendliness is a key differentiator between Template-Driven (hard to test) and Reactive/Signal (easy to test in isolation).
+4. ~~**Add unit tests for validators** — Showing test-friendliness is a key differentiator between Template-Driven (hard to test) and Reactive/Signal (easy to test in isolation).~~
 
 5. **Automate performance tests** — Replace hard-coded slide numbers with a script that runs the benchmarks headlessly (Playwright + `window.performance`) and outputs a JSON fixture the slides can import. This makes results reproducible and trustworthy.
 
