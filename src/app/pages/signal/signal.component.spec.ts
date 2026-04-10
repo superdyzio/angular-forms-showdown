@@ -12,10 +12,12 @@ describe('SignalComponent', () => {
   let fixture: ComponentFixture<SignalComponent>;
 
   /** Current UserForm value: calls the Form as a signal, then reads the value signal */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const formValue = () => (component as any).form().value();
 
   /** Set a scalar field value directly via the FormField's WritableSignal */
   function setField<K extends string>(field: K, value: unknown): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (component as any).form[field]().value.set(value);
   }
 
@@ -167,11 +169,13 @@ describe('SignalComponent', () => {
     //   - template-email-async.validator.spec.ts  (directive with debounce + network delay)
 
     it('starts empty', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((component as any).emailValue()).toBe('');
     });
 
     it('reflects changes to the email field', () => {
       setField('email', 'changed@example.com');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect((component as any).emailValue()).toBe('changed@example.com');
     });
   });
