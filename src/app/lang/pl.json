@@ -294,7 +294,8 @@
       "templateBroken": "UI zamraża się po wpisaniu — zmiany [(ngModel)] nie wywołują change detection",
       "reactiveBroken": "Częściowo zepsute — statusChanges / valueChanges działają, ale asynchroniczne walidatory i markForCheck() wymagają ręcznego wyzwalania",
       "signalWorks": "W pełni kompatybilne — sygnały przekazują powiadomienia o zmianach bezpośrednio do schedulera Angulara, bez Zone.js",
-      "footnote": "provideZonelessChangeDetection() jest stabilne w Angular 21 (eksperymentalne w Angular 18–20). Signal Forms to jedyne podejście do formularzy w pełni z nim kompatybilne."
+      "footnote": "provideZonelessChangeDetection() jest stabilne w Angular 21 (eksperymentalne w Angular 18–20). Signal Forms to jedyne podejście do formularzy w pełni z nim kompatybilne.",
+      "demoNote": "Uwaga: live demo w tej prezentacji nadal używa Zone.js dla szerokiej kompatybilności. Powyższy kod pokazuje, jak wygląda prawdziwa migracja do trybu zoneless."
     },
     "migration": {
       "title": "To samo pole, trzy podejścia",
