@@ -29,9 +29,6 @@ export class ReactiveComponent implements OnInit {
 
   userForm: FormGroup;
   submittedData: User | null = null;
-  emailExists = false;
-  emailCheckInProgress = false;
-  emailCheckError = false;
   profileCompletion = 0;
   bulkAddressesAdded = false;
 
@@ -129,29 +126,16 @@ export class ReactiveComponent implements OnInit {
     return null;
   }
 
-  // Async email existence validator
+  // Async email existence validator — pure: derives all state from control.pending / control.errors
   emailExistsValidator(control: AbstractControl): Observable<ValidationErrors | null> {
     const email = control.value;
     if (!email || !isValidEmailFormat(email)) {
-      this.emailExists = false;
       return of(null);
     }
-    this.emailCheckInProgress = true;
-    this.emailCheckError = false;
     return timer(300).pipe(
       switchMap(() => this.emailCheck.checkEmailExists(email)),
-      map(exists => {
-        this.emailCheckInProgress = false;
-        this.emailExists = exists;
-        this.cdr.markForCheck();
-        return exists ? { emailExists: true } : null;
-      }),
-      catchError(() => {
-        this.emailCheckInProgress = false;
-        this.emailCheckError = true;
-        this.cdr.markForCheck();
-        return of({ emailCheckError: true });
-      })
+      map(exists => (exists ? { emailExists: true } : null)),
+      catchError(() => of({ emailCheckError: true }))
     );
   }
 
@@ -176,6 +160,11 @@ export class ReactiveComponent implements OnInit {
       zipCode: ['']
     });
   }
+
+  get emailControl() { return this.userForm.get('email'); }
+  get emailCheckInProgress(): boolean { return this.emailControl?.pending ?? false; }
+  get emailExists(): boolean { return !!this.emailControl?.errors?.['emailExists']; }
+  get emailCheckError(): boolean { return !!this.emailControl?.errors?.['emailCheckError']; }
 
   // Add new address
   addAddress() {

@@ -366,8 +366,8 @@
       <p><strong>{{ 'common.valid' | translate }}:</strong> {{ userForm.valid }}</p>
       <p><strong>{{ 'common.pristine' | translate }}:</strong> {{ userForm.pristine }}</p>
       <p><strong>{{ 'common.touched' | translate }}:</strong> {{ userForm.touched }}</p>
-      <p><strong>{{ 'common.emailExists' | translate }}:</strong> {{ emailExists }}</p>
-      <p><strong>{{ 'common.emailCheckInProgress' | translate }}:</strong> {{ emailCheckInProgress }}</p>
+      <p><strong>{{ 'common.emailExists' | translate }}:</strong> {{ !!userForm.get('email')?.errors?.['emailExists'] }}</p>
+      <p><strong>{{ 'common.emailCheckInProgress' | translate }}:</strong> {{ userForm.get('email')?.pending }}</p>
     </div>
   </div>
 </div>
