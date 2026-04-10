@@ -7,6 +7,7 @@ import { Address } from '../../types/address';
 import { User } from '../../types/user';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { EmailCheckService } from '../../services/email-check.service';
+import { getPasswordStrength, PasswordStrength } from '../../validators/password-strength';
 
 @Component({
   selector: 'afs-template',
@@ -125,31 +126,8 @@ export class TemplateComponent {
   }
 
   // Calculate password strength
-  getPasswordStrength(): { score: number; label: string; color: string } {
-    const password = this.user.password;
-    if (!password) {
-      return { score: 0, label: '', color: '' };
-    }
-
-    const checks = {
-      length: password.length >= 8,
-      lowercase: /[a-z]/.test(password),
-      uppercase: /[A-Z]/.test(password),
-      number: /\d/.test(password),
-      special: /[@$!%*?&]/.test(password)
-    };
-
-    const score = Object.values(checks).filter(Boolean).length;
-
-    if (score <= 2) {
-      return { score, label: this.translate.instant('password.weak'), color: '#ff4444' };
-    } else if (score <= 3) {
-      return { score, label: this.translate.instant('password.fair'), color: '#ffaa00' };
-    } else if (score <= 4) {
-      return { score, label: this.translate.instant('password.good'), color: '#00aa00' };
-    } else {
-      return { score, label: this.translate.instant('password.strong'), color: '#00aa00' };
-    }
+  getPasswordStrength(): PasswordStrength {
+    return getPasswordStrength(this.user.password);
   }
 
   // Calculate profile completion percentage

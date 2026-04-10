@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { form, FormField, required, minLength, email, validate, requiredError } from '@angular/forms/signals';
 import { EmailCheckService } from '../../services/email-check.service';
 import { isValidEmailFormat } from '../../validators/email.validator';
+import { getPasswordStrength, PasswordStrength } from '../../validators/password-strength';
 import { Address } from '../../types/address';
 import { User, UserForm } from '../../types/user';
 import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
@@ -102,32 +103,7 @@ export class SignalComponent {
   });
 
   // Calculate password strength
-  passwordsStrength = computed((): { score: number; label: string; color: string } => {
-    const password = this.form.password().value();
-    if (!password) {
-      return { score: 0, label: '', color: '' };
-    }
-
-    const checks = {
-      length: password.length >= 8,
-      lowercase: /[a-z]/.test(password),
-      uppercase: /[A-Z]/.test(password),
-      number: /\d/.test(password),
-      special: /[@$!%*?&]/.test(password)
-    };
-
-    const score = Object.values(checks).filter(Boolean).length;
-
-    if (score <= 2) {
-      return { score, label: this.translate.instant('password.weak'), color: '#ff4444' };
-    } else if (score <= 3) {
-      return { score, label: this.translate.instant('password.fair'), color: '#ffaa00' };
-    } else if (score <= 4) {
-      return { score, label: this.translate.instant('password.good'), color: '#00aa00' };
-    } else {
-      return { score, label: this.translate.instant('password.strong'), color: '#00aa00' };
-    }
-  });
+  passwordsStrength = computed((): PasswordStrength => getPasswordStrength(this.form.password().value()));
 
   // Available options - computed to use translations
   countries = computed(() => [
