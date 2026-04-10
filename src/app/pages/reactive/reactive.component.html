@@ -228,17 +228,17 @@
             </button>
           </div>
           @for (address of addresses.controls; track $index; let i = $index) {
-            <div class="address-item" [formGroupName]="i">
-              <div class="address-header">
-                <h4>{{ 'common.addresses' | translate }} {{ i + 1 }}</h4>
-                @if (addresses.length > 1) {
+            <fieldset class="address-item" [formGroupName]="i">
+              <legend class="address-legend">{{ 'common.addresses' | translate }} {{ i + 1 }}</legend>
+              @if (addresses.length > 1) {
+                <div class="address-header">
                   <button type="button" class="remove-button" (click)="removeAddress(i)"
                     [attr.aria-label]="('form.removeAddress' | translate) + ' ' + (i + 1)">
                     {{ 'form.remove' | translate }}
                   </button>
-                }
-              </div>
-            
+                </div>
+              }
+
             <div class="form-row">
               <div class="form-group">
                 <label [for]="'addressType' + i">{{ 'form.type' | translate }}</label>
@@ -302,9 +302,9 @@
                 />
               </div>
             </div>
-            </div>
+            </fieldset>
           }
-          
+
           <button type="button" class="add-button" (click)="addAddress()">
             {{ 'form.addAnotherAddress' | translate }}
           </button>

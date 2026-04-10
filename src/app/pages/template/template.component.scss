@@ -203,21 +203,25 @@ label {
   border-radius: 6px;
   background: white;
   box-sizing: border-box;
+  // reset fieldset browser defaults
+  min-inline-size: 0;
+}
+
+.address-legend {
+  margin: 0;
+  padding: 0 0.25rem;
+  color: #374151;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .address-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid #e5e7eb;
-}
-
-.address-header h4 {
-  margin: 0;
-  color: #374151;
-  font-size: 1rem;
 }
 
 .remove-button {
