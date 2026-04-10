@@ -77,7 +77,7 @@ export class SignalComponent {
       formValue.confirmPassword,
       formValue.country
     ];
-    if (formValue.country.toString().trim() !== '') {
+    if (formValue.country.toString().trim() === 'usa') {
       fields.push(formValue.state);
     }
 

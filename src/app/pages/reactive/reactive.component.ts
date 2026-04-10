@@ -217,6 +217,9 @@ export class ReactiveComponent implements OnInit {
       formValue.confirmPassword,
       formValue.country
     ];
+    if (formValue.country === 'usa') {
+      fields.push(formValue.state);
+    }
 
     const filledFields = fields.filter(field => field && field.toString().trim() !== '').length;
     

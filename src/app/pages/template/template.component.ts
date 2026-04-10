@@ -139,6 +139,9 @@ export class TemplateComponent {
       this.user.confirmPassword,
       this.user.country
     ];
+    if (this.user.country === 'usa') {
+      fields.push(this.user.state);
+    }
 
     const filledFields = fields.filter(field => field && field.toString().trim() !== '').length;
 
