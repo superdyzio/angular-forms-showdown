@@ -215,6 +215,7 @@
     "signalFormsApi": {
       "title": "Signal Forms API",
       "subtitle": "(@experimental API)",
+      "experimentalNote": "⚠ @angular/forms/signals is pre-stable in Angular 21 — API may change before final release",
       "comparisonTitle": "Async Email Validator — Three Ways"
     },
     "cva": {
