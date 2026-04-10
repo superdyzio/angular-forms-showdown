@@ -92,6 +92,35 @@ describe('SignalComponent', () => {
     });
   });
 
+  describe('addOrUpdateHundredAddresses()', () => {
+    it('adds 1000 addresses on first call and sets bulkAddressesAdded', () => {
+      expect(component.bulkAddressesAdded).toBe(false);
+      component.addOrUpdateHundredAddresses();
+      expect(formValue().addresses.length).toBe(1001); // 1 initial + 1000
+      expect(component.bulkAddressesAdded).toBe(true);
+    });
+
+    it('updates all addresses with bulk data on second call', () => {
+      component.addOrUpdateHundredAddresses(); // add
+      component.addOrUpdateHundredAddresses(); // update
+      const first = formValue().addresses[0]();
+      expect(first.type).toBe('work');
+      expect(first.street).toBe('Bulk Street 1');
+      expect(first.city).toBe('Bulk City 1');
+      expect(first.zipCode).toBe('10001');
+      const last = formValue().addresses[1000]();
+      expect(last.street).toBe('Bulk Street 1001');
+      expect(last.zipCode).toBe('11001');
+    });
+
+    it('does not add more addresses on a second call', () => {
+      component.addOrUpdateHundredAddresses();
+      const countAfterAdd = formValue().addresses.length;
+      component.addOrUpdateHundredAddresses();
+      expect(formValue().addresses.length).toBe(countAfterAdd);
+    });
+  });
+
   describe('isUSA()', () => {
     it('returns false when country is empty', () => {
       expect(component.isUSA()).toBe(false);
