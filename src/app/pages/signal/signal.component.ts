@@ -104,6 +104,9 @@ export class SignalComponent {
   // Calculate password strength
   passwordsStrength = computed((): PasswordStrength => getPasswordStrength(this.form.password().value()));
 
+  // Signal Forms has no pristine() — pristine is defined as !dirty in all Angular form approaches
+  formPristine = computed(() => !this.form().dirty());
+
   // Available options - computed to use translations
   countries = computed(() => [
     { value: '', label: this.translate.instant('option.selectCountry') },

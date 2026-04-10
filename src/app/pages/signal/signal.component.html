@@ -353,7 +353,7 @@
     <div class="form-status">
       <h3>{{ 'common.formStatus' | translate }}:</h3>
       <p><strong>{{ 'common.valid' | translate }}:</strong> {{ form().valid() }}</p>
-      <p><strong>{{ 'common.pristine' | translate }}:</strong> {{ !form().dirty() }}</p>
+      <p><strong>{{ 'common.pristine' | translate }}:</strong> {{ formPristine() }}</p>
       <p><strong>{{ 'common.touched' | translate }}:</strong> {{ form().touched() }}</p>
       <p><strong>{{ 'common.emailExists' | translate }}:</strong> {{ emailExists() }}</p>
       <p><strong>{{ 'common.emailCheckInProgress' | translate }}:</strong> {{ emailCheckInProgress() }}</p>
