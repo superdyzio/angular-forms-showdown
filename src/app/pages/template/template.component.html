@@ -128,15 +128,16 @@
           />
           <div id="passwordStrength" class="password-strength" role="status" aria-live="polite">
             @if (user.password) {
+              @let strength = getPasswordStrength();
               <div class="strength-bar">
                 <div
                   class="strength-fill"
-                  [style.width.%]="(getPasswordStrength().score / 5) * 100"
-                  [style.background-color]="getPasswordStrength().color"
+                  [style.width.%]="(strength.score / 5) * 100"
+                  [style.background-color]="strength.color"
                 ></div>
               </div>
-              <span class="strength-label" [style.color]="getPasswordStrength().color">
-                {{ getPasswordStrength().labelKey | translate }}
+              <span class="strength-label" [style.color]="strength.color">
+                {{ strength.labelKey | translate }}
               </span>
             }
           </div>
