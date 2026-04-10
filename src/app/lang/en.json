@@ -257,7 +257,15 @@
       "reactiveSide": "V (rxjs streams and operators)",
       "signalSide": "V (effects, linkedSignals)",
       "cvaAll": "V",
-      "cvaSignal": "V"
+      "cvaSignal": "V",
+      "testFriendliness": "Test-friendliness",
+      "testTemplate": "Limited (requires TestBed + DOM)",
+      "testReactive": "V (validators isolated, no DOM)",
+      "testSignal": "V (validators isolated, no DOM)",
+      "zonelessSupport": "Zoneless support",
+      "zonelessTemplate": "✗ (zone.js required)",
+      "zonelessReactive": "Partial (manual markForCheck)",
+      "zonelessSignal": "V (fully compatible)"
     },
     "demo": {
       "title": "CODE"

@@ -2,59 +2,110 @@
   <h1>{{ 'slide.performance.title' | translate }}</h1>
   <div class="slide-content">
     <h2>{{ 'slide.performance.subtitle' | translate }}</h2>
-    <table class="feature-mapping-table">
-      <thead>
-        <tr>
-          <th>{{ 'slide.performance.action' | translate }}</th>
-          <th>{{ 'slide.shared.templateForms' | translate }}</th>
-          <th>{{ 'slide.shared.reactiveForms' | translate }}</th>
-          <th>{{ 'slide.shared.signalForms' | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{ 'slide.performance.add1kFieldsJs' | translate }}</td>
-          <td>{{ b.template.add1kJs }} ms</td>
-          <td>{{ b.reactive.add1kJs }} ms</td>
-          <td>{{ b.signal.add1kJs }} ms</td>
-        </tr>
-        <tr>
-          <td>{{ 'slide.performance.update1kFieldsJs' | translate }}</td>
-          <td>{{ b.template.update1kJs }} ms</td>
-          <td>{{ b.reactive.update1kJs }} ms</td>
-          <td>{{ b.signal.update1kJs }} ms</td>
-        </tr>
-        <tr>
-          <td>{{ 'slide.performance.add1kFieldsInp' | translate }}</td>
-          <td>{{ b.template.add1kInp }} ms</td>
-          <td>{{ b.reactive.add1kInp }} ms</td>
-          <td>{{ b.signal.add1kInp }} ms</td>
-        </tr>
-        <tr>
-          <td>{{ 'slide.performance.update1kFieldsInp' | translate }}</td>
-          <td>{{ b.template.update1kInp }} ms</td>
-          <td>{{ b.reactive.update1kInp }} ms</td>
-          <td>{{ b.signal.update1kInp }} ms</td>
-        </tr>
-        <tr>
-          <td>{{ 'slide.performance.memoryHeapStart' | translate }}</td>
-          <td>{{ b.template.memoryStart }} mb</td>
-          <td>{{ b.reactive.memoryStart }} mb</td>
-          <td>{{ b.signal.memoryStart }} mb</td>
-        </tr>
-        <tr>
-          <td>{{ 'slide.performance.memoryHeapMax' | translate }}</td>
-          <td>{{ b.template.memoryPeak }} mb</td>
-          <td>{{ b.reactive.memoryPeak }} mb</td>
-          <td>{{ b.signal.memoryPeak }} mb</td>
-        </tr>
-        <tr>
-          <td>{{ 'slide.performance.memoryHeapEnd' | translate }}</td>
-          <td>{{ b.template.memoryEnd }} mb</td>
-          <td>{{ b.reactive.memoryEnd }} mb</td>
-          <td>{{ b.signal.memoryEnd }} mb</td>
-        </tr>
-      </tbody>
-    </table>
+
+    <div class="layout-row">
+      <div class="table-column">
+        <table class="feature-mapping-table">
+          <thead>
+            <tr>
+              <th>{{ 'slide.performance.action' | translate }}</th>
+              <th>{{ 'slide.shared.templateForms' | translate }}</th>
+              <th>{{ 'slide.shared.reactiveForms' | translate }}</th>
+              <th>{{ 'slide.shared.signalForms' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ 'slide.performance.add1kFieldsJs' | translate }}</td>
+              <td>{{ b.template.add1kJs }} ms</td>
+              <td>{{ b.reactive.add1kJs }} ms</td>
+              <td class="signal-win">{{ b.signal.add1kJs }} ms</td>
+            </tr>
+            <tr>
+              <td>{{ 'slide.performance.update1kFieldsJs' | translate }}</td>
+              <td>{{ b.template.update1kJs }} ms</td>
+              <td>{{ b.reactive.update1kJs }} ms</td>
+              <td>{{ b.signal.update1kJs }} ms</td>
+            </tr>
+            <tr>
+              <td>{{ 'slide.performance.add1kFieldsInp' | translate }}</td>
+              <td>{{ b.template.add1kInp }} ms</td>
+              <td class="reactive-win">{{ b.reactive.add1kInp }} ms</td>
+              <td>{{ b.signal.add1kInp }} ms</td>
+            </tr>
+            <tr>
+              <td>{{ 'slide.performance.update1kFieldsInp' | translate }}</td>
+              <td>{{ b.template.update1kInp }} ms</td>
+              <td class="reactive-win">{{ b.reactive.update1kInp }} ms</td>
+              <td>{{ b.signal.update1kInp }} ms</td>
+            </tr>
+            <tr>
+              <td>{{ 'slide.performance.memoryHeapStart' | translate }}</td>
+              <td>{{ b.template.memoryStart }} mb</td>
+              <td>{{ b.reactive.memoryStart }} mb</td>
+              <td>{{ b.signal.memoryStart }} mb</td>
+            </tr>
+            <tr>
+              <td>{{ 'slide.performance.memoryHeapMax' | translate }}</td>
+              <td>{{ b.template.memoryPeak }} mb</td>
+              <td>{{ b.reactive.memoryPeak }} mb</td>
+              <td class="signal-win">{{ b.signal.memoryPeak }} mb</td>
+            </tr>
+            <tr>
+              <td>{{ 'slide.performance.memoryHeapEnd' | translate }}</td>
+              <td>{{ b.template.memoryEnd }} mb</td>
+              <td>{{ b.reactive.memoryEnd }} mb</td>
+              <td>{{ b.signal.memoryEnd }} mb</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart-column">
+        <div class="chart-title">{{ 'slide.performance.add1kFieldsJs' | translate }}</div>
+
+        <div class="bar-chart">
+          <div class="bar-row">
+            <span class="bar-label">{{ 'slide.shared.templateForms' | translate }}</span>
+            <div class="bar-track">
+              <div class="bar template-bar" [style.width.%]="templateBar">
+                <span class="bar-value">{{ b.template.add1kJs }} ms</span>
+              </div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">{{ 'slide.shared.reactiveForms' | translate }}</span>
+            <div class="bar-track">
+              <div class="bar reactive-bar" [style.width.%]="reactiveBar">
+                <span class="bar-value">{{ b.reactive.add1kJs }} ms</span>
+              </div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-label">{{ 'slide.shared.signalForms' | translate }}</span>
+            <div class="bar-track">
+              <div class="bar signal-bar" [style.width.%]="signalBar">
+                <span class="bar-value">{{ b.signal.add1kJs }} ms</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout-box">
+          <div class="callout-headline">
+            ⚡ Signal Forms
+          </div>
+          <div class="callout-stat">
+            <span class="stat-number">{{ signalVsReactivePct }}%</span>
+            <span class="stat-label">faster than Reactive</span>
+          </div>
+          <div class="callout-stat">
+            <span class="stat-number">{{ signalVsTemplatePct }}%</span>
+            <span class="stat-label">faster than Template</span>
+          </div>
+          <div class="callout-note">(JS execution, add 1k fields)</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

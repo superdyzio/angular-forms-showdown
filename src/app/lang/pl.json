@@ -257,7 +257,15 @@
       "reactiveSide": "V (rxjs streams and operators)",
       "signalSide": "V (effects, linkedSignals)",
       "cvaAll": "V",
-      "cvaSignal": "V"
+      "cvaSignal": "V",
+      "testFriendliness": "Testowalność",
+      "testTemplate": "Ograniczona (wymaga TestBed + DOM)",
+      "testReactive": "V (walidatory izolowane, bez DOM)",
+      "testSignal": "V (walidatory izolowane, bez DOM)",
+      "zonelessSupport": "Wsparcie Zoneless",
+      "zonelessTemplate": "✗ (wymagany zone.js)",
+      "zonelessReactive": "Częściowe (ręczny markForCheck)",
+      "zonelessSignal": "V (w pełni kompatybilne)"
     },
     "demo": {
       "title": "KODZIK"

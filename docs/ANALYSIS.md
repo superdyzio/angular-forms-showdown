@@ -144,14 +144,14 @@ These are the measured figures already embedded in the presentation. They are st
 
 | Slide | Current State | Suggestion |
 |-------|--------------|------------|
-| 12 – Performance | Static table | Add a bar chart visual; call out the 77% Signal improvement headline |
-| 13 – Performance Comparison | % change table | Add color-coded cells (green = better, red = worse) |
-| 10 – Feature Mapping | Feature table | Add "Test-friendliness" and "Zoneless support" rows |
-| 08 – Signal Forms API | Code snippets | Add equivalent Reactive snippet side-by-side to highlight verbosity difference |
-| New – Bundle Size | Missing | Add slide with `ng build` output comparison |
-| New – When to Use What | Missing | Decision tree: Login form → Template; Enterprise wizard → Reactive; Modern app → Signal |
-| New – Zoneless | Missing | Show Signal form running with `provideExperimentalZonelessChangeDetection()` |
-| New – Migration Path | Missing | Visual roadmap: Template → Reactive → Signal with effort estimates |
+| ~~12 – Performance~~ | ~~Static table~~ | ~~Add a bar chart visual; call out the 77% Signal improvement headline~~ |
+| ~~13 – Performance Comparison~~ | ~~% change table~~ | ~~Add color-coded cells (green = better, red = worse)~~ |
+| ~~10 – Feature Mapping~~ | ~~Feature table~~ | ~~Add "Test-friendliness" and "Zoneless support" rows~~ |
+| ~~08 – Signal Forms API~~ | ~~Code snippets~~ | ~~Add equivalent Reactive snippet side-by-side to highlight verbosity difference~~ |
+| ~~New – Bundle Size~~ | ~~Missing~~ | ~~Add slide with `ng build` output comparison~~ |
+| ~~New – When to Use What~~ | ~~Missing~~ | ~~Decision tree: Login form → Template; Enterprise wizard → Reactive; Modern app → Signal~~ |
+| ~~New – Zoneless~~ | ~~Missing~~ | ~~Show Signal form running with `provideExperimentalZonelessChangeDetection()`~~ |
+| ~~New – Migration Path~~ | ~~Missing~~ | ~~Visual roadmap: Template → Reactive → Signal with effort estimates~~ |
 
 ---
 
