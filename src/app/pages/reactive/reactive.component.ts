@@ -80,7 +80,19 @@ export class ReactiveComponent implements OnInit {
   ngOnInit() {
     // Add initial address
     this.addAddress();
-    
+
+    // Conditionally require state when country is USA
+    this.userForm.get('country')!.valueChanges.subscribe((country: string) => {
+      const stateControl = this.userForm.get('state')!;
+      if (country === 'usa') {
+        stateControl.setValidators(Validators.required);
+      } else {
+        stateControl.clearValidators();
+      }
+      stateControl.updateValueAndValidity();
+      this.cdr.markForCheck();
+    });
+
     // Subscribe to form changes to update completion
     this.userForm.valueChanges.subscribe(() => {
       this.calculateProfileCompletion();
