@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { delay, map, mergeMap } from 'rxjs/operators';
+import { delay, mergeMap } from 'rxjs/operators';
 import { isValidEmailFormat } from '../validators/email.validator';
 
 @Injectable({ providedIn: 'root' })
