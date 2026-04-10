@@ -9,7 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "benchmark": "node scripts/benchmark.mjs"
+    "benchmark": "node scripts/benchmark.mjs",
+    "prepush": "ng lint && ng build && ng test --watch=false --browsers=ChromeHeadless"
   },
   "prettier": {
     "printWidth": 100,
