@@ -41,16 +41,16 @@
             aria-describedby="nameError"
             (input)="onFieldChange()"
           />
-          @if (name.invalid && name.touched) {
-            <div id="nameError" class="error-message" role="alert">
+          <div id="nameError" class="error-message" role="alert">
+            @if (name.invalid && name.touched) {
               @if (name.errors?.['required']) {
                 <span>{{ 'validation.name.required' | translate }}</span>
               }
               @if (name.errors?.['minlength']) {
                 <span>{{ 'validation.name.minlength' | translate }}</span>
               }
-            </div>
-          }
+            }
+          </div>
         </div>
 
         <div class="form-group">
@@ -71,16 +71,16 @@
             afsEmailExists
             (blur)="onFieldChange()"
           />
-          @if (email.invalid && email.touched) {
-            <div id="emailError" class="error-message" role="alert">
+          <div id="emailError" class="error-message" role="alert">
+            @if (email.invalid && email.touched) {
               @if (email.errors?.['required']) {
                 <span>{{ 'validation.email.required' | translate }}</span>
               }
               @if (email.errors?.['email']) {
                 <span>{{ 'validation.email.invalid' | translate }}</span>
               }
-            </div>
-          }
+            }
+          </div>
           <div id="emailStatus" role="status" aria-live="polite">
             @if (email.errors?.['emailExists']) {
               <div class="error-message">
@@ -126,11 +126,11 @@
             aria-describedby="passwordStrength passwordError"
             (input)="onFieldChange()"
           />
-          @if (user.password) {
-            <div id="passwordStrength" class="password-strength" role="status" aria-live="polite">
+          <div id="passwordStrength" class="password-strength" role="status" aria-live="polite">
+            @if (user.password) {
               <div class="strength-bar">
-                <div 
-                  class="strength-fill" 
+                <div
+                  class="strength-fill"
                   [style.width.%]="(getPasswordStrength().score / 5) * 100"
                   [style.background-color]="getPasswordStrength().color"
                 ></div>
@@ -138,10 +138,10 @@
               <span class="strength-label" [style.color]="getPasswordStrength().color">
                 {{ getPasswordStrength().labelKey | translate }}
               </span>
-            </div>
-          }
-          @if (password.invalid && password.touched) {
-            <div id="passwordError" class="error-message" role="alert">
+            }
+          </div>
+          <div id="passwordError" class="error-message" role="alert">
+            @if (password.invalid && password.touched) {
               @if (password.errors?.['required']) {
                 <div>{{ 'validation.password.required' | translate }}</div>
               }
@@ -151,8 +151,8 @@
               @if (password.errors?.['pattern']) {
                 <div>{{ 'validation.password.complexity' | translate }}</div>
               }
-            </div>
-          }
+            }
+          </div>
         </div>
 
         <div class="form-group">
@@ -171,11 +171,11 @@
             aria-describedby="confirmPasswordError"
             (input)="onFieldChange()"
           />
-          @if (!passwordsMatch() && confirmPassword.touched) {
-            <div id="confirmPasswordError" class="error-message" role="alert">
+          <div id="confirmPasswordError" class="error-message" role="alert">
+            @if (!passwordsMatch() && confirmPassword.touched) {
               <span>{{ 'validation.confirmPassword.mismatch' | translate }}</span>
-            </div>
-          }
+            }
+          </div>
         </div>
       </fieldset>
 
@@ -185,14 +185,15 @@
         
         <div class="form-group">
           <label for="country">{{ 'form.country' | translate }} *</label>
-          <select 
-            id="country" 
-            name="country" 
-            [(ngModel)]="user.country" 
+          <select
+            id="country"
+            name="country"
+            [(ngModel)]="user.country"
             #country="ngModel"
             required
             class="form-input"
             [class.error]="country.invalid && country.touched"
+            [attr.aria-invalid]="country.invalid && country.touched ? 'true' : null"
             (change)="onFieldChange()"
           >
             @for (country of countries(); track country.value) {
@@ -213,14 +214,15 @@
         @if (isUSA()) {
           <div class="form-group">
             <label for="state">{{ 'form.state' | translate }} *</label>
-            <select 
-              id="state" 
-              name="state" 
-              [(ngModel)]="user.state" 
+            <select
+              id="state"
+              name="state"
+              [(ngModel)]="user.state"
               #state="ngModel"
               required
               class="form-input"
               [class.error]="state.invalid && state.touched"
+              [attr.aria-invalid]="state.invalid && state.touched ? 'true' : null"
               (change)="onFieldChange()"
             >
               @for (state of states(); track state.value) {

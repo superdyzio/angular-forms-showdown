@@ -36,11 +36,11 @@
             aria-required="true"
             aria-describedby="nameError"
           />
-          @if (form.name().invalid() && form.name().touched()) {
-            <div id="nameError" class="error-message" role="alert">
+          <div id="nameError" class="error-message" role="alert">
+            @if (form.name().invalid() && form.name().touched()) {
               <span>{{ form.name().errors()[0]?.message }}</span>
-            </div>
-          }
+            }
+          </div>
         </div>
 
         <div class="form-group">
@@ -55,11 +55,11 @@
             aria-required="true"
             aria-describedby="emailError emailStatus"
           />
-          @if (form.email().invalid() && form.email().touched()) {
-            <div id="emailError" class="error-message" role="alert">
+          <div id="emailError" class="error-message" role="alert">
+            @if (form.email().invalid() && form.email().touched()) {
               <span>{{ form.email().errors()[0]?.message }}</span>
-            </div>
-          }
+            }
+          </div>
           <div id="emailStatus" role="status" aria-live="polite">
             @if (emailCheckError()) {
               <div class="error-message">
@@ -100,11 +100,11 @@
             aria-required="true"
             aria-describedby="passwordStrength passwordError"
           />
-          @if (form.password().value()) {
-            <div id="passwordStrength" class="password-strength" role="status" aria-live="polite">
+          <div id="passwordStrength" class="password-strength" role="status" aria-live="polite">
+            @if (form.password().value()) {
               <div class="strength-bar">
-                <div 
-                  class="strength-fill" 
+                <div
+                  class="strength-fill"
                   [style.width.%]="(passwordsStrength().score / 5) * 100"
                   [style.background-color]="passwordsStrength().color"
                 ></div>
@@ -112,15 +112,15 @@
               <span class="strength-label" [style.color]="passwordsStrength().color">
                 {{ passwordsStrength().labelKey | translate }}
               </span>
-            </div>
-          }
-          @if (form.password().invalid() && form.password().touched()) {
-            @for (error of form.password().errors(); track error.message) {
-              <div id="passwordError" class="error-message" role="alert">
-                <span>{{ error.message }}</span>
-              </div>
             }
-          }
+          </div>
+          <div id="passwordError" class="error-message" role="alert">
+            @if (form.password().invalid() && form.password().touched()) {
+              @for (error of form.password().errors(); track error.message) {
+                <span>{{ error.message }}</span>
+              }
+            }
+          </div>
         </div>
 
         <div class="form-group">
@@ -135,16 +135,14 @@
             aria-required="true"
             aria-describedby="confirmPasswordError"
           />
-          @if (form.confirmPassword().invalid() && form.confirmPassword().touched()) {
-            <div id="confirmPasswordError" class="error-message" role="alert">
+          <div id="confirmPasswordError" class="error-message" role="alert">
+            @if (form.confirmPassword().invalid() && form.confirmPassword().touched()) {
               <span>{{ form.confirmPassword().errors()[0]?.message }}</span>
-            </div>
-          }
-          @if (form.confirmPassword().touched() && form.confirmPassword().valid() && !passwordsMatch()) {
-            <div class="error-message" role="alert">
+            }
+            @if (form.confirmPassword().touched() && form.confirmPassword().valid() && !passwordsMatch()) {
               <span>{{ 'validation.confirmPassword.mismatch' | translate }}</span>
-            </div>
-          }
+            }
+          </div>
         </div>
       </fieldset>
 
@@ -154,11 +152,12 @@
         
         <div class="form-group">
           <label for="country">{{ 'form.country' | translate }} *</label>
-          <select 
-            id="country" 
+          <select
+            id="country"
             [formField]="form.country"
             class="form-input"
             [class.error]="form.country().invalid() && form.country().touched()"
+            [attr.aria-invalid]="form.country().invalid() && form.country().touched() ? 'true' : null"
           >
             @for (country of countries(); track country.value) {
               <option [value]="country.value">
@@ -176,11 +175,12 @@
         @if (isUSA()) {
           <div class="form-group">
             <label for="state">{{ 'form.state' | translate }} *</label>
-            <select 
-              id="state" 
+            <select
+              id="state"
               [formField]="form.state"
               class="form-input"
               [class.error]="form.state().invalid() && form.state().touched()"
+              [attr.aria-invalid]="form.state().invalid() && form.state().touched() ? 'true' : null"
             >
               @for (state of states(); track state.value) {
                 <option [value]="state.value">

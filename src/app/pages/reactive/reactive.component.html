@@ -36,16 +36,16 @@
             aria-required="true"
             aria-describedby="nameError"
           />
-          @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
-            <div id="nameError" class="error-message" role="alert">
+          <div id="nameError" class="error-message" role="alert">
+            @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
               @if (userForm.get('name')?.errors?.['required']) {
                 <span>{{ 'validation.name.required' | translate }}</span>
               }
               @if (userForm.get('name')?.errors?.['minlength']) {
                 <span>{{ 'validation.name.minlength' | translate }}</span>
               }
-            </div>
-          }
+            }
+          </div>
         </div>
 
         <div class="form-group">
@@ -60,8 +60,8 @@
             aria-required="true"
             aria-describedby="emailError emailStatus"
           />
-          @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
-            <div id="emailError" class="error-message" role="alert">
+          <div id="emailError" class="error-message" role="alert">
+            @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
               @if (userForm.get('email')?.errors?.['required']) {
                 <span>{{ 'validation.email.required' | translate }}</span>
               }
@@ -71,8 +71,8 @@
               @if (userForm.get('email')?.errors?.['emailExists']) {
                 <span>{{ 'validation.email.exists' | translate }}</span>
               }
-            </div>
-          }
+            }
+          </div>
           <div id="emailStatus" role="status" aria-live="polite">
             @if (emailCheckError) {
               <div class="error-message">
@@ -107,11 +107,11 @@
             aria-required="true"
             aria-describedby="passwordStrength passwordError"
           />
-          @if (userForm.get('password')?.value) {
-            <div id="passwordStrength" class="password-strength" role="status" aria-live="polite">
+          <div id="passwordStrength" class="password-strength" role="status" aria-live="polite">
+            @if (userForm.get('password')?.value) {
               <div class="strength-bar">
-                <div 
-                  class="strength-fill" 
+                <div
+                  class="strength-fill"
                   [style.width.%]="(getPasswordStrength().score / 5) * 100"
                   [style.background-color]="getPasswordStrength().color"
                 ></div>
@@ -119,10 +119,10 @@
               <span class="strength-label" [style.color]="getPasswordStrength().color">
                 {{ getPasswordStrength().labelKey | translate }}
               </span>
-            </div>
-          }
-          @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
-            <div id="passwordError" class="error-message" role="alert">
+            }
+          </div>
+          <div id="passwordError" class="error-message" role="alert">
+            @if (userForm.get('password')?.invalid && userForm.get('password')?.touched) {
               @if (userForm.get('password')?.errors?.['required']) {
                 <div>{{ 'validation.password.required' | translate }}</div>
               }
@@ -132,8 +132,8 @@
               @if (userForm.get('password')?.errors?.['passwordComplexity']) {
                 <div>{{ 'validation.password.complexity' | translate }}</div>
               }
-            </div>
-          }
+            }
+          </div>
         </div>
 
         <div class="form-group">
@@ -148,16 +148,16 @@
             aria-required="true"
             aria-describedby="confirmPasswordError"
           />
-          @if (userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched) {
-            <div id="confirmPasswordError" class="error-message" role="alert">
+          <div id="confirmPasswordError" class="error-message" role="alert">
+            @if (userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched) {
               @if (userForm.get('confirmPassword')?.errors?.['required']) {
                 <span>{{ 'validation.confirmPassword.required' | translate }}</span>
               }
               @if (userForm.get('confirmPassword')?.errors?.['passwordMismatch']) {
                 <span>{{ 'validation.confirmPassword.mismatch' | translate }}</span>
               }
-            </div>
-          }
+            }
+          </div>
         </div>
       </fieldset>
 
@@ -167,11 +167,12 @@
         
         <div class="form-group">
           <label for="country">{{ 'form.country' | translate }} *</label>
-          <select 
-            id="country" 
+          <select
+            id="country"
             formControlName="country"
             class="form-input"
             [class.error]="userForm.get('country')?.invalid && userForm.get('country')?.touched"
+            [attr.aria-invalid]="userForm.get('country')?.invalid && userForm.get('country')?.touched ? 'true' : null"
           >
             @for (country of countries(); track country.value) {
               <option [value]="country.value">
@@ -191,11 +192,12 @@
         @if (isUSA()) {
           <div class="form-group">
             <label for="state">{{ 'form.state' | translate }} *</label>
-            <select 
-              id="state" 
+            <select
+              id="state"
               formControlName="state"
               class="form-input"
               [class.error]="userForm.get('state')?.invalid && userForm.get('state')?.touched"
+              [attr.aria-invalid]="userForm.get('state')?.invalid && userForm.get('state')?.touched ? 'true' : null"
             >
               @for (state of states(); track state.value) {
                 <option [value]="state.value">
