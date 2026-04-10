@@ -20,7 +20,7 @@
  */
 
 import { chromium } from '@playwright/test';
-import { writeFileSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
@@ -99,13 +99,48 @@ async function runBenchmarkOnPage(browser, url) {
   };
 }
 
+/**
+ * Read existing INP values from benchmarks.ts so that a script run does not
+ * zero them out.  Returns a map of { template, reactive, signal } → { add1kInp, update1kInp }.
+ * Falls back to 0 if the file is missing or a value cannot be parsed.
+ */
+function readExistingInpValues(outPath) {
+  const defaults = {
+    template: { add1kInp: 0, update1kInp: 0 },
+    reactive: { add1kInp: 0, update1kInp: 0 },
+    signal:   { add1kInp: 0, update1kInp: 0 },
+  };
+
+  if (!existsSync(outPath)) return defaults;
+
+  const src = readFileSync(outPath, 'utf8');
+
+  // Extract the BENCHMARKS object literal and parse INP fields per form type.
+  // Pattern: inside a "template:" / "reactive:" / "signal:" block, find
+  // add1kInp: <number> and update1kInp: <number>.
+  const sectionRe = /(template|reactive|signal)\s*:\s*\{([^}]+)\}/g;
+  const inpRe = (field) => new RegExp(`${field}\\s*:\\s*([\\d.]+)`);
+
+  let match;
+  while ((match = sectionRe.exec(src)) !== null) {
+    const key = match[1];
+    const body = match[2];
+    const addMatch = inpRe('add1kInp').exec(body);
+    const updateMatch = inpRe('update1kInp').exec(body);
+    if (addMatch)    defaults[key].add1kInp    = parseFloat(addMatch[1]);
+    if (updateMatch) defaults[key].update1kInp = parseFloat(updateMatch[1]);
+  }
+
+  return defaults;
+}
+
 /** Arithmetic mean */
 const mean = (arr) => arr.reduce((a, b) => a + b, 0) / arr.length;
 
 /** Round to 2 decimal places */
 const round2 = (n) => Math.round(n * 100) / 100;
 
-async function benchmarkPage(browser, { key, url }) {
+async function benchmarkPage(browser, { key, url }, existingInp) {
   console.log(`\n  Benchmarking ${key} (${RUNS} runs)…`);
 
   const results = { addJs: [], updateJs: [], memStart: [], memPeak: [], memEnd: [] };
@@ -121,13 +156,21 @@ async function benchmarkPage(browser, { key, url }) {
     console.log(`add=${round2(r.addJs)}ms  update=${round2(r.updateJs)}ms  peak=${round2(r.memPeak)}MB`);
   }
 
+  // INP (user-visible latency) cannot be measured headlessly — preserve the
+  // values already in benchmarks.ts so a script run doesn't zero them out.
+  const add1kInp    = existingInp.add1kInp;
+  const update1kInp = existingInp.update1kInp;
+  if (add1kInp !== 0 || update1kInp !== 0) {
+    console.log(`    INP preserved from existing file: add=${add1kInp}ms  update=${update1kInp}ms`);
+  } else {
+    console.log(`    INP: no existing values — set manually from Chrome DevTools recordings.`);
+  }
+
   return {
     add1kJs: round2(mean(results.addJs)),
     update1kJs: round2(mean(results.updateJs)),
-    // INP (user-visible latency) cannot be measured purely via console.log;
-    // these values are kept at 0 and should be measured manually via DevTools.
-    add1kInp: 0,
-    update1kInp: 0,
+    add1kInp,
+    update1kInp,
     memoryStart: round2(mean(results.memStart)),
     memoryPeak: round2(mean(results.memPeak)),
     memoryEnd: round2(mean(results.memEnd)),
@@ -186,17 +229,19 @@ async function main() {
 
   const browser = await chromium.launch({ args: ['--enable-precise-memory-info'] });
 
+  const outPath = path.resolve(__dirname, '../src/app/data/benchmarks.ts');
+  const existingInp = readExistingInpValues(outPath);
+
   const benchmarks = {};
 
   try {
     for (const page of PAGES) {
-      benchmarks[page.key] = await benchmarkPage(browser, page);
+      benchmarks[page.key] = await benchmarkPage(browser, page, existingInp[page.key]);
     }
   } finally {
     await browser.close();
   }
 
-  const outPath = path.resolve(__dirname, '../src/app/data/benchmarks.ts');
   writeFileSync(outPath, formatTs(benchmarks), 'utf8');
 
   console.log(`\nResults written to: ${outPath}`);

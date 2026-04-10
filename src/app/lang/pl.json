@@ -281,7 +281,8 @@
       "update1kFieldsInp": "update 1k pól [INP]",
       "memoryHeapStart": "memory heap start",
       "memoryHeapMax": "memory heap max",
-      "memoryHeapEnd": "memory heap end"
+      "memoryHeapEnd": "memory heap end",
+      "sessionNote": "Przebieg 1: Angular 21.0.0-next.3 · Przebieg 2: Angular 21.0.3 — % diff pokazuje zmianę między sesjami; wariancja INP między sesjami (±30%) jest normalna"
     },
     "zoneless": {
       "title": "Zoneless Angular",
