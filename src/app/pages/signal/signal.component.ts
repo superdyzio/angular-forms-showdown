@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, signal, inject, computed, WritableS
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { form, FormField, required, minLength, email, validate, requiredError } from '@angular/forms/signals';
 import { EmailCheckService } from '../../services/email-check.service';
 import { isValidEmailFormat } from '../../validators/email.validator';
@@ -16,7 +15,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'afs-signal',
   standalone: true,
-  imports: [RouterLink, FormsModule, CommonModule, FormField, TranslateModule],
+  imports: [RouterLink, CommonModule, FormField, TranslateModule],
   templateUrl: './signal.component.html',
   styleUrl: './signal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -193,6 +192,11 @@ export class SignalComponent {
       state: '',
       zipCode: ''
     }));
+  }
+
+  /** Update a single field on an address signal without [(ngModel)] */
+  updateAddressField(addressSignal: WritableSignal<Address>, field: keyof Address, value: string): void {
+    addressSignal.update(a => ({ ...a, [field]: value }));
   }
 
   // Remove address

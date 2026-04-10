@@ -225,10 +225,10 @@
               <div class="form-row">
                 <div class="form-group">
                   <label [for]="'addressType' + i">{{ 'form.type' | translate }}</label>
-                  <select 
+                  <select
                     [id]="'addressType' + i"
-                    name="addressType"
-                    [(ngModel)]="address().type"
+                    [value]="address().type"
+                    (change)="updateAddressField(address, 'type', $any($event).target.value)"
                     class="form-input"
                   >
                     @for (type of addressTypes(); track type.value) {
@@ -242,11 +242,11 @@
 
               <div class="form-group">
                 <label [for]="'street' + i">{{ 'form.streetAddress' | translate }}</label>
-                <input 
-                  type="text" 
-                  [id]="'street' + i" 
-                  name="addressStreet"
-                  [(ngModel)]="address().street"
+                <input
+                  type="text"
+                  [id]="'street' + i"
+                  [value]="address().street"
+                  (input)="updateAddressField(address, 'street', $any($event).target.value)"
                   class="form-input"
                 />
               </div>
@@ -254,21 +254,21 @@
               <div class="form-row">
                 <div class="form-group">
                   <label [for]="'city' + i">{{ 'form.city' | translate }}</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     [id]="'city' + i"
-                    name="addressCity"
-                    [(ngModel)]="address().city"
+                    [value]="address().city"
+                    (input)="updateAddressField(address, 'city', $any($event).target.value)"
                     class="form-input"
                   />
                 </div>
                 @if (isUSA()) {
                   <div class="form-group">
                     <label [for]="'state' + i">{{ 'form.state' | translate }}</label>
-                    <select 
-                      [id]="'state' + i" 
-                      name="addressState"
-                      [(ngModel)]="address().state"
+                    <select
+                      [id]="'state' + i"
+                      [value]="address().state"
+                      (change)="updateAddressField(address, 'state', $any($event).target.value)"
                       class="form-input"
                     >
                       @for (state of states(); track state.value) {
@@ -281,11 +281,11 @@
                 }
                 <div class="form-group">
                   <label [for]="'zipCode' + i">{{ 'form.zipCode' | translate }}</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     [id]="'zipCode' + i"
-                    name="addressZipCode"
-                    [(ngModel)]="address().zipCode"
+                    [value]="address().zipCode"
+                    (input)="updateAddressField(address, 'zipCode', $any($event).target.value)"
                     class="form-input"
                   />
                 </div>
