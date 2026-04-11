@@ -192,10 +192,13 @@ describe('SignalComponent', () => {
 
   describe('emailValue (computed)', () => {
     // Note: the full async pipeline (toObservable + debounceTime + switchMap → emailExists)
-    // is not tested here because Angular 21's zoneless effect scheduler does not flush
-    // reliably inside fakeAsync in the current test setup. That behaviour is covered in:
-    //   - email-check.service.spec.ts  (service logic + debounce-free results)
-    //   - template-email-async.validator.spec.ts  (directive with debounce + network delay)
+    // cannot be driven by fakeAsync in this setup. Angular 21's zoneless effect scheduler
+    // uses its own microtask queue that does not integrate with Zone.js's fake timer
+    // infrastructure, so the toObservable effect never fires inside tick(). The equivalent
+    // behaviour is covered end-to-end in:
+    //   - email-check.service.spec.ts  (service logic, error simulation, debounce-free)
+    //   - template-email-async.validator.spec.ts  (directive: debounce + network + errors)
+    //   - reactive.component.spec.ts  (emailExistsValidator + component getter tests)
 
     it('starts empty', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

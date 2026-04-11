@@ -10,6 +10,7 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { FormsModule, NgForm } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { TemplateEmailAsyncValidatorDirective } from './template-email-async.validator';
+import { EmailCheckService } from '../../services/email-check.service';
 
 const DEBOUNCE_MS = 300;
 const NETWORK_DELAY_MS = 800;
@@ -73,6 +74,19 @@ describe('TemplateEmailAsyncValidatorDirective', () => {
     fixture.detectChanges();
 
     expect(form.controls['email'].errors).toBeNull();
+  }));
+
+  it('sets emailCheckError when the service throws', fakeAsync(() => {
+    const emailCheck = TestBed.inject(EmailCheckService);
+    emailCheck.toggleSimulateError();
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
+    input.value = 'test@example.com';
+    input.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    tick(DEBOUNCE_MS + NETWORK_DELAY_MS);
+    fixture.detectChanges();
+    expect(form.controls['email'].errors).toEqual({ emailCheckError: true });
+    emailCheck.toggleSimulateError(); // restore
   }));
 
   it('debounces — does not fire before 300 ms', fakeAsync(() => {

@@ -3,7 +3,9 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideTranslateService } from '@ngx-translate/core';
+import { FormControl, ValidationErrors } from '@angular/forms';
 import { ReactiveComponent } from './reactive.component';
+import { EmailCheckService } from '../../services/email-check.service';
 
 const DEBOUNCE_MS = 300;
 const NETWORK_DELAY_MS = 800;
@@ -177,6 +179,97 @@ describe('ReactiveComponent', () => {
       component.userForm.patchValue({ password: 'StrongP@ss1', confirmPassword: 'StrongP@ss1' });
       expect(component.userForm.get('confirmPassword')?.errors?.['passwordMismatch']).toBeFalsy();
     });
+  });
+
+  describe('emailExistsValidator()', () => {
+    // timer(300) inside the validator + 800 ms simulated network delay
+    const TIMER_MS = 300;
+    const NETWORK_DELAY_MS = 800;
+    let emailCheck: EmailCheckService;
+
+    beforeEach(() => {
+      emailCheck = TestBed.inject(EmailCheckService);
+    });
+
+    afterEach(() => {
+      if (emailCheck.simulateError()) emailCheck.toggleSimulateError();
+    });
+
+    it('returns emailExists error for a taken email', fakeAsync(() => {
+      const ctrl = new FormControl('test@example.com');
+      let result: ValidationErrors | null | undefined;
+      component.emailExistsValidator(ctrl).subscribe(r => (result = r));
+      tick(TIMER_MS + NETWORK_DELAY_MS);
+      expect(result).toEqual({ emailExists: true });
+    }));
+
+    it('returns null for an available email', fakeAsync(() => {
+      const ctrl = new FormControl('available@example.com');
+      let result: ValidationErrors | null | undefined;
+      component.emailExistsValidator(ctrl).subscribe(r => (result = r));
+      tick(TIMER_MS + NETWORK_DELAY_MS);
+      expect(result).toBeNull();
+    }));
+
+    it('returns null immediately for an invalid email format', fakeAsync(() => {
+      const ctrl = new FormControl('not-an-email');
+      let result: ValidationErrors | null | undefined;
+      component.emailExistsValidator(ctrl).subscribe(r => (result = r));
+      tick(0);
+      expect(result).toBeNull();
+    }));
+
+    it('returns null immediately for an empty value', fakeAsync(() => {
+      const ctrl = new FormControl('');
+      let result: ValidationErrors | null | undefined;
+      component.emailExistsValidator(ctrl).subscribe(r => (result = r));
+      tick(0);
+      expect(result).toBeNull();
+    }));
+
+    it('returns emailCheckError when the service errors', fakeAsync(() => {
+      emailCheck.toggleSimulateError();
+      const ctrl = new FormControl('test@example.com');
+      let result: ValidationErrors | null | undefined;
+      component.emailExistsValidator(ctrl).subscribe(r => (result = r));
+      tick(TIMER_MS + NETWORK_DELAY_MS);
+      expect(result).toEqual({ emailCheckError: true });
+    }));
+  });
+
+  describe('email control getters', () => {
+    const TIMER_MS = 300;
+    const NETWORK_DELAY_MS = 800;
+    let emailCheck: EmailCheckService;
+
+    beforeEach(() => {
+      emailCheck = TestBed.inject(EmailCheckService);
+    });
+
+    afterEach(() => {
+      if (emailCheck.simulateError()) emailCheck.toggleSimulateError();
+    });
+
+    it('emailCheckInProgress is true while the async validator is pending', fakeAsync(() => {
+      component.userForm.get('email')!.setValue('available@example.com');
+      tick(TIMER_MS); // debounce fires, network call in flight
+      expect(component.emailCheckInProgress).toBe(true);
+      tick(NETWORK_DELAY_MS);
+      expect(component.emailCheckInProgress).toBe(false);
+    }));
+
+    it('emailExists is true when a taken email passes sync validation', fakeAsync(() => {
+      component.userForm.get('email')!.setValue('test@example.com');
+      tick(TIMER_MS + NETWORK_DELAY_MS);
+      expect(component.emailExists).toBe(true);
+    }));
+
+    it('emailCheckError is true when the service errors', fakeAsync(() => {
+      emailCheck.toggleSimulateError();
+      component.userForm.get('email')!.setValue('test@example.com');
+      tick(TIMER_MS + NETWORK_DELAY_MS);
+      expect(component.emailCheckError).toBe(true);
+    }));
   });
 
   describe('onSubmit()', () => {
