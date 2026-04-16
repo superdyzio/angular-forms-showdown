@@ -6,35 +6,34 @@ import { compareRun } from '../../data/benchmark-compare';
 
 /**
  * Run 2 — copy the RUN2 values from the 13-performance-comparison slide.
- * TODO: replace zeros with actual values
  */
 const RUN2: { template: BenchmarkRun; reactive: BenchmarkRun; signal: BenchmarkRun } = {
   template: {
-    add1kJs: 0,
-    update1kJs: 0,
-    add1kInp: 0,
-    update1kInp: 0,
-    memoryStart: 0,
-    memoryPeak: 0,
-    memoryEnd: 0,
+    add1kJs: 8.74,
+    update1kJs: 2.26,
+    add1kInp: 5584,
+    update1kInp: 4803,
+    memoryStart: 14.7,
+    memoryPeak: 134.1,
+    memoryEnd: 19.9,
   },
   reactive: {
-    add1kJs: 0,
-    update1kJs: 0,
-    add1kInp: 0,
-    update1kInp: 0,
-    memoryStart: 0,
-    memoryPeak: 0,
-    memoryEnd: 0,
+    add1kJs: 127.07,
+    update1kJs: 156.13,
+    add1kInp: 1338,
+    update1kInp: 270,
+    memoryStart: 15.3,
+    memoryPeak: 133,
+    memoryEnd: 20.9,
   },
   signal: {
-    add1kJs: 0,
-    update1kJs: 0,
-    add1kInp: 0,
-    update1kInp: 0,
-    memoryStart: 0,
-    memoryPeak: 0,
-    memoryEnd: 0,
+    add1kJs: 0.78,
+    update1kJs: 2.55,
+    add1kInp: 1919,
+    update1kInp: 3394,
+    memoryStart: 15.5,
+    memoryPeak: 124.2,
+    memoryEnd: 63.3,
   },
 };
 

@@ -37,30 +37,30 @@ export interface Benchmarks {
 /** Run `npm run benchmark` to regenerate. */
 export const BENCHMARKS: Benchmarks = {
   template: {
-    add1kJs: 7.37,
-    update1kJs: 1.67,
+    add1kJs: 8.8,
+    update1kJs: 2.24,
     add1kInp: 5254,
     update1kInp: 4093,
-    memoryStart: 12.19,
-    memoryPeak: 54.07,
-    memoryEnd: 74.91
+    memoryStart: 23,
+    memoryPeak: 151,
+    memoryEnd: 28
   },
   reactive: {
-    add1kJs: 70.63,
-    update1kJs: 112.03,
+    add1kJs: 162.22,
+    update1kJs: 155.44,
     add1kInp: 1321,
     update1kInp: 248,
-    memoryStart: 12.12,
-    memoryPeak: 63.86,
-    memoryEnd: 66.12
+    memoryStart: 24,
+    memoryPeak: 154,
+    memoryEnd: 29
   },
   signal: {
-    add1kJs: 0.7,
-    update1kJs: 2.23,
+    add1kJs: 3.44,
+    update1kJs: 3.88,
     add1kInp: 1750,
     update1kInp: 2659,
-    memoryStart: 12.5,
-    memoryPeak: 31.49,
-    memoryEnd: 25.6
+    memoryStart: 25,
+    memoryPeak: 134,
+    memoryEnd: 73
   }
 };
