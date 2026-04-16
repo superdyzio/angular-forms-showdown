@@ -12,13 +12,14 @@ import { FeatureMappingSlideComponent } from './10-feature-mapping/feature-mappi
 import { DemoSlideComponent } from './11-demo/demo-slide.component';
 import { PerformanceSlideComponent } from './12-performance/performance-slide.component';
 import { PerformanceComparisonSlideComponent } from './13-performance-comparison/performance-comparison-slide.component';
-import { BundleSizeSlideComponent } from './14-bundle-size/bundle-size-slide.component';
-import { LearningCurveSlideComponent } from './15-learning-curve/learning-curve-slide.component';
-import { CommunitySlideComponent } from './16-community/community-slide.component';
-import { WhenToUseSlideComponent } from './17-when-to-use/when-to-use-slide.component';
-import { ZonelessSlideComponent } from './18-zoneless/zoneless-slide.component';
-import { MigrationSlideComponent } from './19-migration/migration-slide.component';
-import { ThankYouSlideComponent } from './20-thank-you/thank-you-slide.component';
+import { LatestPerformanceSlideComponent } from './14-latest-performance/latest-performance-slide.component';
+import { BundleSizeSlideComponent } from './15-bundle-size/bundle-size-slide.component';
+import { LearningCurveSlideComponent } from './16-learning-curve/learning-curve-slide.component';
+import { CommunitySlideComponent } from './17-community/community-slide.component';
+import { WhenToUseSlideComponent } from './18-when-to-use/when-to-use-slide.component';
+import { ZonelessSlideComponent } from './19-zoneless/zoneless-slide.component';
+import { MigrationSlideComponent } from './20-migration/migration-slide.component';
+import { ThankYouSlideComponent } from './21-thank-you/thank-you-slide.component';
 
 export const slidesRoutes: Routes = [
   { path: '', redirectTo: '1', pathMatch: 'full' },
@@ -35,12 +36,13 @@ export const slidesRoutes: Routes = [
   { path: '11', component: DemoSlideComponent },
   { path: '12', component: PerformanceSlideComponent },
   { path: '13', component: PerformanceComparisonSlideComponent },
-  { path: '14', component: BundleSizeSlideComponent },
-  { path: '15', component: LearningCurveSlideComponent },
-  { path: '16', component: CommunitySlideComponent },
-  { path: '17', component: WhenToUseSlideComponent },
-  { path: '18', component: ZonelessSlideComponent },
-  { path: '19', component: MigrationSlideComponent },
-  { path: '20', component: ThankYouSlideComponent },
+  { path: '14', component: LatestPerformanceSlideComponent },
+  { path: '15', component: BundleSizeSlideComponent },
+  { path: '16', component: LearningCurveSlideComponent },
+  { path: '17', component: CommunitySlideComponent },
+  { path: '18', component: WhenToUseSlideComponent },
+  { path: '19', component: ZonelessSlideComponent },
+  { path: '20', component: MigrationSlideComponent },
+  { path: '21', component: ThankYouSlideComponent },
   { path: '**', redirectTo: '1' }
 ];

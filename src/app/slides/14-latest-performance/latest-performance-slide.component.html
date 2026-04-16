@@ -1,0 +1,166 @@
+<div class="slide-container">
+  <h1>{{ 'slide.performance.latestComparisonTitle' | translate }}</h1>
+  <div class="slide-content">
+    <h2>{{ 'slide.performance.subtitle' | translate }}</h2>
+    <table class="performance-table">
+      <thead>
+        <tr>
+          <th>{{ 'slide.performance.action' | translate }}</th>
+          <th>{{ 'slide.shared.templateForms' | translate }}</th>
+          <th>{{ 'slide.shared.reactiveForms' | translate }}</th>
+          <th>{{ 'slide.shared.signalForms' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ 'slide.performance.add1kFieldsJs' | translate }}</td>
+          <td>
+            {{ template.add1kJs.value }} {{ template.add1kJs.unit }}
+            <span class="diff" [class.better]="template.add1kJs.better" [class.worse]="!template.add1kJs.better">
+              ({{ template.add1kJs.diff > 0 ? '+' : '' }}{{ template.add1kJs.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ reactive.add1kJs.value }} {{ reactive.add1kJs.unit }}
+            <span class="diff" [class.better]="reactive.add1kJs.better" [class.worse]="!reactive.add1kJs.better">
+              ({{ reactive.add1kJs.diff > 0 ? '+' : '' }}{{ reactive.add1kJs.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ signal.add1kJs.value }} {{ signal.add1kJs.unit }}
+            <span class="diff" [class.better]="signal.add1kJs.better" [class.worse]="!signal.add1kJs.better">
+              ({{ signal.add1kJs.diff > 0 ? '+' : '' }}{{ signal.add1kJs.diff }}%)
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ 'slide.performance.update1kFieldsJs' | translate }}</td>
+          <td>
+            {{ template.update1kJs.value }} {{ template.update1kJs.unit }}
+            <span class="diff" [class.better]="template.update1kJs.better" [class.worse]="!template.update1kJs.better">
+              ({{ template.update1kJs.diff > 0 ? '+' : '' }}{{ template.update1kJs.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ reactive.update1kJs.value }} {{ reactive.update1kJs.unit }}
+            <span class="diff" [class.better]="reactive.update1kJs.better" [class.worse]="!reactive.update1kJs.better">
+              ({{ reactive.update1kJs.diff > 0 ? '+' : '' }}{{ reactive.update1kJs.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ signal.update1kJs.value }} {{ signal.update1kJs.unit }}
+            <span class="diff" [class.better]="signal.update1kJs.better" [class.worse]="!signal.update1kJs.better">
+              ({{ signal.update1kJs.diff > 0 ? '+' : '' }}{{ signal.update1kJs.diff }}%)
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ 'slide.performance.add1kFieldsInp' | translate }}</td>
+          <td>
+            {{ template.add1kInp.value }} {{ template.add1kInp.unit }}
+            <span class="diff" [class.better]="template.add1kInp.better" [class.worse]="!template.add1kInp.better">
+              ({{ template.add1kInp.diff > 0 ? '+' : '' }}{{ template.add1kInp.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ reactive.add1kInp.value }} {{ reactive.add1kInp.unit }}
+            <span class="diff" [class.better]="reactive.add1kInp.better" [class.worse]="!reactive.add1kInp.better">
+              ({{ reactive.add1kInp.diff > 0 ? '+' : '' }}{{ reactive.add1kInp.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ signal.add1kInp.value }} {{ signal.add1kInp.unit }}
+            <span class="diff" [class.better]="signal.add1kInp.better" [class.worse]="!signal.add1kInp.better">
+              ({{ signal.add1kInp.diff > 0 ? '+' : '' }}{{ signal.add1kInp.diff }}%)
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ 'slide.performance.update1kFieldsInp' | translate }}</td>
+          <td>
+            {{ template.update1kInp.value }} {{ template.update1kInp.unit }}
+            <span class="diff" [class.better]="template.update1kInp.better" [class.worse]="!template.update1kInp.better">
+              ({{ template.update1kInp.diff > 0 ? '+' : '' }}{{ template.update1kInp.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ reactive.update1kInp.value }} {{ reactive.update1kInp.unit }}
+            <span class="diff" [class.better]="reactive.update1kInp.better" [class.worse]="!reactive.update1kInp.better">
+              ({{ reactive.update1kInp.diff > 0 ? '+' : '' }}{{ reactive.update1kInp.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ signal.update1kInp.value }} {{ signal.update1kInp.unit }}
+            <span class="diff" [class.better]="signal.update1kInp.better" [class.worse]="!signal.update1kInp.better">
+              ({{ signal.update1kInp.diff > 0 ? '+' : '' }}{{ signal.update1kInp.diff }}%)
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ 'slide.performance.memoryHeapStart' | translate }}</td>
+          <td>
+            {{ template.memoryStart.value }} {{ template.memoryStart.unit }}
+            <span class="diff" [class.better]="template.memoryStart.better" [class.worse]="!template.memoryStart.better">
+              ({{ template.memoryStart.diff > 0 ? '+' : '' }}{{ template.memoryStart.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ reactive.memoryStart.value }} {{ reactive.memoryStart.unit }}
+            <span class="diff" [class.better]="reactive.memoryStart.better" [class.worse]="!reactive.memoryStart.better">
+              ({{ reactive.memoryStart.diff > 0 ? '+' : '' }}{{ reactive.memoryStart.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ signal.memoryStart.value }} {{ signal.memoryStart.unit }}
+            <span class="diff" [class.better]="signal.memoryStart.better" [class.worse]="!signal.memoryStart.better">
+              ({{ signal.memoryStart.diff > 0 ? '+' : '' }}{{ signal.memoryStart.diff }}%)
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ 'slide.performance.memoryHeapMax' | translate }}</td>
+          <td>
+            {{ template.memoryPeak.value }} {{ template.memoryPeak.unit }}
+            <span class="diff" [class.better]="template.memoryPeak.better" [class.worse]="!template.memoryPeak.better">
+              ({{ template.memoryPeak.diff > 0 ? '+' : '' }}{{ template.memoryPeak.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ reactive.memoryPeak.value }} {{ reactive.memoryPeak.unit }}
+            <span class="diff" [class.better]="reactive.memoryPeak.better" [class.worse]="!reactive.memoryPeak.better">
+              ({{ reactive.memoryPeak.diff > 0 ? '+' : '' }}{{ reactive.memoryPeak.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ signal.memoryPeak.value }} {{ signal.memoryPeak.unit }}
+            <span class="diff" [class.better]="signal.memoryPeak.better" [class.worse]="!signal.memoryPeak.better">
+              ({{ signal.memoryPeak.diff > 0 ? '+' : '' }}{{ signal.memoryPeak.diff }}%)
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td>{{ 'slide.performance.memoryHeapEnd' | translate }}</td>
+          <td>
+            {{ template.memoryEnd.value }} {{ template.memoryEnd.unit }}
+            <span class="diff" [class.better]="template.memoryEnd.better" [class.worse]="!template.memoryEnd.better">
+              ({{ template.memoryEnd.diff > 0 ? '+' : '' }}{{ template.memoryEnd.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ reactive.memoryEnd.value }} {{ reactive.memoryEnd.unit }}
+            <span class="diff" [class.better]="reactive.memoryEnd.better" [class.worse]="!reactive.memoryEnd.better">
+              ({{ reactive.memoryEnd.diff > 0 ? '+' : '' }}{{ reactive.memoryEnd.diff }}%)
+            </span>
+          </td>
+          <td>
+            {{ signal.memoryEnd.value }} {{ signal.memoryEnd.unit }}
+            <span class="diff" [class.better]="signal.memoryEnd.better" [class.worse]="!signal.memoryEnd.better">
+              ({{ signal.memoryEnd.diff > 0 ? '+' : '' }}{{ signal.memoryEnd.diff }}%)
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="session-note">{{ 'slide.performance.latestSessionNote' | translate }}</p>
+  </div>
+</div>

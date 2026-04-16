@@ -34,13 +34,14 @@ export class SlideshowComponent implements OnInit, OnDestroy {
     { id: 11, title: 'Demo' },
     { id: 12, title: 'Performance' },
     { id: 13, title: 'Performance' },
-    { id: 14, title: 'Bundle Size' },
-    { id: 15, title: 'Developer Experience' },
-    { id: 16, title: 'Community & Ecosystem' },
-    { id: 17, title: 'When to Use What?' },
-    { id: 18, title: 'Zoneless Angular' },
-    { id: 19, title: 'Same Field, Three Approaches' },
-    { id: 20, title: 'Thank You' }
+    { id: 14, title: 'Performance' },
+    { id: 15, title: 'Bundle Size' },
+    { id: 16, title: 'Developer Experience' },
+    { id: 17, title: 'Community & Ecosystem' },
+    { id: 18, title: 'When to Use What?' },
+    { id: 19, title: 'Zoneless Angular' },
+    { id: 20, title: 'Same Field, Three Approaches' },
+    { id: 21, title: 'Thank You' }
   ]);
   
   // Computed values
