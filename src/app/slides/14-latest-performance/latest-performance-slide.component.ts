@@ -40,7 +40,6 @@ const RUN2: { template: BenchmarkRun; reactive: BenchmarkRun; signal: BenchmarkR
 
 /**
  * Run 3 — latest benchmark run.
- * TODO: fill in with actual Run 3 values after running: npm run benchmark
  */
 const RUN3: typeof RUN2 = {
   template: {
