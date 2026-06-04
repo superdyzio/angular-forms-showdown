@@ -5,7 +5,7 @@
  * a directive, testing it requires a host component, a compiled template, and
  * fakeAsync to manage both the debounce timer and the simulated network delay.
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule, NgForm } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -18,6 +18,7 @@ const NETWORK_DELAY_MS = 800;
 @Component({
   standalone: true,
   imports: [FormsModule, TemplateEmailAsyncValidatorDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <form #f="ngForm">
       <input name="email" ngModel [afsEmailExists]="true" />

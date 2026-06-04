@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { BENCHMARKS } from '../../data/benchmarks';
@@ -44,6 +44,7 @@ const RUN2: typeof BENCHMARKS = {
   standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './performance-comparison-slide.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './performance-comparison-slide.component.scss',
 })
 export class PerformanceComparisonSlideComponent {

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet, Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,6 +8,7 @@ import { filter } from 'rxjs/operators';
   selector: 'afs-root',
   imports: [RouterOutlet, FormsModule, ReactiveFormsModule],
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
