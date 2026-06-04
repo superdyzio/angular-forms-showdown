@@ -2,9 +2,9 @@
 
 ## Overview
 
-**Angular Forms Showdown** is an interactive presentation + live-demo app that compares three Angular form approaches side-by-side: Template-Driven Forms, Reactive Forms, and the new Signal-Based Forms API (Angular 21+). It was built as a conference/meetup talk resource with 14 presentation slides and fully functional form implementations for each approach.
+**Angular Forms Showdown** is an interactive presentation + live-demo app that compares three Angular form approaches side-by-side: Template-Driven Forms, Reactive Forms, and the Signal-Based Forms API. It was built as a conference/meetup talk resource with 21 presentation slides and fully functional form implementations for each approach.
 
-**Stack:** Angular 21.0.3 · RxJS 7.8.0 · ngx-translate 17 · TypeScript 5.9 · SCSS
+**Stack:** Angular 22.0.0 · RxJS 7.8.2 · ngx-translate 17 · TypeScript 6.0 · zone.js · SCSS
 
 ---
 
@@ -13,24 +13,24 @@
 ### What's Working Well
 
 - **Three parallel form implementations** for the same complex use case (user registration with dynamic addresses, conditional state field, async email validation, password strength indicator, and progress tracking)
-- **14-slide presentation** embedded in the app, navigable by keyboard
+- **21-slide presentation** embedded in the app, navigable by keyboard
 - **Performance benchmarks** built into each form page (add/update 1 000 address records, measure JS execution time and heap memory)
 - **Bilingual support** (EN / PL) via ngx-translate with 280+ translation keys
-- **Modern Angular patterns**: standalone components, `inject()`, functional route guards, Vite-based build (`@angular/build:application`)
+- **Modern Angular patterns**: standalone components, `inject()`, lazy-loaded routes, signals, Vite-based build (`@angular/build:application`)
 - **TypeScript strict mode** across the board
 
 ### Current Gaps
 
-| Area | Issue |
-|------|-------|
-| Testing | Only 2 smoke tests; zero coverage for validators, services, or components |
-| Documentation | README is the default Angular CLI template; no architecture or usage guide |
-| Code duplication | Email regex duplicated across 3 component files |
-| Performance testing | Results hard-coded in slides; no automated runner or reproducibility guide |
-| Accessibility | Limited ARIA labels; forms not fully keyboard-accessible |
-| Change detection | No `OnPush` strategy used — missed performance win |
-| Async validators | No debouncing on email check (fires on every keystroke) |
-| TODOs | Leftover comments about "comparison with SolidJS" and "test with smaller form" |
+| Area | Status |
+|------|--------|
+| Testing | ✅ Resolved — 9 spec files, 153 tests covering validators, services, and all three form components |
+| Code duplication | ✅ Resolved — email regex extracted to `src/app/validators/email.validator.ts` |
+| Change detection | ✅ Resolved — `OnPush` on the three form pages; explicit `Eager` elsewhere (Angular 22 migration) |
+| Async validators | ✅ Resolved — all three approaches debounce the email check (`debounceTime(300)` / `timer(300)`) |
+| Performance testing | ✅ Resolved — headless runner in `scripts/benchmark.mjs` (`npm run benchmark`) |
+| TODOs | ✅ Resolved — leftover SolidJS / smaller-form comments removed |
+| Tooling | `angular-eslint` has no v22 release yet; installs need `--legacy-peer-deps` (lint passes) |
+| Accessibility | Limited ARIA labels; forms not fully keyboard-accessible (still open) |
 
 ---
 
@@ -175,7 +175,7 @@ src/app/
 │   ├── reactive/        Reactive Forms implementation
 │   ├── signal/          Signal-Based Forms implementation
 │   └── slideshow/       Presentation container
-├── slides/              14 slide components (01–14)
+├── slides/              21 slide components (01–21)
 ├── services/
 │   └── email-check.service.ts   Simulated async validator backend
 ├── types/
@@ -190,7 +190,7 @@ src/app/
 
 ## Key Numbers for Slides
 
-- **Angular version:** 21.0.3
+- **Angular version:** 22.0.0
 - **Signal forms performance win (JS add):** ~61% faster than Template-Driven, ~98% faster than Reactive
 - **Reactive forms performance win (input update):** ~94% faster than Template-Driven
 - **Peak memory:** Signal saves ~13% vs Reactive at 1 000 addresses
