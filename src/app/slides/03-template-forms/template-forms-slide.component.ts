@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './template-forms-slide.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './template-forms-slide.component.scss'
 })
 export class TemplateFormsSlideComponent {}
