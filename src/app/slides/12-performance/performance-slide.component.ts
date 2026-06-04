@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { BENCHMARKS } from '../../data/benchmarks';
@@ -8,7 +8,6 @@ import { BENCHMARKS } from '../../data/benchmarks';
   standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './performance-slide.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './performance-slide.component.scss',
 })
 export class PerformanceSlideComponent {

@@ -25,7 +25,7 @@
 |------|--------|
 | Testing | ✅ Resolved — 9 spec files, 153 tests covering validators, services, and all three form components |
 | Code duplication | ✅ Resolved — email regex extracted to `src/app/validators/email.validator.ts` |
-| Change detection | ✅ Resolved — `OnPush` on the three form pages; explicit `Eager` elsewhere (Angular 22 migration) |
+| Change detection | ✅ Resolved — all components run on `OnPush` (explicit on the three form pages, Angular 22 default elsewhere) |
 | Async validators | ✅ Resolved — all three approaches debounce the email check (`debounceTime(300)` / `timer(300)`) |
 | Performance testing | ✅ Resolved — headless runner in `scripts/benchmark.mjs` (`npm run benchmark`) |
 | TODOs | ✅ Resolved — leftover SolidJS / smaller-form comments removed |

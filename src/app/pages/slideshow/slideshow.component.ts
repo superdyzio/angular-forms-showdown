@@ -1,4 +1,4 @@
-import { Component, signal, computed, OnInit, OnDestroy, HostListener, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, computed, OnInit, OnDestroy, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -10,7 +10,6 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [CommonModule, RouterLink, RouterOutlet, TranslateModule],
   templateUrl: './slideshow.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './slideshow.component.scss'
 })
 export class SlideshowComponent implements OnInit, OnDestroy {

@@ -61,7 +61,7 @@ Language can be switched via URL query param: `?lang=en` or `?lang=pl`
 
 - ~~Email validation regex duplicated across four locations~~ — extracted to `src/app/validators/email.validator.ts` (`EMAIL_REGEX`, `isValidEmailFormat`), now consumed by all three form components and `EmailCheckService`
 - ~~Async email validator has no debounce~~ — all three approaches debounce (`debounceTime(300)` / `timer(300)` + `switchMap`)
-- ~~No `OnPush` change detection on any component~~ — the three form pages use `OnPush`; the remaining components carry an explicit `ChangeDetectionStrategy.Eager` added by the Angular 22 migration (v22 defaults undefined `changeDetection` to `OnPush`)
+- ~~No `OnPush` change detection on any component~~ — every component runs on `OnPush`: the three form pages set it explicitly, and the rest rely on Angular 22's default (undefined `changeDetection` now means `OnPush`). The migration's `ChangeDetectionStrategy.Eager` opt-out was deliberately removed.
 - ~~Tests are minimal~~ — 9 spec files, **153 tests** (validators, services, and all three form components)
 - ~~Leftover TODO comments in `template.component.ts` about SolidJS comparison~~ (already removed)
 - `angular-eslint` has no v22 release yet (peer caps at `@angular/cli < 22`); `npm install` requires `--legacy-peer-deps`. Lint still passes.
