@@ -1,6 +1,8 @@
 # AngularFormsShowdown
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.1.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) and is currently on **Angular 22**.
+
+> **Note:** `angular-eslint` has no Angular 22 release yet, so dependency installs require `npm install --legacy-peer-deps`.
 
 ## Development server
 
