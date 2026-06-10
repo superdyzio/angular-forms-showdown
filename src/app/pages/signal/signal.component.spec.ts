@@ -53,12 +53,8 @@ describe('SignalComponent', () => {
       expect(component.submittedData()).toBeNull();
     });
 
-    it('emailCheckInProgress is false', () => {
-      expect(component.emailCheckInProgress()).toBe(false);
-    });
-
-    it('emailExists is false', () => {
-      expect(component.emailExists()).toBe(false);
+    it('email field starts not pending', () => {
+      expect(component['form'].email().pending()).toBe(false);
     });
 
     it('profileCompletion starts at 0', () => {
@@ -187,28 +183,6 @@ describe('SignalComponent', () => {
       setField('name', 'Jane');
       setField('email', 'jane@example.com');
       expect(component.profileCompletion()).toBeGreaterThan(0);
-    });
-  });
-
-  describe('emailValue (computed)', () => {
-    // Note: the full async pipeline (toObservable + debounceTime + switchMap → emailExists)
-    // cannot be driven by fakeAsync in this setup. Angular 21's zoneless effect scheduler
-    // uses its own microtask queue that does not integrate with Zone.js's fake timer
-    // infrastructure, so the toObservable effect never fires inside tick(). The equivalent
-    // behaviour is covered end-to-end in:
-    //   - email-check.service.spec.ts  (service logic, error simulation, debounce-free)
-    //   - template-email-async.validator.spec.ts  (directive: debounce + network + errors)
-    //   - reactive.component.spec.ts  (emailExistsValidator + component getter tests)
-
-    it('starts empty', () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((component as any).emailValue()).toBe('');
-    });
-
-    it('reflects changes to the email field', () => {
-      setField('email', 'changed@example.com');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect((component as any).emailValue()).toBe('changed@example.com');
     });
   });
 

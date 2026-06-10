@@ -1,15 +1,13 @@
 import { ChangeDetectionStrategy, Component, signal, inject, computed, WritableSignal } from '@angular/core';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { form, FormField, required, minLength, email, validate, requiredError } from '@angular/forms/signals';
+import { form, FormField, required, minLength, email, validate, validateAsync } from '@angular/forms/signals';
 import { EmailCheckService } from '../../services/email-check.service';
 import { isValidEmailFormat } from '../../validators/email.validator';
 import { getPasswordStrength, PasswordStrength } from '../../validators/password-strength';
 import { Address } from '../../types/address';
 import { User, UserForm } from '../../types/user';
-import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -39,6 +37,21 @@ export class SignalComponent {
     minLength(data.name, 2, { message: () => this.translate.instant('validation.name.minlength') });
     required(data.email, { message: () => this.translate.instant('validation.email.required') });
     email(data.email, { message: () => this.translate.instant('validation.email.invalid') });
+    validateAsync(data.email, {
+      params: ({ valueOf }) => valueOf(data.email),
+      when: ({ valueOf }) => {
+        const val = valueOf(data.email) ?? '';
+        return !!val && isValidEmailFormat(val);
+      },
+      debounce: 300,
+      factory: emailValueSignal => rxResource({
+        params: () => emailValueSignal(),
+        stream: ({ params: emailVal }) => this.emailCheck.checkEmailExists(emailVal ?? ''),
+      }),
+      onSuccess: exists =>
+        exists ? { kind: 'emailExists', message: this.translate.instant('validation.email.alreadyTaken') } : null,
+      onError: () => ({ kind: 'emailCheckError', message: this.translate.instant('validation.email.checkError') }),
+    });
     required(data.password, { message: () => this.translate.instant('validation.password.required') });
     minLength(data.password, 8, { message: () => this.translate.instant('validation.password.minlength') });
     validate(data.password, ({ valueOf }) => {
@@ -57,14 +70,14 @@ export class SignalComponent {
     });
     required(data.confirmPassword, { message: () => this.translate.instant('validation.confirmPassword.required') });
     required(data.country, { message: () => this.translate.instant('validation.country.required') });
-    validate(data.state, ({ valueOf }) => this.isUSA() && !valueOf(data.state) ? requiredError({ message: this.translate.instant('validation.state.required') }) : null);
+    required(data.state, {
+      when: () => this.isUSA(),
+      message: () => this.translate.instant('validation.state.required'),
+    });
   });
 
   // Signal-based state
   submittedData = signal<User | null>(null);
-  emailCheckInProgress = signal(false);
-  emailExists = signal(false);
-  emailCheckError = signal(false);
   protected emailErrorSimulation = this.emailCheck.simulateError;
 
   // Calculate profile completion percentage
@@ -138,38 +151,8 @@ export class SignalComponent {
     { value: 'monthly', label: this.translate.instant('option.monthly') }
   ]);
 
-  // Dedicated email value signal to scope the async check to email changes only
-  emailValue = computed(() => this.form.email().value());
-
   constructor() {
-    // Add initial address
     this.addAddress();
-
-    toObservable(this.emailValue).pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      switchMap(email => {
-        if (!email || !isValidEmailFormat(email)) {
-          this.emailExists.set(false);
-          return of(null);
-        }
-        this.emailCheckInProgress.set(true);
-        this.emailCheckError.set(false);
-        return this.emailCheck.checkEmailExists(email).pipe(
-          map(exists => {
-            this.emailCheckInProgress.set(false);
-            this.emailExists.set(exists);
-            return exists ? { emailExists: true } : null;
-          }),
-          catchError(() => {
-            this.emailCheckInProgress.set(false);
-            this.emailCheckError.set(true);
-            return of(null);
-          })
-        );
-      }),
-      takeUntilDestroyed()
-    ).subscribe();
   }
 
   // Check if country is USA

@@ -56,23 +56,22 @@
             aria-describedby="emailError emailStatus"
           />
           <div id="emailError" class="error-message" role="alert">
-            @if (form.email().invalid() && form.email().touched()) {
-              <span>{{ form.email().errors()[0]?.message }}</span>
+            @let syncErr = form.email().errors().find(e => e.kind === 'required' || e.kind === 'email');
+            @if (syncErr && form.email().touched()) {
+              <span>{{ syncErr.message }}</span>
             }
           </div>
           <div id="emailStatus" role="status" aria-live="polite">
-            @if (emailCheckError()) {
-              <div class="error-message">
-                <span>{{ 'validation.email.checkError' | translate }}</span>
-              </div>
-            }
-            @if (emailCheckInProgress()) {
+            @if (form.email().pending()) {
               <div class="loading-message">
                 <span>{{ 'validation.email.checking' | translate }}</span>
               </div>
-            }
-            @if (form.email().valid() && form.email().touched() && !emailCheckInProgress() && !emailCheckError()) {
-              @if (emailExists()) {
+            } @else if (form.email().touched() && !form.email().errors().some(e => e.kind === 'required' || e.kind === 'email')) {
+              @if (form.email().errors().some(e => e.kind === 'emailCheckError')) {
+                <div class="error-message">
+                  <span>{{ 'validation.email.checkError' | translate }}</span>
+                </div>
+              } @else if (form.email().errors().some(e => e.kind === 'emailExists')) {
                 <div class="error-message">
                   <span>{{ 'validation.email.alreadyTaken' | translate }}</span>
                 </div>
@@ -117,7 +116,7 @@
           <div id="passwordError" class="error-message" role="alert">
             @if (form.password().invalid() && form.password().touched()) {
               @for (error of form.password().errors(); track error.message) {
-                <span>{{ error.message }}</span>
+                <div>{{ error.message }}</div>
               }
             }
           </div>
@@ -355,8 +354,8 @@
       <p><strong>{{ 'common.valid' | translate }}:</strong> {{ form().valid() }}</p>
       <p><strong>{{ 'common.pristine' | translate }}:</strong> {{ formPristine() }}</p>
       <p><strong>{{ 'common.touched' | translate }}:</strong> {{ form().touched() }}</p>
-      <p><strong>{{ 'common.emailExists' | translate }}:</strong> {{ emailExists() }}</p>
-      <p><strong>{{ 'common.emailCheckInProgress' | translate }}:</strong> {{ emailCheckInProgress() }}</p>
+      <p><strong>{{ 'common.emailExists' | translate }}:</strong> {{ form.email().errors().some(e => e.kind === 'emailExists') }}</p>
+      <p><strong>{{ 'common.emailCheckInProgress' | translate }}:</strong> {{ form.email().pending() }}</p>
     </div>
   </div>
 </div>
