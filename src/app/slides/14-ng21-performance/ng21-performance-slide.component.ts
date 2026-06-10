@@ -71,13 +71,13 @@ const RUN3: typeof RUN2 = {
 };
 
 @Component({
-  selector: 'afs-latest-performance-slide',
+  selector: 'afs-ng21-performance-slide',
   standalone: true,
   imports: [CommonModule, TranslateModule],
-  templateUrl: './latest-performance-slide.component.html',
-  styleUrl: './latest-performance-slide.component.scss',
+  templateUrl: './ng21-performance-slide.component.html',
+  styleUrl: './ng21-performance-slide.component.scss',
 })
-export class LatestPerformanceSlideComponent {
+export class Ng21PerformanceSlideComponent {
   readonly template = compareRun(RUN2.template, RUN3.template);
   readonly reactive = compareRun(RUN2.reactive, RUN3.reactive);
   readonly signal = compareRun(RUN2.signal, RUN3.signal);

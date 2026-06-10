@@ -284,8 +284,10 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end",
       "sessionNote": "Run 1: Angular 21.0.0-next.3 · Run 2: Angular 21.0.3 — % diff shows change between sessions; cross-session INP variance (±30%) is normal",
-      "latestComparisonTitle": "Performance (21.2.8)",
-      "latestSessionNote": "Run 2: Angular 21.0.3 · Run 3: 21.2.8 — % diff shows change between sessions; cross-session INP variance (±30%) is normal"
+      "ng21ComparisonTitle": "Performance (21.2.8)",
+      "ng21SessionNote": "Run 2: Angular 21.0.3 · Run 3: 21.2.8 — % diff shows change between sessions; cross-session INP variance (±30%) is normal",
+      "ng22ComparisonTitle": "Performance (22.0.0)",
+      "ng22SessionNote": "Run 3: Angular 21.2.8 · Run 4: Angular 22.0.0 — % diff shows change between sessions; INP not remeasured for this run"
     },
     "zoneless": {
       "title": "Zoneless Angular",

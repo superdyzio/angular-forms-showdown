@@ -284,8 +284,10 @@
       "memoryHeapMax": "memory heap max",
       "memoryHeapEnd": "memory heap end",
       "sessionNote": "Przebieg 1: Angular 21.0.0-next.3 · Przebieg 2: Angular 21.0.3 — % diff pokazuje zmianę między sesjami; wariancja INP między sesjami (±30%) jest normalna",
-      "latestComparisonTitle": "Performęs (21.2.8)",
-      "latestSessionNote": "Przebieg 2: Angular 21.0.3 · Przebieg 3: 21.2.8 — % diff pokazuje zmianę między sesjami; wariancja INP między sesjami (±30%) jest normalna"
+      "ng21ComparisonTitle": "Performęs (21.2.8)",
+      "ng21SessionNote": "Przebieg 2: Angular 21.0.3 · Przebieg 3: 21.2.8 — % diff pokazuje zmianę między sesjami; wariancja INP między sesjami (±30%) jest normalna",
+      "ng22ComparisonTitle": "Performęs (22.0.0)",
+      "ng22SessionNote": "Przebieg 3: Angular 21.2.8 · Przebieg 4: Angular 22.0.0 — % diff pokazuje zmianę między sesjami; INP nie był ponownie mierzony dla tego przebiegu"
     },
     "zoneless": {
       "title": "Zoneless Angular",
