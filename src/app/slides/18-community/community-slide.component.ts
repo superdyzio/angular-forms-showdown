@@ -11,5 +11,5 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class CommunitySlideComponent {
   // Update this date when refreshing SO/GitHub figures
-  readonly dataDate = '2026-04-09';
+  readonly dataDate = '2026-06-11';
 }
