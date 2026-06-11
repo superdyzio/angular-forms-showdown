@@ -379,7 +379,7 @@
       "note": "Note",
       "noteBaseline": "Baseline",
       "noteSimilar": "Similar to Template-Driven",
-      "noteSignal": "Includes experimental @angular/forms/signals API",
+      "noteSignal": "@angular/forms/signals is used only here so it's bundled together. Normally: 26kB and 6kB.",
       "footnote": "Shared Angular & app code (~400 kB initial bundle) is excluded — only the lazy per-approach chunk is compared."
     },
     "thankYou": {

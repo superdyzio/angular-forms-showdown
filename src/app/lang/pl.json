@@ -379,7 +379,7 @@
       "note": "Uwaga",
       "noteBaseline": "Punkt odniesienia",
       "noteSimilar": "Podobnie jak Template-Driven",
-      "noteSignal": "Zawiera eksperymentalne API @angular/forms/signals",
+      "noteSignal": "@angular/forms/signals jest użyte tylko tutaj, więc zawiera się w tym bundle. Normalnie: 26kB i 6kB.",
       "footnote": "Wspólny kod Angular i aplikacji (~400 kB initial bundle) jest pominięty — porównywane są tylko lazy chunki per podejście."
     },
     "thankYou": {
