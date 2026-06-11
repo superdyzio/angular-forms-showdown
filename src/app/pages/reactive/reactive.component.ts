@@ -243,7 +243,7 @@ export class ReactiveComponent implements OnInit {
   }
 
   // Bulk add or update 100 addresses for performance testing
-  addOrUpdateHundredAddresses() {
+  addOrUpdateThousandAddresses() {
     if (!this.bulkAddressesAdded) {
       const start = performance.now();
       for (let i = 0; i < 1000; i++) {

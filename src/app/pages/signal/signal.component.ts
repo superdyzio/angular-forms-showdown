@@ -214,7 +214,7 @@ export class SignalComponent {
   // Bulk add/update similar to template/reactive components for performance testing
   bulkAddressesAdded = false;
 
-  addOrUpdateHundredAddresses() {
+  addOrUpdateThousandAddresses() {
     const addresses = this.form().value().addresses as WritableSignal<Address>[];
     if (!this.bulkAddressesAdded) {
       const start = performance.now();

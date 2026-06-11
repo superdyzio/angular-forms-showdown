@@ -78,17 +78,17 @@ describe('ReactiveComponent', () => {
     });
   });
 
-  describe('addOrUpdateHundredAddresses()', () => {
+  describe('addOrUpdateThousandAddresses()', () => {
     it('adds 1000 addresses on first call and sets bulkAddressesAdded', () => {
       expect(component.bulkAddressesAdded).toBe(false);
-      component.addOrUpdateHundredAddresses();
+      component.addOrUpdateThousandAddresses();
       expect(component.addresses.length).toBe(1001); // 1 initial + 1000
       expect(component.bulkAddressesAdded).toBe(true);
     });
 
     it('updates all addresses with bulk data on second call', () => {
-      component.addOrUpdateHundredAddresses(); // add
-      component.addOrUpdateHundredAddresses(); // update
+      component.addOrUpdateThousandAddresses(); // add
+      component.addOrUpdateThousandAddresses(); // update
       const first = component.addresses.at(0);
       expect(first.get('type')?.value).toBe('work');
       expect(first.get('street')?.value).toBe('Bulk Street 1');
@@ -100,9 +100,9 @@ describe('ReactiveComponent', () => {
     });
 
     it('does not add more addresses on a second call', () => {
-      component.addOrUpdateHundredAddresses();
+      component.addOrUpdateThousandAddresses();
       const countAfterAdd = component.addresses.length;
-      component.addOrUpdateHundredAddresses();
+      component.addOrUpdateThousandAddresses();
       expect(component.addresses.length).toBe(countAfterAdd);
     });
   });
