@@ -74,25 +74,23 @@ email: ['', [Validators.email],
   [this.emailExistsValidator.bind(this)]]`;
 
   protected signalAsyncSnippet =
-`// signal.component.ts
-// effect-based, not a form validator
-effect(() => {
-  const email = this.emailValue();
-  emailCheck
-    .checkEmailExists(email)
-    .pipe(
-      map(exists =>
-        this.emailExists.set(exists)
-      ),
-      catchError(() =>
-        this.emailCheckError.set(true)
-      ),
-      take(1)
-    )
-    .subscribe();
+`// signal.component.ts — inside the form schema
+validateAsync(data.email, {
+  when: ({ valueOf }) =>
+    isValidEmailFormat(valueOf(data.email) ?? ''),
+  debounce: 300,
+  factory: email => rxResource({
+    params: () => email(),
+    stream: ({ params }) =>
+      emailCheck.checkEmailExists(params ?? '')
+  }),
+  onSuccess: exists => exists
+    ? { kind: 'emailExists', message: '...' }
+    : null,
+  onError: () => ({ kind: 'emailCheckError' })
 });
 
-// template: manual error display
-@if (emailExists()) { ... }
-@if (emailCheckError()) { ... }`;
+// template: declarative, framework-driven
+@if (form.email().errors()
+      .some(e => e.kind === 'emailExists')) { ... }`;
 }

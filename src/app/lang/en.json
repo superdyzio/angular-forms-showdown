@@ -198,7 +198,7 @@
       "description": "New reactive type in Angular",
       "point1": "Wrapper for any value",
       "point2": "Provides fine-grained reactivity",
-      "point3": "Zoneless in the future",
+      "point3": "Zoneless Angular",
       "point4": "set, computed, effect, linkedSignal, ...",
       "point5": "complements rxjs + interop helpers"
     },
@@ -214,8 +214,8 @@
     },
     "signalFormsApi": {
       "title": "Signal Forms API",
-      "subtitle": "(@experimental API)",
-      "experimentalNote": "⚠ @angular/forms/signals is pre-stable in Angular 21 — API may change before final release",
+      "subtitle": "(stable API)",
+      "experimentalNote": "✓ @angular/forms/signals is stable as of Angular 22",
       "comparisonTitle": "Async Email Validator — Three Ways"
     },
     "cva": {
