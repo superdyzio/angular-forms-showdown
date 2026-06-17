@@ -5,6 +5,9 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
+/** An item in the compacted slide-indicator strip: a clickable slide or an ellipsis gap. */
+type IndicatorItem = { kind: 'slide'; n: number; id: string } | { kind: 'gap'; id: string };
+
 @Component({
   selector: 'afs-slideshow',
   standalone: true,
@@ -49,10 +52,41 @@ export class SlideshowComponent implements OnInit, OnDestroy {
   // Computed values
   totalSlides = computed(() => this.slides().length);
   
-  progressPercentage = computed(() => 
+  progressPercentage = computed(() =>
     (this.currentSlide() / this.totalSlides()) * 100
   );
-  
+
+  // Compacted indicator strip: always show the first five slides, the last five, and the
+  // selected slide ±2. Any remaining gap of more than one hidden slide collapses to an
+  // ellipsis (a lone hidden slide is shown as-is, since "…" would take the same space).
+  visibleIndicators = computed<IndicatorItem[]>(() => {
+    const total = this.totalSlides();
+    const current = this.currentSlide();
+
+    const keep = new Set<number>([
+      1, 2, 3, 4, 5,
+      total - 4, total - 3, total - 2, total - 1, total,
+      current - 2, current - 1, current, current + 1, current + 2,
+    ]);
+    const nums = [...keep].filter(n => n >= 1 && n <= total).sort((a, b) => a - b);
+
+    const items: IndicatorItem[] = [];
+    let prev = 0;
+    for (const n of nums) {
+      if (prev) {
+        const gap = n - prev;
+        if (gap === 2) {
+          items.push({ kind: 'slide', n: prev + 1, id: `s${prev + 1}` });
+        } else if (gap > 2) {
+          items.push({ kind: 'gap', id: `g${prev}` });
+        }
+      }
+      items.push({ kind: 'slide', n, id: `s${n}` });
+      prev = n;
+    }
+    return items;
+  });
+
   private destroy$ = new Subject<void>();
   
   ngOnInit() {

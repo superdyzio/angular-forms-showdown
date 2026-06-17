@@ -36,13 +36,17 @@
     </button>
     
     <div class="slide-indicators">
-      @for (slide of slides(); track slide.id; let i = $index) {
-        <button 
-          class="indicator"
-          [class.active]="currentSlide() === i + 1"
-          (click)="goToSlide(i + 1)">
-          {{ i + 1 }}
-        </button>
+      @for (item of visibleIndicators(); track item.id) {
+        @if (item.kind === 'slide') {
+          <button
+            class="indicator"
+            [class.active]="currentSlide() === item.n"
+            (click)="goToSlide(item.n)">
+            {{ item.n }}
+          </button>
+        } @else {
+          <span class="indicator-ellipsis" aria-hidden="true">…</span>
+        }
       }
     </div>
     

@@ -122,7 +122,21 @@ h1 {
 
 .slide-indicators {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.5rem;
+}
+
+.indicator-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 40px;
+  color: #4facfe;
+  font-weight: 700;
+  letter-spacing: 1px;
+  user-select: none;
 }
 
 .indicator {

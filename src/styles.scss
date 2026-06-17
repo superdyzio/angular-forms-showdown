@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* ---------------------------------------------------------------------------
+   Responsive fallbacks for the slide deck.
+   Slides are authored for wide / projector screens. Below 900px the multi-column
+   code comparisons stack, wide tables scroll horizontally, and chrome shrinks so
+   the deck stays usable on narrow viewports. Rules use !important to win over the
+   component-scoped (emulated-encapsulation) slide styles; they only apply inside
+   the media query, so desktop rendering is unchanged.
+--------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .slide-container {
+    padding: 1.25rem !important;
+  }
+
+  .slide-container h1 {
+    font-size: 1.9rem !important;
+  }
+
+  .slide-container .subtitle {
+    font-size: 0.9rem !important;
+  }
+
+  /* Multi-column code / comparison slides (e.g. Signal Forms API, Migration) */
+  .columns {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Wide data tables scroll horizontally instead of overflowing the viewport */
+  .slide-container table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Code blocks never push past the screen edge */
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+}
