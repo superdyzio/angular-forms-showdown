@@ -1,0 +1,51 @@
+<div class="compat-demo">
+  <a routerLink="/" class="back">← Back to Main</a>
+  <h1>compatForm — live proof</h1>
+  <p class="lead">
+    A model mixing a migrated signal field (<code>name</code>) and a not-yet-migrated Reactive
+    <code>FormControl</code> (<code>email</code>), bridged by <code>compatForm</code> — both bind the
+    same <code>[formField]</code> way and <code>extractValue()</code> unwraps on submit. A
+    <code>FormArray</code> of tags stays fully Reactive alongside it (the bit you migrate last).
+  </p>
+
+  <form (ngSubmit)="onSubmit()">
+    <!-- migrated: plain value governed by the Signal Forms schema -->
+    <label class="field">
+      <span class="field-label">Name <em class="badge signal">signal schema</em></span>
+      <input [formField]="form.name" />
+    </label>
+    @if (form.name().invalid() && form.name().touched()) {
+      <p class="err">Name is required (min 2 characters).</p>
+    }
+
+    <!-- not migrated: a bridged Reactive FormControl, same [formField] binding -->
+    <label class="field">
+      <span class="field-label">Email <em class="badge reactive">bridged FormControl</em></span>
+      <input [formField]="form.email" />
+    </label>
+    @if (form.email().invalid() && form.email().touched()) {
+      <p class="err">A valid email is required.</p>
+    }
+
+    <!-- heavy bit left fully Reactive alongside the compat form, driven the Reactive way -->
+    <fieldset class="field">
+      <legend>Tags <em class="badge reactive">Reactive FormArray</em></legend>
+      @for (tag of tags.controls; track $index) {
+        <div class="tag-row">
+          <input [formControl]="tag" placeholder="tag" />
+          <button type="button" class="ghost" (click)="removeTag($index)">remove</button>
+        </div>
+      }
+      <button type="button" class="ghost" (click)="addTag()">+ add tag</button>
+    </fieldset>
+
+    <button type="submit" class="submit" [disabled]="form().invalid()">Submit</button>
+  </form>
+
+  @if (submitted(); as result) {
+    <div class="result">
+      <h2>extractValue(form) →</h2>
+      <pre>{{ result | json }}</pre>
+    </div>
+  }
+</div>

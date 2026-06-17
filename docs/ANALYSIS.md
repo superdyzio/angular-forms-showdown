@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Angular Forms Showdown** is an interactive presentation + live-demo app that compares three Angular form approaches side-by-side: Template-Driven Forms, Reactive Forms, and the Signal-Based Forms API. It was built as a conference/meetup talk resource with 22 presentation slides and fully functional form implementations for each approach.
+**Angular Forms Showdown** is an interactive presentation + live-demo app that compares three Angular form approaches side-by-side: Template-Driven Forms, Reactive Forms, and the Signal-Based Forms API. It was built as a conference/meetup talk resource with 23 presentation slides and fully functional form implementations for each approach.
 
 **Stack:** Angular 22.0.0 · RxJS 7.8.2 · ngx-translate 17 · TypeScript 6.0 · zone.js · SCSS
 
@@ -13,9 +13,9 @@
 ### What's Working Well
 
 - **Three parallel form implementations** for the same complex use case (user registration with dynamic addresses, conditional state field, async email validation, password strength indicator, and progress tracking)
-- **22-slide presentation** embedded in the app, navigable by keyboard
+- **23-slide presentation** embedded in the app, navigable by keyboard
 - **Performance benchmarks** built into each form page (add/update 1 000 address records, measure JS execution time and heap memory)
-- **Bilingual support** (EN / PL) via ngx-translate with 305 translation keys (en/pl in exact parity)
+- **Bilingual support** (EN / PL) via ngx-translate with 313 translation keys (en/pl in exact parity)
 - **Modern Angular patterns**: standalone components, `inject()`, lazy-loaded routes, signals, Vite-based build (`@angular/build:application`)
 - **TypeScript strict mode** across the board
 
@@ -23,9 +23,9 @@
 
 | Area | Status |
 |------|--------|
-| Testing | ✅ Resolved — 9 spec files, 161 tests covering validators, services, and all three form components |
+| Testing | ✅ Resolved — 10 spec files, 166 tests covering validators, services, all three form components, and the compatForm demo |
 | Code duplication | ✅ Resolved — email regex extracted to `src/app/validators/email.validator.ts` |
-| Change detection | ✅ Resolved — all components run on `OnPush` (explicit on the three form pages, Angular 22 default elsewhere) |
+| Change detection | ✅ Resolved — the three form pages and the compatForm demo set `OnPush` explicitly (perf-sensitive components); other components use Angular's default strategy under zone.js |
 | Async validators | ✅ Resolved — all three approaches debounce the email check (`debounceTime(300)` / `timer(300)`) |
 | Performance testing | ✅ Resolved — headless runner in `scripts/benchmark.mjs` (`npm run benchmark`) |
 | TODOs | ✅ Resolved — leftover SolidJS / smaller-form comments removed |
@@ -175,14 +175,14 @@ src/app/
 │   ├── reactive/        Reactive Forms implementation
 │   ├── signal/          Signal-Based Forms implementation
 │   └── slideshow/       Presentation container
-├── slides/              22 slide components (01–22)
+├── slides/              23 slide components (01–23)
 ├── services/
 │   └── email-check.service.ts   Simulated async validator backend
 ├── types/
 │   ├── user.ts          9-field user model (incl. dynamic addresses)
 │   └── address.ts       5-field address model
 └── lang/
-    ├── en.json          305 English translation keys
+    ├── en.json          313 English translation keys
     └── pl.json          Polish translations
 ```
 
@@ -194,6 +194,6 @@ src/app/
 - **Signal forms performance win (JS add):** ~61% faster than Template-Driven, ~98% faster than Reactive
 - **Reactive forms performance win (input update):** ~94% faster than Template-Driven
 - **Peak memory:** Signal saves ~13% vs Reactive at 1 000 addresses
-- **Translation keys:** 305 (en/pl in exact parity)
+- **Translation keys:** 313 (en/pl in exact parity)
 - **Form fields in demo:** 9 top-level + 5 per dynamic address × N addresses
 - **Async validator delay (simulated):** 800 ms

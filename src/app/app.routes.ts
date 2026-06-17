@@ -17,9 +17,13 @@ export const routes: Routes = [
     path: 'reactive', 
     loadComponent: () => import('./pages/reactive/reactive.component').then(m => m.ReactiveComponent)
   },
-  { 
-    path: 'signal', 
+  {
+    path: 'signal',
     loadComponent: () => import('./pages/signal/signal.component').then(m => m.SignalComponent)
+  },
+  {
+    path: 'compat-demo',
+    loadComponent: () => import('./pages/compat-demo/compat-demo.component').then(m => m.CompatDemoComponent)
   },
   { path: '**', redirectTo: '' }
 ];
