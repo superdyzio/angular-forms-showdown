@@ -1,8 +1,16 @@
 # AngularFormsShowdown
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) and is currently on **Angular 22**.
+An interactive presentation + live-demo app (Angular 22) comparing three Angular form approaches side by side — **Template-Driven**, **Reactive**, and the **Signal-Based Forms** API (`@angular/forms/signals`, stable as of Angular 22). The same complex user-registration form (dynamic addresses, async email validation, password strength, conditional fields) is implemented three times under `src/app/pages/`, and a 22-slide deck under `src/app/slides/` walks through the comparison. Copy is bilingual (EN/PL) via ngx-translate — switch with the `?lang=en` / `?lang=pl` query param.
 
 > **Note:** `angular-eslint` has no Angular 22 release yet, so dependency installs require `npm install --legacy-peer-deps`.
+
+## Benchmarks
+
+Each form page has an "Add/Update 1k" button that bulk-adds then bulk-updates 1000 addresses, timing each pass with `performance.now()`. For reproducible heap/memory figures, run the headless benchmark:
+
+```bash
+npm run benchmark   # node scripts/benchmark.mjs
+```
 
 ## Development server
 
