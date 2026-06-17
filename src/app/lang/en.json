@@ -308,6 +308,16 @@
       "subtitle": "A required email field with validation — how each approach handles it",
       "footnote": "All three achieve the same result. The difference is where the logic lives: template or class."
     },
+    "compatMigration": {
+      "title": "Incremental Migration with compatForm",
+      "subtitle": "Reactive → Signal Forms, one field at a time — the app runs at every step",
+      "step1": "1 · Wrap, don't rewrite — compatForm tolerates reactive controls inside the model",
+      "step2": "2 · Move logic into the schema — validators, cross-field & conditional go declarative",
+      "step3": "3 · Keep heavy bits reactive — the FormArray stays bridged until last",
+      "step4": "4 · Read & bind uniformly — extractValue() unwraps; bind [formField] everywhere",
+      "step5": "5 · Finish — when no reactive controls remain, compatForm → form",
+      "footnote": "Reverse direction: SignalFormControl drops a signal-driven control into an existing FormGroup."
+    },
     "whenToUse": {
       "title": "When to Use What?",
       "subtitle": "A practical decision guide",

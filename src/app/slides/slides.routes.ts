@@ -20,7 +20,8 @@ import { CommunitySlideComponent } from './18-community/community-slide.componen
 import { WhenToUseSlideComponent } from './19-when-to-use/when-to-use-slide.component';
 import { ZonelessSlideComponent } from './20-zoneless/zoneless-slide.component';
 import { MigrationSlideComponent } from './21-migration/migration-slide.component';
-import { ThankYouSlideComponent } from './22-thank-you/thank-you-slide.component';
+import { CompatMigrationSlideComponent } from './22-compat-migration/compat-migration-slide.component';
+import { ThankYouSlideComponent } from './23-thank-you/thank-you-slide.component';
 
 export const slidesRoutes: Routes = [
   { path: '', redirectTo: '1', pathMatch: 'full' },
@@ -45,6 +46,7 @@ export const slidesRoutes: Routes = [
   { path: '19', component: WhenToUseSlideComponent },
   { path: '20', component: ZonelessSlideComponent },
   { path: '21', component: MigrationSlideComponent },
-  { path: '22', component: ThankYouSlideComponent },
+  { path: '22', component: CompatMigrationSlideComponent },
+  { path: '23', component: ThankYouSlideComponent },
   { path: '**', redirectTo: '1' }
 ];

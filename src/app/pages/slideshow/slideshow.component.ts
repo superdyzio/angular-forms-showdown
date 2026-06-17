@@ -42,7 +42,8 @@ export class SlideshowComponent implements OnInit, OnDestroy {
     { id: 19, title: 'When to Use What?' },
     { id: 20, title: 'Zoneless Angular' },
     { id: 21, title: 'Same Field, Three Approaches' },
-    { id: 22, title: 'Thank You' }
+    { id: 22, title: 'Incremental Migration — compatForm' },
+    { id: 23, title: 'Thank You' }
   ]);
   
   // Computed values

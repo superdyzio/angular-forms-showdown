@@ -308,6 +308,16 @@
       "subtitle": "Wymagane pole email z walidacją — jak każde podejście to obsługuje",
       "footnote": "Wszystkie trzy osiągają ten sam rezultat. Różnica tkwi w tym, gdzie żyje logika: szablon lub klasa."
     },
+    "compatMigration": {
+      "title": "Stopniowa migracja z compatForm",
+      "subtitle": "Reactive → Signal Forms, pole po polu — aplikacja działa na każdym kroku",
+      "step1": "1 · Owiń, nie przepisuj — compatForm akceptuje kontrolki reactive wewnątrz modelu",
+      "step2": "2 · Przenieś logikę do schematu — walidatory, cross-field i warunkowe deklaratywnie",
+      "step3": "3 · Zostaw ciężkie elementy w reactive — FormArray pozostaje mostkowany do końca",
+      "step4": "4 · Czytaj i binduj jednolicie — extractValue() rozpakowuje; [formField] wszędzie",
+      "step5": "5 · Zakończ — gdy nie ma już kontrolek reactive, compatForm → form",
+      "footnote": "Odwrotny kierunek: SignalFormControl wstawia kontrolkę sterowaną sygnałami do istniejącego FormGroup."
+    },
     "whenToUse": {
       "title": "Kiedy użyć czego?",
       "subtitle": "Praktyczny przewodnik decyzyjny",
